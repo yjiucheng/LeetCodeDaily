@@ -104,7 +104,6 @@ public class ListNodeDemo {
                 first = first.next;
                 second = second.next;
             }
-
         }
         if (needPlusNext) {
             ans.next = new ListNode(1);
