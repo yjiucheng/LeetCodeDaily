@@ -8,13 +8,13 @@ import java.util.List;
  */
 public class HashDemo {
     public static void main(String[] args) {
-
-        String ss = "cbaebabacd";
-        String s = "abc";
+        long starttime = System.currentTimeMillis();
+        String ss = "bb";
+        String s = "aa";
         System.err.println(findAnagrams(ss, s));
-        String k = ss;
-        char[] asd = k.toCharArray();
-        Arrays.sort(asd);
+
+
+        System.err.println("本次耗时：" + (System.currentTimeMillis() - starttime));
 
     }
 
@@ -34,30 +34,29 @@ public class HashDemo {
      */
     public static List<Integer> findAnagrams(String s, String p) {
         List<Integer> ans = new ArrayList<>();
-        if (s == null || s.length() == 0) {
+        if (s == null || s.length() == 0 || p.length() > s.length()) {
             return ans;
         }
         int targetLength = p.length();
-        char[] pChars = p.toCharArray();
-        Arrays.sort(pChars);
-        String sortTarget = String.valueOf(pChars);
+        char[] tagetChars = p.toCharArray();
+        char[] souChars = s.toCharArray();
+        int[] targetCharNums = new int[26];
+        int[] souCharNums = new int[26];
+        for (int index = 0; index < targetLength; index++) {
+            targetCharNums[tagetChars[index] - 'a'] += 1;
+            souCharNums[souChars[index] - 'a'] += 1;
+        }
+
+        if (Arrays.equals(targetCharNums, souCharNums)) {
+            ans.add(0);
+        }
+
         int length = s.length();
-        int slowIndex = 0;
-        for (int fastIndex = 0; fastIndex < length; fastIndex++) {
-            char curChar = s.charAt(fastIndex);
-            if (p.contains(String.valueOf(curChar))) {
-                if (fastIndex - slowIndex == targetLength - 1) {
-                    String subStr = s.substring(slowIndex, fastIndex + 1);
-                    char[] sub = subStr.toCharArray();
-                    Arrays.sort(sub);
-                    String subSort = String.valueOf(sub);
-                    if (sortTarget.equals(subSort)) {
-                        ans.add(slowIndex);
-                    }
-                    slowIndex++;
-                }
-            } else {
-                slowIndex = fastIndex + 1;
+        for (int fastIndex = targetLength; fastIndex < length; fastIndex++) {
+            souCharNums[souChars[fastIndex] - 'a'] += 1;
+            souCharNums[souChars[fastIndex - targetLength] - 'a'] -= 1;
+            if (Arrays.equals(targetCharNums, souCharNums)) {
+                ans.add(fastIndex - targetLength + 1);
             }
         }
         return ans;
