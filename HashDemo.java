@@ -19,6 +19,38 @@ public class HashDemo {
     }
 
     /**
+     * 给定两个数组，编写一个函数来计算它们的交集。
+     * 输入：nums1 = [1,2,2,1], nums2 = [2,2]
+     * 输出：[2]
+     * <p>
+     * 输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+     * 输出：[9,4]
+     */
+    public int[] intersection(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) {
+            return new int[0];
+        }
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int index = 0; index < nums1.length; index++) {
+            map.put(nums1[index], 1);
+        }
+        HashMap<Integer, Integer> result = new HashMap<>();
+        for (int index = 0; index < nums2.length; index++) {
+            int num = nums2[index];
+            if (map.containsKey(num)) {
+                result.put(num, 1);
+            }
+        }
+        int[] ans = new int[result.size()];
+        int index = 0;
+        for (Integer num : result.keySet()) {
+            ans[index] = num;
+            index++;
+        }
+        return ans;
+    }
+
+    /**
      * 给定一个字符串 s 和一个非空字符串 p，找到 s 中所有是 p 的字母异位词的子串，返回这些子串的起始索引。
      * <p>
      * 字符串只包含小写英文字母，并且字符串 s 和 p 的长度都不超过 20100。
