@@ -29,6 +29,8 @@ public class HashDemo {
      * 不考虑答案输出的顺序。
      * <p>
      * 链接：https://leetcode-cn.com/problems/find-all-anagrams-in-a-string
+     * "cbaebabacd"
+     * "abc"
      */
     public static List<Integer> findAnagrams(String s, String p) {
         List<Integer> ans = new ArrayList<>();
@@ -37,12 +39,22 @@ public class HashDemo {
         }
         int targetLength = p.length();
         char[] pChars = p.toCharArray();
+        Arrays.sort(pChars);
+        String sortTarget = String.valueOf(pChars);
         int length = s.length();
         int slowIndex = 0;
         for (int fastIndex = 0; fastIndex < length; fastIndex++) {
-            if (p.contains(String.valueOf(s.charAt(fastIndex)))) {
+            char curChar = s.charAt(fastIndex);
+            if (p.contains(String.valueOf(curChar))) {
                 if (fastIndex - slowIndex == targetLength - 1) {
-
+                    String subStr = s.substring(slowIndex, fastIndex + 1);
+                    char[] sub = subStr.toCharArray();
+                    Arrays.sort(sub);
+                    String subSort = String.valueOf(sub);
+                    if (sortTarget.equals(subSort)) {
+                        ans.add(slowIndex);
+                    }
+                    slowIndex++;
                 }
             } else {
                 slowIndex = fastIndex + 1;
