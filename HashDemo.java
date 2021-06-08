@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * hash
@@ -9,14 +6,53 @@ import java.util.List;
 public class HashDemo {
     public static void main(String[] args) {
         long starttime = System.currentTimeMillis();
-        String ss = "bb";
-        String s = "aa";
-        System.err.println(findAnagrams(ss, s));
+
+        int[] s1 = new int[]{1, 2, 2, 1};
+        int[] s2 = new int[]{2, 2};
+
+        System.err.println(Arrays.toString(intersect(s1, s2)));
 
 
         System.err.println("本次耗时：" + (System.currentTimeMillis() - starttime));
 
     }
+
+
+    /**
+     * 给定两个数组，编写一个函数来计算它们的交集。
+     * <p>
+     * 输出结果中每个元素出现的次数，应与元素在两个数组中出现次数的最小值一致。
+     * 我们可以不考虑输出结果的顺序。
+     */
+    public static int[] intersect(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) {
+            return new int[0];
+        }
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int index = 0; index < nums1.length; index++) {
+            map.put(nums1[index], map.getOrDefault(nums1[index], 0) + 1);
+        }
+        Stack<Integer> stack = new Stack<>();
+        for (int index = 0; index < nums2.length; index++) {
+            int num = nums2[index];
+            if (map.containsKey(num)) {
+                stack.push(num);
+                if (map.get(num) > 1) {
+                    map.put(num, map.get(num) - 1);
+                } else {
+                    map.remove(num);
+                }
+            }
+        }
+        int[] ans = new int[stack.size()];
+        int index = 0;
+        while (!stack.empty()) {
+            ans[index] = stack.pop();
+            index++;
+        }
+        return ans;
+    }
+
 
     /**
      * 给定两个数组，编写一个函数来计算它们的交集。
