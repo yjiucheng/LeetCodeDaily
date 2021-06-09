@@ -7,14 +7,14 @@ public class HashDemo {
     public static void main(String[] args) {
         long starttime = System.currentTimeMillis();
 
-        int[] s1 = new int[]{1,-2,-5,-4,-3,3,3,5};
+        int[] s1 = new int[]{1, -2, -5, -4, -3, 3, 3, 5};
         int[] s2 = new int[]{2, 2};
 
 //        System.err.println(Arrays.toString(intersect(s1, s2)));
 
         int s = 3;
 
-        System.err.println(fourSum(s1 ,-11));
+        System.err.println(fourSum(s1, -11));
 
         System.err.println("本次耗时：" + (System.currentTimeMillis() - starttime));
 
@@ -40,7 +40,7 @@ public class HashDemo {
         //排序：双指针都要先排序
         Arrays.sort(nums);
         //a:
-        for (int firtIndex = 0; firtIndex < nums.length; firtIndex++) {
+        for (int firtIndex = 0; firtIndex < nums.length - 4; firtIndex++) {
             int first = nums[firtIndex];
             //去重：答案中不可以包含重复的四元组。如果nums[firtIndex]与nums[firtIndex - 1]相等，
             //那上一轮满足的答案这轮必然还满足，需要排除掉
@@ -48,34 +48,38 @@ public class HashDemo {
                 continue;
             }
             //b:
-            for (int secondIndex = firtIndex + 1; secondIndex < nums.length; secondIndex++) {
+            for (int secondIndex = firtIndex + 1; secondIndex < nums.length - 3; secondIndex++) {
                 int second = nums[secondIndex];
                 //同理：与firstIndex一样的去重逻辑
                 if (secondIndex - firtIndex > 1 && nums[secondIndex] == nums[secondIndex - 1]) {
                     continue;
                 }
 
+                int thirdIndex = secondIndex + 1;
                 int fouthIndex = nums.length - 1;
-                for (int thirdIndex = secondIndex + 1; thirdIndex < nums.length; thirdIndex++) {
-                    int third = nums[thirdIndex];
-                    //同理：与firstIndex一样的去重逻辑
-                    if (thirdIndex - secondIndex > 1 && nums[thirdIndex] == nums[thirdIndex - 1]) {
-                        continue;
-                    }
-
-                    while (thirdIndex < fouthIndex && third + nums[fouthIndex] + first + second > target) {
-                        fouthIndex--;
-                    }
-                    if (thirdIndex == fouthIndex) {
-                        break;
-                    }
-                    if (third + nums[fouthIndex] + first + second == target) {
+                while (fouthIndex > thirdIndex) {
+                    int sum = first + second + nums[thirdIndex] + nums[fouthIndex];
+                    if (sum == target) {
                         List<Integer> list = new ArrayList<>();
                         list.add(first);
                         list.add(second);
-                        list.add(third);
+                        list.add(nums[thirdIndex]);
                         list.add(nums[fouthIndex]);
                         ans.add(list);
+
+                        while (fouthIndex > thirdIndex && nums[thirdIndex] == nums[thirdIndex + 1]) {
+                            thirdIndex++;
+                        }
+                        thirdIndex++;
+                        while (fouthIndex > thirdIndex && nums[fouthIndex] == nums[fouthIndex - 1]) {
+                            fouthIndex--;
+                        }
+                        fouthIndex--;
+
+                    } else if (sum < target) {
+                        thirdIndex++;
+                    } else {
+                        fouthIndex--;
                     }
                 }
             }
