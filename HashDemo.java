@@ -7,17 +7,81 @@ public class HashDemo {
     public static void main(String[] args) {
         long starttime = System.currentTimeMillis();
 
-        int[] s1 = new int[]{1, 2, 2, 1};
+        int[] s1 = new int[]{1,-2,-5,-4,-3,3,3,5};
         int[] s2 = new int[]{2, 2};
 
 //        System.err.println(Arrays.toString(intersect(s1, s2)));
 
         int s = 3;
 
-        System.err.println(isHappy(19));
+        System.err.println(fourSum(s1 ,-11));
 
         System.err.println("本次耗时：" + (System.currentTimeMillis() - starttime));
 
+    }
+
+    /**
+     * 给定一个包含 n 个整数的数组 nums 和一个目标值 target，
+     * 判断 nums 中是否存在四个元素 a，b，c 和 d ，使得 a + b + c + d 的值与 target 相等？
+     * 找出所有满足条件且不重复的四元组。
+     * <p>
+     * 注意：答案中不可以包含重复的四元组。
+     * <p>
+     * 链接：https://leetcode-cn.com/problems/4sum
+     * <p>
+     * 输入：nums = [1,0,-1,0,-2,2], target = 0
+     * 输出：[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+     */
+    public static List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            return ans;
+        }
+        //排序：双指针都要先排序
+        Arrays.sort(nums);
+        //a:
+        for (int firtIndex = 0; firtIndex < nums.length; firtIndex++) {
+            int first = nums[firtIndex];
+            //去重：答案中不可以包含重复的四元组。如果nums[firtIndex]与nums[firtIndex - 1]相等，
+            //那上一轮满足的答案这轮必然还满足，需要排除掉
+            if (firtIndex > 0 && nums[firtIndex] == nums[firtIndex - 1]) {
+                continue;
+            }
+            //b:
+            for (int secondIndex = firtIndex + 1; secondIndex < nums.length; secondIndex++) {
+                int second = nums[secondIndex];
+                //同理：与firstIndex一样的去重逻辑
+                if (secondIndex - firtIndex > 1 && nums[secondIndex] == nums[secondIndex - 1]) {
+                    continue;
+                }
+
+                int fouthIndex = nums.length - 1;
+                for (int thirdIndex = secondIndex + 1; thirdIndex < nums.length; thirdIndex++) {
+                    int third = nums[thirdIndex];
+                    //同理：与firstIndex一样的去重逻辑
+                    if (thirdIndex - secondIndex > 1 && nums[thirdIndex] == nums[thirdIndex - 1]) {
+                        continue;
+                    }
+
+                    while (thirdIndex < fouthIndex && third + nums[fouthIndex] + first + second > target) {
+                        fouthIndex--;
+                    }
+                    if (thirdIndex == fouthIndex) {
+                        break;
+                    }
+                    if (third + nums[fouthIndex] + first + second == target) {
+                        List<Integer> list = new ArrayList<>();
+                        list.add(first);
+                        list.add(second);
+                        list.add(third);
+                        list.add(nums[fouthIndex]);
+                        ans.add(list);
+                    }
+                }
+            }
+        }
+
+        return ans;
     }
 
 
@@ -56,7 +120,7 @@ public class HashDemo {
                 n = n / 10;
             }
             n = sum;
-            sum=0;
+            sum = 0;
             if (n == 1) {
                 return true;
             } else {
