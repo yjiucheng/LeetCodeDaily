@@ -1,12 +1,76 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class StringDemo {
     public static void main(String[] args) {
-        System.err.println(5 / 2);
+        System.err.println(reverseWords("  Bob    Loves  Alice   "));
         String s = "123";
     }
+
+    /**
+     * 给你一个字符串 s ，逐个翻转字符串中的所有 单词 。
+     * <p>
+     * 单词 是由非空格字符组成的字符串。s 中使用至少一个空格将字符串中的 单词 分隔开。
+     * <p>
+     * 请你返回一个翻转 s 中单词顺序并用单个空格相连的字符串。
+     * <p>
+     * 说明：
+     * <p>
+     * 输入字符串 s 可以在前面、后面或者单词间包含多余的空格。
+     * 翻转后单词间应当仅用一个空格分隔。
+     * 翻转后的字符串中不应包含额外的空格。
+     * <p>
+     * 链接：https://leetcode-cn.com/problems/reverse-words-in-a-string
+     * <p>
+     * 输入：s = "the sky is blue"
+     * 输出："blue is sky the"
+     * <p>
+     * 输入：s = "  Bob    Loves  Alice   "
+     * 输出："Alice Loves Bob"
+     */
+    public static String reverseWords(String s) {
+        StringBuilder ansBuild = new StringBuilder();
+        char[] sNums = s.toCharArray();
+        //上一个非空格的下标，用来确定起始位置是不是空格
+        int lastWordIndex = -1;
+        List<String> list = new ArrayList<>();
+        StringBuilder temp = new StringBuilder();
+        for (int index = 0; index < sNums.length ; index++) {
+            char cur = sNums[index];
+            //当前是空格：
+            if (cur == ' ') {
+                //首位空格
+                if (lastWordIndex == -1) {
+                    continue;
+                }
+                //前一位也是空格
+                if (sNums[index - 1] == ' ') {
+                    continue;
+                }
+                //处理空格:前面一个单词结束，开始记录下一个单词，同时吧上一个单词添加到list
+                list.add(temp.toString());
+                temp = new StringBuilder();
+            } else {
+                temp.append(cur);
+                lastWordIndex = index;
+                if (index==sNums.length - 1){
+                    list.add(temp.toString());
+                }
+            }
+        }
+
+        for (int index = list.size() - 1; index >= 0; index--) {
+            if (list.get(index).length() == 0) {
+                continue;
+            }
+            ansBuild.append(list.get(index));
+            if (index != 0) {
+                ansBuild.append(" ");
+            }
+        }
+
+        return ansBuild.toString();
+    }
+
 
     /**
      * 请实现一个函数，把字符串 s 中的每个空格替换成"%20"。
