@@ -5,7 +5,27 @@ import java.util.Stack;
 public class StringDemo {
     public static void main(String[] args) {
         System.err.println(5 / 2);
+        String s = "123";
     }
+
+    /**
+     * 请实现一个函数，把字符串 s 中的每个空格替换成"%20"。
+     */
+    public String replaceSpace(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        for (char sChar : s.toCharArray()) {
+            if (sChar == ' ') {
+                stringBuilder.append("%20");
+            } else {
+                stringBuilder.append(sChar);
+            }
+        }
+        return stringBuilder.toString();
+    }
+
 
     /**
      * 编写一个函数，其作用是将输入的字符串反转过来。输入字符串以字符数组 char[] 的形式给出。
