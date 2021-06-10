@@ -6,6 +6,28 @@ public class StringDemo {
         String s = "123";
     }
 
+
+    /**
+     * 字符串的左旋转操作是把字符串前面的若干个字符转移到字符串的尾部。
+     * 请定义一个函数实现字符串左旋转操作的功能。
+     * 比如，输入字符串"abcdefg"和数字2，该函数将返回左旋转两位得到的结果"cdefgab"。
+     * <p>
+     * 输入: s = "abcdefg", k = 2
+     * 输出: "cdefgab"
+     * <p>
+     * 输入: s = "lrloseumgh", k = 6
+     * 输出: "umghlrlose"
+     * <p>
+     * 链接：https://leetcode-cn.com/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof
+     */
+    public String reverseLeftWords(String s, int n) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(s.substring(n, s.length()));
+        builder.append(s.substring(0,n));
+
+        return builder.toString();
+    }
+
     /**
      * 给你一个字符串 s ，逐个翻转字符串中的所有 单词 。
      * <p>
@@ -34,7 +56,7 @@ public class StringDemo {
         int lastWordIndex = -1;
         List<String> list = new ArrayList<>();
         StringBuilder temp = new StringBuilder();
-        for (int index = 0; index < sNums.length ; index++) {
+        for (int index = 0; index < sNums.length; index++) {
             char cur = sNums[index];
             //当前是空格：
             if (cur == ' ') {
@@ -52,7 +74,7 @@ public class StringDemo {
             } else {
                 temp.append(cur);
                 lastWordIndex = index;
-                if (index==sNums.length - 1){
+                if (index == sNums.length - 1) {
                     list.add(temp.toString());
                 }
             }
