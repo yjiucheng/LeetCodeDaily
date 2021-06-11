@@ -34,16 +34,37 @@ public class StringDemo {
         int ans = -1;
         char[] haysChars = haystack.toCharArray();
         char[] needleChars = needle.toCharArray();
-        for (int fast = 0; fast <= haysChars.length - needleChars.length; fast++) {
-            char cur = haysChars[fast];
-            if (cur == needleChars[0]) {
-                String str = haystack.substring(fast, fast + needleChars.length);
-                if (needle.equals(str)) {
-                    ans = fast;
+        //KMP算法实现
+        //1.先求前缀表
+        int[] next = new int[needle.length()];
+        int j = 0;
+        next[0] = j;
+        for (int i = 1; i < needleChars.length; i++) {
+            while (j > 0 && needleChars[i] != needleChars[j]) {
+                j = next[j - 1];
+            }
+            if (needleChars[i] == needleChars[j]) {
+                j++;
+            }
+            next[i] = j;
+        }
+
+        for (int index = 0, tagrget = 0; index < haysChars.length; index++) {
+            if (haysChars[index] == needleChars[tagrget]) {
+                if (tagrget == needleChars.length - 1) {
+                    ans = index - tagrget;
                     break;
+                } else {
+                    tagrget++;
+                }
+            } else {
+                if (tagrget > 0) {
+                    tagrget = next[tagrget - 1];
+                    index--;
                 }
             }
         }
+
         return ans;
     }
 
