@@ -36,18 +36,22 @@ public class ListNodeDemo {
         if (headA == null || headB == null) {
             return null;
         }
-        HashMap<ListNode, Integer> map = new HashMap<>();
-        while (headA != null) {
-            map.put(headA, 1);
-            headA = headA.next;
-        }
-        while (headB != null) {
-            if (map.containsKey(headB)) {
-                return headB;
+
+        ListNode planA = headA;
+        ListNode planB = headB;
+        while (planA != planB) {
+            if (planA==null){
+                planA = headB;
+            }else {
+                planA = planA.next;
             }
-            headB = headB.next;
+            if (planB==null){
+                planB = headA;
+            }else {
+                planB = planB.next;
+            }
         }
-        return null;
+        return planA;
     }
 
 
