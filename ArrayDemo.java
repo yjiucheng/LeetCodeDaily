@@ -17,6 +17,28 @@ public class ArrayDemo {
 
 
     /**
+     * 给你一个含 n 个整数的数组 nums ，其中 nums[i] 在区间 [1, n] 内。
+     * 请你找出所有在 [1, n] 范围内但没有出现在 nums 中的数字，并以数组的形式返回结果。
+     * <p>
+     * 链接：https://leetcode-cn.com/problems/find-all-numbers-disappeared-in-an-array
+     */
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> ans = new ArrayList<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i : nums) {
+            map.put(i, 1);
+        }
+        for (int i = 1; i <= nums.length; i++) {
+            if (!map.containsKey(i)) {
+                ans.add(i);
+            }
+        }
+
+        return ans;
+    }
+
+
+    /**
      * 给定一个数组 prices ，其中 prices[i] 是一支给定股票第 i 天的价格。
      * <p>
      * 设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。
