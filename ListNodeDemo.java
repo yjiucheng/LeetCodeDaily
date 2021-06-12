@@ -29,6 +29,29 @@ public class ListNodeDemo {
 
 
     /**
+     * 给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。
+     * 如果两个链表没有交点，返回 null 。
+     */
+    public ListNode getIntersectionNode2(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+        HashMap<ListNode, Integer> map = new HashMap<>();
+        while (headA != null) {
+            map.put(headA, 1);
+            headA = headA.next;
+        }
+        while (headB != null) {
+            if (map.containsKey(headB)) {
+                return headB;
+            }
+            headB = headB.next;
+        }
+        return null;
+    }
+
+
+    /**
      * 给定两个用链表表示的整数，每个节点包含一个数位。
      * <p>
      * 这些数位是反向存放的，也就是个位排在链表首部。
