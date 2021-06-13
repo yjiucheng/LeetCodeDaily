@@ -27,8 +27,8 @@ public class TestDemo {
 //        ListNode listNode2 = new ListNode(1);
 //        System.err.println(mergeTwoLists(null, listNode2));
 //        int[] num3 = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
-        int[] num3 = new int[]{23,2,6,4,7};
-        System.err.println(checkSubarraySum(num3,13));
+        int[] num3 = new int[]{23, 2, 6, 4, 7};
+        System.err.println(checkSubarraySum(num3, 13));
 //        moveZeroes(num3);
 //        System.err.println(minSubArrayLen(4, num3));
 
@@ -49,6 +49,35 @@ public class TestDemo {
 //            System.err.println(Arrays.toString(newData[i]));
 //        }
 //        System.err.println(spiralOrder(newData));
+    }
+
+
+    /**
+     * 猜数字游戏的规则如下：
+     * <p>
+     * 每轮游戏，我都会从 1 到 n 随机选择一个数字。 请你猜选出的是哪个数字。
+     * 如果你猜错了，我会告诉你，你猜测的数字比我选出的数字是大了还是小了。
+     * 你可以通过调用一个预先定义好的接口 int guess(int num) 来获取猜测结果，返回值一共有 3 种可能的情况（-1，1 或 0）：
+     * <p>
+     * -1：我选出的数字你猜的数字小 pick < num
+     * 1：我选出的数字比你猜的数字大 pic比k > num
+     * 0：我选出的数字和你猜的数字一样。恭喜！你猜对了！pick == num
+     * 返回我选出的数字。
+     * <p>
+     * 链接：https://leetcode-cn.com/problems/guess-number-higher-or-lower
+     */
+    public static int guessNumber(int n) {
+        int left = 1;
+        int right = n;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (guess(mid) <= 0) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
     }
 
 
