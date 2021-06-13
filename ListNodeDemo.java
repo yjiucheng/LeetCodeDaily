@@ -23,8 +23,8 @@ public class ListNodeDemo {
         ListNode[] dat = new ListNode[]{demo1, demo2, demo3};
 //        System.err.println(mergeKLists(dat));
 
-        ListNode demo = new ListNode(1, new ListNode(2, new ListNode(2, new ListNode(4, new ListNode(5)))));
-        System.err.println(addTwoNumbers(demo3, demo4));
+        ListNode demo = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(2,new ListNode(1))))));
+        System.err.println(isPalindrome(demo));
     }
 
     /**
@@ -37,25 +37,53 @@ public class ListNodeDemo {
      * <p>
      * 你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？
      */
-    public boolean isPalindrome(ListNode head) {
+    public static boolean isPalindrome(ListNode head) {
         //常规思路
-        List<Integer> list = new ArrayList<>();
+//        List<Integer> list = new ArrayList<>();
+//        ListNode temp = head;
+//        while (temp != null) {
+//            list.add(temp.val);
+//            temp = temp.next;
+//        }
+//        if (list.size() == 1) {
+//            return true;
+//        }
+//        for (int index = 0; index < list.size() / 2; index++) {
+//            if (list.get(index) != list.get(list.size() - 1 - index)) {
+//                return false;
+//            }
+//        }
+
+        //O(n) 时间复杂度和 O(1) 空间复杂度
+        int cout = 0;
         ListNode temp = head;
         while (temp != null) {
-            list.add(temp.val);
             temp = temp.next;
+            cout++;
         }
-        if (list.size() == 1) {
+        if (cout == 1) {
             return true;
         }
-        for (int index = 0; index < list.size() / 2; index++) {
-            if (list.get(index) != list.get(list.size() - 1 - index)) {
+        //反转前count/2部分链表
+        int index = 1;
+        ListNode pre = null;
+        ListNode cur = head;
+        while (index <= cout / 2) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+            index++;
+        }
+        cur = cout % 2 == 0 ? cur : cur.next;
+        while (pre != null) {
+            if (pre.val != cur.val) {
                 return false;
             }
+            pre = pre.next;
+            cur = cur.next;
         }
         return true;
-
-
     }
 
 
