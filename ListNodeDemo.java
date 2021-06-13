@@ -23,8 +23,9 @@ public class ListNodeDemo {
         ListNode[] dat = new ListNode[]{demo1, demo2, demo3};
 //        System.err.println(mergeKLists(dat));
 
-        ListNode demo = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(2,new ListNode(1))))));
-        System.err.println(isPalindrome(demo));
+        ListNode demo = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(2, new ListNode(1))))));
+        ListNode demoN = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(2, new ListNode(1)))));
+        System.err.println(isPalindrome(demoN));
     }
 
     /**
@@ -55,34 +56,63 @@ public class ListNodeDemo {
 //        }
 
         //O(n) 时间复杂度和 O(1) 空间复杂度
-        int cout = 0;
-        ListNode temp = head;
-        while (temp != null) {
-            temp = temp.next;
-            cout++;
-        }
-        if (cout == 1) {
+//        int cout = 0;
+//        ListNode temp = head;
+//        while (temp != null) {
+//            temp = temp.next;
+//            cout++;
+//        }
+//        if (cout == 1) {
+//            return true;
+//        }
+//        //反转前count/2部分链表
+//        int index = 1;
+//        ListNode pre = null;
+//        ListNode cur = head;
+//        while (index <= cout / 2) {
+//            ListNode next = cur.next;
+//            cur.next = pre;
+//            pre = cur;
+//            cur = next;
+//            index++;
+//        }
+//        cur = cout % 2 == 0 ? cur : cur.next;
+//        while (pre != null) {
+//            if (pre.val != cur.val) {
+//                return false;
+//            }
+//            pre = pre.next;
+//            cur = cur.next;
+//        }
+        //优化：快慢指针找中间节点
+        if (head == null || head.next == null) {
             return true;
         }
-        //反转前count/2部分链表
-        int index = 1;
-        ListNode pre = null;
-        ListNode cur = head;
-        while (index <= cout / 2) {
-            ListNode next = cur.next;
-            cur.next = pre;
-            pre = cur;
-            cur = next;
-            index++;
+        ListNode fast = head;
+        ListNode slow = head;
+        //fast速度是slow的2倍，fast走完时slow恰好走到一半
+        while (fast != null && fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
         }
-        cur = cout % 2 == 0 ? cur : cur.next;
+        //反转后半部分链表
+        ListNode endHalf = slow.next;
+        ListNode pre = null;
+        while (endHalf != null) {
+            ListNode next = endHalf.next;
+            endHalf.next = pre;
+            pre = endHalf;
+            endHalf = next;
+        }
         while (pre != null) {
-            if (pre.val != cur.val) {
+            if (pre.val != head.val) {
                 return false;
             }
             pre = pre.next;
-            cur = cur.next;
+            head = head.next;
         }
+
+
         return true;
     }
 
