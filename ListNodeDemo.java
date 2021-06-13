@@ -27,6 +27,37 @@ public class ListNodeDemo {
         System.err.println(addTwoNumbers(demo3, demo4));
     }
 
+    /**
+     * 234. 回文链表
+     * 请判断一个链表是否为回文链表。
+     * 输入: 1->2
+     * 输出: false
+     * 输入: 1->2->2->1
+     * 输出: true
+     * <p>
+     * 你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？
+     */
+    public boolean isPalindrome(ListNode head) {
+        //常规思路
+        List<Integer> list = new ArrayList<>();
+        ListNode temp = head;
+        while (temp != null) {
+            list.add(temp.val);
+            temp = temp.next;
+        }
+        if (list.size() == 1) {
+            return true;
+        }
+        for (int index = 0; index < list.size() / 2; index++) {
+            if (list.get(index) != list.get(list.size() - 1 - index)) {
+                return false;
+            }
+        }
+        return true;
+
+
+    }
+
 
     /**
      * 给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。
@@ -40,14 +71,14 @@ public class ListNodeDemo {
         ListNode planA = headA;
         ListNode planB = headB;
         while (planA != planB) {
-            if (planA==null){
+            if (planA == null) {
                 planA = headB;
-            }else {
+            } else {
                 planA = planA.next;
             }
-            if (planB==null){
+            if (planB == null) {
                 planB = headA;
-            }else {
+            } else {
                 planB = planB.next;
             }
         }
