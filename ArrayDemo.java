@@ -15,6 +15,20 @@ public class ArrayDemo {
         System.err.println(generate(5));
     }
 
+    /**
+     * 852. 山脉数组的峰顶索引
+     */
+    public int peakIndexInMountainArray(int[] arr) {
+        int index = -1;
+        for (int i = 1; i < arr.length - 1; i++) {
+            if (arr[i] > arr[i - 1] && arr[i] > arr[i + 1]) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
 
     /**
      * 给你一个含 n 个整数的数组 nums ，其中 nums[i] 在区间 [1, n] 内。
