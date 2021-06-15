@@ -8,25 +8,29 @@ import java.util.List;
  */
 public class ArrayDemo {
     public static void main(String[] args) {
-
-        int[] nums = new int[]{8, 1, 2, 2, 3};
+//        int[] nums = new int[]{18,29,38,59,98,100,99,98,90};
+        int[] nums = new int[]{0, 1, 0};
 //        System.err.println(Arrays.toString(smallerNumbersThanCurrent(nums)));
         String a = "leetcode";
-        System.err.println(generate(5));
+        System.err.println(peakIndexInMountainArray(nums));
     }
 
     /**
      * 852. 山脉数组的峰顶索引
      */
-    public int peakIndexInMountainArray(int[] arr) {
-        int index = -1;
-        for (int i = 1; i < arr.length - 1; i++) {
-            if (arr[i] > arr[i - 1] && arr[i] > arr[i + 1]) {
-                index = i;
-                break;
+    public static int peakIndexInMountainArray(int[] arr) {
+        int left = 1, right = arr.length - 2;
+        while (right > left) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] < arr[mid - 1]) {
+                right = mid - 1;
+            } else if (arr[mid] <= arr[mid + 1]) {
+                left = mid + 1;
+            } else {
+                return mid;
             }
         }
-        return index;
+        return left;
     }
 
 
