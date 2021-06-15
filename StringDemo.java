@@ -2,8 +2,39 @@ import java.util.*;
 
 public class StringDemo {
     public static void main(String[] args) {
-        System.err.println(strStr("mississippi", "issip"));
+//        System.err.println(strStr("mississippi", "issip"));
+        System.err.println(repeatedSubstringPattern("abac"));
         String s = "123";
+    }
+
+
+    /**
+     * 给定一个非空的字符串，判断它是否可以由它的一个子串重复多次构成。给定的字符串只含有小写英文字母，并且长度不超过10000。
+     *
+     * @param s
+     * @return
+     */
+    public static boolean repeatedSubstringPattern(String s) {
+        if (s.length() == 1) {
+            return true;
+        }
+        int[] next = new int[s.length()];
+        int j = 0;
+        next[0] = j;
+        for (int i = 1; i < s.length(); i++) {
+            while (j > 0 && s.charAt(i) != s.charAt(j)) {
+                j = next[j - 1];
+            }
+            if (s.charAt(i) == s.charAt(j)) {
+                j++;
+            }
+            next[i] = j;
+        }
+        int repeatLength = s.length() - next[s.length() - 1];
+        if (repeatLength==s.length()){
+            return false;
+        }
+        return (s.length() % repeatLength) == 0;
     }
 
 
@@ -53,7 +84,7 @@ public class StringDemo {
         for (int index = 0; index < haysChars.length; index++) {
             if (haysChars[index] == needleChars[targetIndex]) {
                 if (targetIndex == needleChars.length - 1) {
-                    ans=index-targetIndex;
+                    ans = index - targetIndex;
                     break;
                 } else {
                     targetIndex++;
