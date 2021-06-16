@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -7,8 +8,42 @@ import java.util.Stack;
  */
 public class StackDemo {
     public static void main(String[] args) {
-        System.err.println(removeDuplicates("abbaca"));
+
+        int[] nums=new int[]{1,3,-1,-3,5,3,6,7};
+        System.err.println(maxSlidingWindow(nums,3));
     }
+
+    /**
+     * 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
+     * 你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
+     * <p>
+     * 返回滑动窗口中的最大值。
+     * <p>
+     * 链接：https://leetcode-cn.com/problems/sliding-window-maximum
+     */
+    public static int[] maxSlidingWindow(int[] nums, int k) {
+        //todo
+        int[] ans = new int[nums.length - k + 1];
+        LinkedList<Integer> queue = new LinkedList();
+        for (int i = 0; i < nums.length; i++) {
+            //将num[i] 按从大到下插入Queue中，如果num[i+1]>num[i]，将num[i]出栈
+            while (queue.size() > 0 && nums[queue.peekLast()] <= nums[i]) {
+                queue.pollLast();
+            }
+            queue.add(i);
+
+            //判断当前qunue中所有数据是否满足条件
+            if (queue.getFirst() <= i - k) {
+                queue.pollFirst();
+            }
+            //在满足i+1-k>=0田间下，当前qunue最大的值加入数组
+            if (i + 1 - k >= 0) {
+                ans[i+1-k]=nums[queue.getFirst()];
+            }
+        }
+        return ans;
+    }
+
 
     /**
      * 1047. 删除字符串中的所有相邻重复项
@@ -18,7 +53,7 @@ public class StackDemo {
             return s;
         }
         StringBuilder sb = new StringBuilder();
-        for (int i =0; i <s.length() ;i++) {
+        for (int i = 0; i < s.length(); i++) {
             char cur = s.charAt(i);
             if (sb.length() > 0) {
                 char stackChar = sb.charAt(sb.length() - 1);
