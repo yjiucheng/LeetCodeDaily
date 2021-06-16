@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Stack;
 
@@ -8,8 +7,37 @@ import java.util.Stack;
  */
 public class StackDemo {
     public static void main(String[] args) {
-
+System.err.println(removeDuplicates("abbaca"));
     }
+
+    /**
+     * 1047. 删除字符串中的所有相邻重复项
+     */
+    public static String removeDuplicates(String s) {
+        if (s == null || s.length() <= 1) {
+            return s;
+        }
+        Stack<Character> stack = new Stack<>();
+        for (int i = s.length()-1; i >=0; i--) {
+            char cur = s.charAt(i);
+            if (stack.size() > 0) {
+                char stackChar = stack.peek();
+                if (cur == stackChar) {
+                    stack.pop();
+                } else {
+                    stack.push(cur);
+                }
+            } else {
+                stack.push(cur);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!stack.empty()) {
+            sb.append(stack.pop());
+        }
+        return sb.toString();
+    }
+
 
     /**
      * 150. 逆波兰表达式求值
