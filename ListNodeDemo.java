@@ -56,22 +56,36 @@ public class ListNodeDemo {
      * 链接：https://leetcode-cn.com/problems/fu-za-lian-biao-de-fu-zhi-lcof
      */
     public static Node copyRandomList(Node head) {
-        HashMap<Node, Node> mapOrigin = new HashMap<>();
         Node cur = head;
+        while(cur != null) {
+            Node tmp = new Node(cur.val);
+            tmp.next = cur.next;
+            cur.next = tmp;
+            cur = tmp.next;
+        }
+
+
+        cur = head;
         while (cur != null) {
-            mapOrigin.put(cur, new Node(cur.val));
+            Node next = cur.next;
+            if (cur.random == null) {
+                next.random = null;
+            } else {
+                cur.next.random = cur.random.next;
+            }
+            cur = next.next;
+        }
+        // 3. 拆分两链表
+        cur = head.next;
+        Node pre = head, res = head.next;
+        while(cur.next != null) {
+            pre.next = pre.next.next;
+            cur.next = cur.next.next;
+            pre = pre.next;
             cur = cur.next;
         }
-
-        Node temp = head;
-        while (temp != null) {
-            mapOrigin.get(temp).next = mapOrigin.get(temp.next);
-            mapOrigin.get(temp).random = mapOrigin.get(temp.random);
-            temp = temp.next;
-        }
-
-        return mapOrigin.get(head);
-
+        pre.next = null; // 单独处理原链表尾节点
+        return res;      // 返回新链表头节点
     }
 
     public static class Node {
