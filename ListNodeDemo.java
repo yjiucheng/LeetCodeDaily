@@ -56,37 +56,22 @@ public class ListNodeDemo {
      * 链接：https://leetcode-cn.com/problems/fu-za-lian-biao-de-fu-zhi-lcof
      */
     public static Node copyRandomList(Node head) {
-        HashMap<Node, Integer> mapOrigin = new HashMap<>();
-        HashMap<Integer, Node> mapCopy = new HashMap<>();
-        int count = 1;
-        Node pre = new Node(-1);
-        Node temPre = pre;
+        HashMap<Node, Node> mapOrigin = new HashMap<>();
+        Node cur = head;
+        while (cur != null) {
+            mapOrigin.put(cur, new Node(cur.val));
+            cur = cur.next;
+        }
+
         Node temp = head;
         while (temp != null) {
-            Node node = new Node(temp.val);
-            temPre.next = node;
-            mapOrigin.put(temp, count);
-            mapCopy.put(count, node);
-            count++;
-            temPre = node;
+            mapOrigin.get(temp).next = mapOrigin.get(temp.next);
+            mapOrigin.get(temp).random = mapOrigin.get(temp.random);
             temp = temp.next;
         }
 
-        Node ansHead = pre.next;
-        while (ansHead != null) {
-            Node random = head.random;
-            Integer index = mapOrigin.get(random);
-            if (index == null) {
-                ansHead.random = null;
-            } else {
-                ansHead.random = mapCopy.get(index);
-            }
-            head = head.next;
-            ansHead = ansHead.next;
-        }
+        return mapOrigin.get(head);
 
-
-        return pre.next;
     }
 
     public static class Node {
