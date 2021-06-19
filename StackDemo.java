@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 栈相关
@@ -9,9 +6,24 @@ import java.util.Stack;
 public class StackDemo {
     public static void main(String[] args) {
 
-        int[] nums=new int[]{1,3,-1,-3,5,3,6,7};
-        System.err.println(maxSlidingWindow(nums,3));
+        int[] nums = new int[]{1, 3, -1, -3, 5, 3, 6, 7};
+        System.err.println(maxSlidingWindow(nums, 3));
     }
+
+
+    /**
+     * 347. 前 K 个高频元素
+     * 给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案。
+     */
+    public int[] topKFrequent(int[] nums, int k) {
+        //todo
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i : nums) {
+            map.put(i, map.getOrDefault(i, 0) + 1);
+        }
+        return null;
+    }
+
 
     /**
      * 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
@@ -38,7 +50,7 @@ public class StackDemo {
             }
             //在满足i+1-k>=0田间下，当前qunue最大的值加入数组
             if (i + 1 - k >= 0) {
-                ans[i+1-k]=nums[queue.getFirst()];
+                ans[i + 1 - k] = nums[queue.getFirst()];
             }
         }
         return ans;
