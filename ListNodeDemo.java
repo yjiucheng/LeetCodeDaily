@@ -6,27 +6,111 @@ import java.util.*;
 public class ListNodeDemo {
 
     public static void main(String[] args) {
-        ListNode listNode1 = new ListNode(1);
-        ListNode listNode2 = new ListNode(2);
-        ListNode listNode3 = new ListNode(3);
-        listNode2.next = listNode3;
-        listNode1.next = listNode2;
+//        ListNode listNode1 = new ListNode(1);
+//        ListNode listNode2 = new ListNode(2);
+//        ListNode listNode3 = new ListNode(3);
+//        listNode2.next = listNode3;
+//        listNode1.next = listNode2;
 
 //        ListNode demo = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
 //        System.err.println(reverseBetween(demo, 2, 4));
 
 
-        ListNode demo1 = new ListNode(7, new ListNode(1, new ListNode(6)));
-        ListNode demo2 = new ListNode(5, new ListNode(9, new ListNode(2)));
-        ListNode demo3 = new ListNode(9, new ListNode(9));
-        ListNode demo4 = new ListNode(1);
-        ListNode[] dat = new ListNode[]{demo1, demo2, demo3};
+//        ListNode demo1 = new ListNode(7, new ListNode(1, new ListNode(6)));
+//        ListNode demo2 = new ListNode(5, new ListNode(9, new ListNode(2)));
+//        ListNode demo3 = new ListNode(9, new ListNode(9));
+//        ListNode demo4 = new ListNode(1);
+//        ListNode[] dat = new ListNode[]{demo1, demo2, demo3};
 //        System.err.println(mergeKLists(dat));
 
-        ListNode demo = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(2, new ListNode(1))))));
-        ListNode demoN = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(2, new ListNode(1)))));
-        System.err.println(isPalindrome(demoN));
+//        ListNode demo = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(2, new ListNode(1))))));
+//        ListNode demoN = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(2, new ListNode(1)))));
+//        System.err.println(isPalindrome(demoN));
+
+
+        Node n1 = new Node(7);
+        Node n2 = new Node(13);
+        Node n3 = new Node(11);
+        Node n4 = new Node(10);
+        Node n5 = new Node(1);
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        n4.next = n5;
+
+        n1.random = null;
+        n2.random = n1;
+        n3.random = n5;
+        n4.random = n3;
+        n5.random = n1;
+
+        System.err.println(copyRandomList(n1));
     }
+
+
+    /**
+     * 剑指 Offer 35. 复杂链表的复制
+     * 请实现 copyRandomList 函数，复制一个复杂链表。
+     * 在复杂链表中，每个节点除了有一个 next 指针指向下一个节点，还有一个 random 指针指向链表中的任意节点或者 null。
+     * <p>
+     * 链接：https://leetcode-cn.com/problems/fu-za-lian-biao-de-fu-zhi-lcof
+     */
+    public static Node copyRandomList(Node head) {
+        HashMap<Node, Integer> mapOrigin = new HashMap<>();
+        HashMap<Integer, Node> mapCopy = new HashMap<>();
+        int count = 1;
+        Node pre = new Node(-1);
+        Node temPre = pre;
+        Node temp = head;
+        while (temp != null) {
+            Node node = new Node(temp.val);
+            temPre.next = node;
+            mapOrigin.put(temp, count);
+            mapCopy.put(count, node);
+            count++;
+            temPre = node;
+            temp = temp.next;
+        }
+
+        Node ansHead = pre.next;
+        while (ansHead != null) {
+            Node random = head.random;
+            Integer index = mapOrigin.get(random);
+            if (index == null) {
+                ansHead.random = null;
+            } else {
+                ansHead.random = mapCopy.get(index);
+            }
+            head = head.next;
+            ansHead = ansHead.next;
+        }
+
+
+        return pre.next;
+    }
+
+    public static class Node {
+        public int val;
+        public Node next;
+        public Node random;
+
+
+        public Node(int val) {
+            this.val = val;
+            this.next = null;
+            this.random = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "val=" + val +
+                    ", next=" + (next == null ? -1 : next.val) +
+                    ", random=" + (random == null ? -1 : random.val) +
+                    '}';
+        }
+    }
+
 
     /**
      * 234. 回文链表
