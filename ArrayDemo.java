@@ -9,10 +9,10 @@ import java.util.List;
 public class ArrayDemo {
     public static void main(String[] args) {
 //        int[] nums = new int[]{18,29,38,59,98,100,99,98,90};
-        int[] nums = new int[]{1, 1, 1};
+        int[] nums = new int[]{1, 2, 3};
 //        System.err.println(Arrays.toString(smallerNumbersThanCurrent(nums)));
         String a = "leetcode";
-        System.err.println(subarraySum(nums,2));
+        System.err.println(subarraySum(nums, 3));
     }
 
 
@@ -22,18 +22,18 @@ public class ArrayDemo {
      */
     public static int subarraySum(int[] nums, int k) {
         int ans = 0;
-        for (int i = 0; i < nums.length; i++) {
-            int sum = nums[i];
-            if (sum == k) {
-                ans++;
+        int sum = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        for (int num : nums) {
+            sum += num;
+            if (map.containsKey(sum - k)) {
+                ans += map.get(sum - k);
             }
-            for (int j = i + 1; j < nums.length; j++) {
-                sum += nums[j];
-                if (sum == k) {
-                    ans++;
-                }
-            }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+
         }
+
         return ans;
     }
 
