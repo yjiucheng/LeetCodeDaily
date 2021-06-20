@@ -9,11 +9,34 @@ import java.util.List;
 public class ArrayDemo {
     public static void main(String[] args) {
 //        int[] nums = new int[]{18,29,38,59,98,100,99,98,90};
-        int[] nums = new int[]{0, 1, 0};
+        int[] nums = new int[]{1, 1, 1};
 //        System.err.println(Arrays.toString(smallerNumbersThanCurrent(nums)));
         String a = "leetcode";
-        System.err.println(peakIndexInMountainArray(nums));
+        System.err.println(subarraySum(nums,2));
     }
+
+
+    /**
+     * 560. 和为K的子数组
+     * 给定一个整数数组和一个整数 k，你需要找到该数组中和为 k 的连续的子数组的个数。
+     */
+    public static int subarraySum(int[] nums, int k) {
+        int ans = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int sum = nums[i];
+            if (sum == k) {
+                ans++;
+            }
+            for (int j = i + 1; j < nums.length; j++) {
+                sum += nums[j];
+                if (sum == k) {
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+
 
     /**
      * 852. 山脉数组的峰顶索引
