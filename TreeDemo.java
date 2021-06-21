@@ -24,4 +24,22 @@ public class TreeDemo {
         preOrder(root.left, ans);
         preOrder(root.right, ans);
     }
+
+    /**
+     * 145. 二叉树的后序遍历
+     * 给定一个二叉树，返回它的 后序 遍历。
+     */
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        afterOrder(root, ans);
+        return ans;
+    }
+    public void afterOrder(TreeNode root, List<Integer> ans) {
+        if (root == null) {
+            return;
+        }
+        afterOrder(root.left, ans);
+        afterOrder(root.right, ans);
+        ans.add(root.val);
+    }
 }
