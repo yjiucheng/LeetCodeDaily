@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class TreeDemo {
     public static void main(String[] args) {
@@ -12,7 +13,20 @@ public class TreeDemo {
      */
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
-        preOrder(root, ans);
+//        preOrder(root, ans);
+        //递归遍历
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.empty()) {
+            TreeNode tree = stack.pop();
+            ans.add(tree.val);
+            if (tree.right != null) {
+                stack.push(tree.right);
+            }
+            if (tree.left != null) {
+                stack.push(tree.left);
+            }
+        }
         return ans;
     }
 
@@ -34,6 +48,7 @@ public class TreeDemo {
         afterOrder(root, ans);
         return ans;
     }
+
     public void afterOrder(TreeNode root, List<Integer> ans) {
         if (root == null) {
             return;
@@ -51,6 +66,7 @@ public class TreeDemo {
         inorder(root, ans);
         return ans;
     }
+
     public void inorder(TreeNode root, List<Integer> ans) {
         if (root == null) {
             return;
