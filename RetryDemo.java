@@ -8,6 +8,10 @@ public class RetryDemo {
         System.err.println(reverseList(demo));
     }
 
+
+
+
+
     public static ListNode reverseList(ListNode head) {
         ListNode pre = null;
         ListNode cur = head;

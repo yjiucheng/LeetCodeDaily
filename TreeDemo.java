@@ -13,20 +13,22 @@ public class TreeDemo {
      */
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
-//        preOrder(root, ans);
-        //递归遍历
+        if (root == null) {
+            return ans;
+        }
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
-        while (!stack.empty()) {
-            TreeNode tree = stack.pop();
-            ans.add(tree.val);
-            if (tree.right != null) {
-                stack.push(tree.right);
+        while (!stack.isEmpty()) {
+            TreeNode val = stack.pop();
+            ans.add(val.val);
+            if (val.right != null) {
+                stack.push(val.right);
             }
-            if (tree.left != null) {
-                stack.push(tree.left);
+            if (val.left != null) {
+                stack.push(val.left);
             }
         }
+
         return ans;
     }
 
@@ -45,7 +47,25 @@ public class TreeDemo {
      */
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
-        afterOrder(root, ans);
+        if (root == null) {
+            return ans;
+        }
+//        afterOrder(root, ans);
+
+        Stack<TreeNode> stack = new Stack<>();
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            TreeNode node=stack.pop();
+            ans.add(node.val);
+            while (node != null) {
+                stack.push(root);
+                root = root.right;
+            }
+        }
+
         return ans;
     }
 
