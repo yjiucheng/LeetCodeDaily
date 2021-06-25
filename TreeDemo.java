@@ -7,6 +7,20 @@ public class TreeDemo {
 
     }
 
+
+    /**
+     * 100. 相同的树
+     * 给你两棵二叉树的根节点 p 和 q ，编写一个函数来检验这两棵树是否相同。
+     * <p>
+     * 如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
+     */
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        boolean ans = true;
+
+        return ans;
+    }
+
+
     /**
      * 144. 二叉树的前序遍历
      * 给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
@@ -16,16 +30,17 @@ public class TreeDemo {
         if (root == null) {
             return ans;
         }
+
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
-        while (!stack.isEmpty()) {
-            TreeNode val = stack.pop();
-            ans.add(val.val);
-            if (val.right != null) {
-                stack.push(val.right);
+        while (stack.size() > 0) {
+            TreeNode node = stack.pop();
+            ans.add(node.val);
+            if (node.right != null) {
+                stack.push(node.right);
             }
-            if (val.left != null) {
-                stack.push(val.left);
+            if (node.left != null) {
+                stack.push(node.left);
             }
         }
 
@@ -50,21 +65,25 @@ public class TreeDemo {
         if (root == null) {
             return ans;
         }
-//        afterOrder(root, ans);
+        Stack<TreeNode> stackOri = new Stack<>();
+        Stack<TreeNode> stackRes = new Stack<>();
+        stackOri.push(root);
+        while (!stackOri.isEmpty()) {
+            TreeNode node = stackOri.pop();
+            stackRes.push(node);
 
-        Stack<TreeNode> stack = new Stack<>();
-        while (!stack.isEmpty() || root != null) {
-            while (root != null) {
-                stack.push(root);
-                root = root.left;
+            if (node.left != null) {
+                stackOri.push(node.left);
             }
-            TreeNode node=stack.pop();
-            ans.add(node.val);
-            while (node != null) {
-                stack.push(root);
-                root = root.right;
+            if (node.right != null) {
+                stackOri.push(node.right);
             }
         }
+        while (!stackRes.isEmpty()){
+            ans.add(stackRes.pop().val);
+        }
+
+
 
         return ans;
     }
@@ -83,7 +102,24 @@ public class TreeDemo {
      */
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
-        inorder(root, ans);
+        if (root == null) {
+            return ans;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        while (!stack.isEmpty() || cur != null) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            TreeNode node = stack.pop();
+            ans.add(node.val);
+            if (node.right != null) {
+                cur = node.right;
+            }
+        }
+
+
         return ans;
     }
 
