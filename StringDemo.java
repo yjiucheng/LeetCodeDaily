@@ -3,8 +3,55 @@ import java.util.*;
 public class StringDemo {
     public static void main(String[] args) {
 //        System.err.println(strStr("mississippi", "issip"));
-        System.err.println(repeatedSubstringPattern("abac"));
+        String[] nums = new String[]{"dog","racecar","car"};
+        System.err.println(longestCommonPrefix(nums));
         String s = "123";
+    }
+
+
+    /**
+     * 14. 最长公共前缀
+     * 编写一个函数来查找字符串数组中的最长公共前缀。
+     * <p>
+     * 如果不存在公共前缀，返回空字符串 ""。
+     */
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+        List<Character> list = new ArrayList<>();
+        String first = strs[0];
+        int i = 1;
+        if (first == null || first.length() == 0) {
+            return "";
+        }
+        for (int index = 0; index < first.length(); index++) {
+            char cur = first.charAt(index);
+            i = 1;
+            while (i < strs.length) {
+                String str = strs[i];
+                if (index >= str.length()) {
+                    return listToString(list);
+                }
+                if (str.charAt(index) != cur) {
+                    return listToString(list);
+                }
+                i++;
+            }
+            list.add(cur);
+        }
+        return listToString(list);
+    }
+
+    private static String listToString(List<Character> list) {
+        if (list.size()==0){
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        for (char cur : list) {
+            builder.append(cur);
+        }
+        return builder.toString();
     }
 
 
@@ -31,7 +78,7 @@ public class StringDemo {
             next[i] = j;
         }
         int repeatLength = s.length() - next[s.length() - 1];
-        if (repeatLength==s.length()){
+        if (repeatLength == s.length()) {
             return false;
         }
         return (s.length() % repeatLength) == 0;
