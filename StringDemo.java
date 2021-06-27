@@ -3,7 +3,7 @@ import java.util.*;
 public class StringDemo {
     public static void main(String[] args) {
 //        System.err.println(strStr("mississippi", "issip"));
-        String[] nums = new String[]{"dog","racecar","car"};
+        String[] nums = new String[]{"flower","flow","flight"};
         System.err.println(longestCommonPrefix(nums));
         String s = "123";
     }
@@ -19,7 +19,6 @@ public class StringDemo {
         if (strs == null || strs.length == 0) {
             return "";
         }
-        List<Character> list = new ArrayList<>();
         String first = strs[0];
         int i = 1;
         if (first == null || first.length() == 0) {
@@ -31,20 +30,19 @@ public class StringDemo {
             while (i < strs.length) {
                 String str = strs[i];
                 if (index >= str.length()) {
-                    return listToString(list);
+                    return first.substring(0, index);
                 }
                 if (str.charAt(index) != cur) {
-                    return listToString(list);
+                    return first.substring(0, index);
                 }
                 i++;
             }
-            list.add(cur);
         }
-        return listToString(list);
+        return first;
     }
 
     private static String listToString(List<Character> list) {
-        if (list.size()==0){
+        if (list.size() == 0) {
             return "";
         }
         StringBuilder builder = new StringBuilder();
