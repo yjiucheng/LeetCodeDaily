@@ -14,24 +14,40 @@ public class TreeDemo {
         if (root == null) {
             return ans;
         }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        while (queue.size() > 0) {
-            int count = queue.size();
-            for (int i = 0; i < count; i++) {
-                TreeNode node = queue.poll();
-                if (i == count - 1) {
-                    ans.add(node.val);
-                }
-                if (node.left != null) {
-                    queue.add(node.left);
-                }
-                if (node.right != null) {
-                    queue.add(node.right);
-                }
-            }
-        }
+        //DFS解法
+        getRightVal(root, 0, ans);
+//        BFS解法
+//        Queue<TreeNode> queue = new LinkedList<>();
+//        queue.add(root);
+//        while (queue.size() > 0) {
+//            int count = queue.size();
+//            for (int i = 0; i < count; i++) {
+//                TreeNode node = queue.poll();
+//                if (i == count - 1) {
+//                    ans.add(node.val);
+//                }
+//                if (node.left != null) {
+//                    queue.add(node.left);
+//                }
+//                if (node.right != null) {
+//                    queue.add(node.right);
+//                }
+//            }
+//        }
         return ans;
+    }
+
+
+    private void getRightVal(TreeNode node, int depth, List<Integer> list) {
+        if (node == null) {
+            return;
+        }
+        if (depth == list.size()) {
+            list.add(node.val);
+        }
+        depth++;
+        getRightVal(node.right, depth, list);
+        getRightVal(node.left, depth, list);
     }
 
     /**
