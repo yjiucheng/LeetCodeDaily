@@ -2,8 +2,42 @@ import java.util.*;
 
 public class TreeDemo {
     public static void main(String[] args) {
+        int sum = 5;
+        System.err.println(sum / (double) 2);
+    }
+
+    /**
+     * 637. 二叉树的层平均值
+     * 给定一个非空二叉树, 返回一个由每层节点平均值组成的数组。
+     */
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (queue.size() > 0) {
+            int count = queue.size();
+            double sum = 0;
+            for (int i = 0; i < count; i++) {
+                TreeNode node = queue.remove();
+                sum += node.val;
+
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            ans.add(sum / count);
+        }
+
+        return ans;
 
     }
+
 
     /**
      * 199. 二叉树的右视图
