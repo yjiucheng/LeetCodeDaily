@@ -6,6 +6,62 @@ public class TreeDemo {
         System.err.println(sum / (double) 2);
     }
 
+
+    /**
+     * 515. 在每个树行中找最大值
+     * 您需要在二叉树的每一行中找到最大的值。
+     */
+    public List<Integer> largestValues(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+
+        getMaxLevel(root, ans, 0);
+        //BFS
+//        Queue<TreeNode> queue = new LinkedList<>();
+//        queue.add(root);
+//        while (queue.size() > 0) {
+//            int count = queue.size();
+//            int max = Integer.MIN_VALUE;
+//            for (int i = 0; i < count; i++) {
+//                TreeNode node = queue.poll();
+//                max = Math.max(max, node.val);
+//                if (node.right != null) {
+//                    queue.add(node.right);
+//                }
+//                if (node.left != null) {
+//                    queue.add(node.left);
+//                }
+//            }
+//            ans.add(max);
+//        }
+        return ans;
+    }
+
+
+    private void getMaxLevel(TreeNode node, List<Integer> ans, int depth) {
+        if (node == null) {
+            return;
+        }
+        if (ans.size() <= depth) {
+            ans.add(node.val);
+        } else {
+            int cur = ans.get(depth);
+            ans.set(depth,Math.max(cur, node.val));
+        }
+
+        if (node.left != null) {
+            getMaxLevel(node.left, ans, depth + 1);
+        }
+
+        if (node.right != null) {
+            getMaxLevel(node.right, ans, depth + 1);
+        }
+
+    }
+
+
     /**
      * 429. N 叉树的层序遍历
      * 给定一个 N 叉树，返回其节点值的层序遍历。（即从左到右，逐层遍历）。
