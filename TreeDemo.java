@@ -19,24 +19,21 @@ public class TreeDemo {
         if (root == null) {
             return ans;
         }
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(root);
-        while (queue.size() > 0) {
-            int count = queue.size();
-            List<Integer> list = new ArrayList<>();
-            for (int i = 0; i < count; i++) {
-                Node node = queue.poll();
-                list.add(node.val);
-                List<Node> nodes = node.children;
-                if (nodes != null) {
-                    for (Node item : nodes) {
-                        queue.add(item);
-                    }
-                }
-            }
-            ans.add(list);
-        }
+        getLevelOrder(root, ans, 0);
         return ans;
+    }
+
+    private void getLevelOrder(Node node, List<List<Integer>> ans, int depth) {
+        if (node == null) {
+            return;
+        }
+        if (ans.size() <= depth) {
+            ans.add(new ArrayList<>());
+        }
+        ans.get(depth).add(node.val);
+        for (Node node1 : node.children) {
+            getLevelOrder(node1, ans, depth + 1);
+        }
     }
 
     public static class Node {
