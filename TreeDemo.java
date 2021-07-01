@@ -21,28 +21,45 @@ public class TreeDemo {
         if (root == null) {
             return null;
         }
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(root);
-        while (queue.size() > 0) {
-            int count = queue.size();
-            Node pre = null;
-            for (int i = 0; i < count; i++) {
-                Node node = queue.poll();
-                if (pre != null) {
-                    pre.next = node;
+
+
+        Node head = root;
+        while (head.left != null) {
+            Node cur = head;
+            while (cur != null) {
+                cur.left.next = cur.right;
+                if (cur.next != null) {
+                    cur.right.next = cur.next.left;
                 }
-                pre = node;
-                if (node.left != null) {
-                    queue.add(node.left);
-                }
-                if (node.right != null) {
-                    queue.add(node.right);
-                }
+                cur = cur.next;
             }
+            head = head.left;
         }
+
+        //BFS
+//        Queue<Node> queue = new LinkedList<>();
+//        queue.add(root);
+//        while (queue.size() > 0) {
+//            int count = queue.size();
+//            Node pre = null;
+//            for (int i = 0; i < count; i++) {
+//                Node node = queue.poll();
+//                if (pre != null) {
+//                    pre.next = node;
+//                }
+//                pre = node;
+//                if (node.left != null) {
+//                    queue.add(node.left);
+//                }
+//                if (node.right != null) {
+//                    queue.add(node.right);
+//                }
+//            }
+//        }
 
         return root;
     }
+
 
     static class Node {
         public int val;
