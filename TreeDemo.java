@@ -13,9 +13,27 @@ public class TreeDemo {
         if (root == null) {
             return null;
         }
-        preinvertTree(root);
-        return root;
+        //递归
+//        preinvertTree(root);
 
+        //迭代
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (stack.size() > 0) {
+            TreeNode node = stack.pop();
+            TreeNode left = node.left;
+            node.left = node.right;
+            node.right = left;
+            if (node.left != null) {
+                stack.add(node.left);
+            }
+            if (node.right != null) {
+                stack.add(node.right);
+            }
+        }
+
+
+        return root;
     }
 
     private void preinvertTree(TreeNode node) {
