@@ -17,21 +17,41 @@ public class TreeDemo {
 //        preinvertTree(root);
 
         //迭代
-        Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
-        while (stack.size() > 0) {
-            TreeNode node = stack.pop();
-            TreeNode left = node.left;
-            node.left = node.right;
-            node.right = left;
-            if (node.left != null) {
-                stack.add(node.left);
-            }
-            if (node.right != null) {
-                stack.add(node.right);
+//        Stack<TreeNode> stack = new Stack<>();
+//        stack.push(root);
+//        while (stack.size() > 0) {
+//            TreeNode node = stack.pop();
+//            TreeNode left = node.left;
+//            node.left = node.right;
+//            node.right = left;
+//            if (node.left != null) {
+//                stack.add(node.left);
+//            }
+//            if (node.right != null) {
+//                stack.add(node.right);
+//            }
+//        }
+        //BFS
+
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (queue.size() > 0) {
+            int count = queue.size();
+            for (int i = 0; i < count; i++) {
+                TreeNode node = queue.poll();
+                TreeNode lef = node.left;
+                node.left = node.right;
+                node.right = lef;
+
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
             }
         }
-
 
         return root;
     }
