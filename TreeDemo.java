@@ -6,6 +6,30 @@ public class TreeDemo {
         System.err.println(sum / (double) 2);
     }
 
+    /**
+     * 226. 翻转二叉树
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        preinvertTree(root);
+        return root;
+
+    }
+
+    private void preinvertTree(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        TreeNode leftNode = node.left;
+        node.left = node.right;
+        node.right = leftNode;
+
+        preinvertTree(node.left);
+        preinvertTree(node.right);
+    }
+
 
     /**
      * 116. 填充每个节点的下一个右侧节点指针
