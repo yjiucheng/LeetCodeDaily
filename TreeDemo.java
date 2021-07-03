@@ -18,7 +18,31 @@ public class TreeDemo {
         if (root == null) {
             return true;
         }
-        return compareTwo(root.left, root.right);
+        //递归解法
+//        return compareTwo(root.left, root.right);
+
+        //迭代
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root.left);
+        queue.add(root.right);
+        while (queue.size() > 0) {
+            TreeNode left = queue.poll();
+            TreeNode right = queue.poll();
+            if (right == null && left == null) {
+                continue;
+            }
+
+            if (right == null || left == null || left.val != right.val) {
+                return false;
+            }
+            queue.add(left.left);
+            queue.add(right.right);
+            queue.add(left.right);
+            queue.add(right.left);
+
+        }
+
+        return true;
     }
 
 
@@ -35,11 +59,11 @@ public class TreeDemo {
         if (left.val != right.val) {
             return false;
         }
-    boolean out=    compareTwo(left.left, right.right);
-      boolean in=  compareTwo(left.right, right.left);
+        boolean out = compareTwo(left.left, right.right);
+        boolean in = compareTwo(left.right, right.left);
 
 
-        return out&&in;
+        return out && in;
 
     }
 
