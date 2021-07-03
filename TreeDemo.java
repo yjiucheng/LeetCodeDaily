@@ -4,6 +4,43 @@ public class TreeDemo {
     public static void main(String[] args) {
         int sum = 5;
         System.err.println(sum / (double) 2);
+
+
+    }
+
+    /**
+     * 101. 对称二叉树
+     *
+     * @param root
+     * @return
+     */
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return compareTwo(root.left, root.right);
+    }
+
+
+    private boolean compareTwo(TreeNode left, TreeNode right) {
+        if (left == null && right == null) {
+            return true;
+        }
+        if (left == null && right != null) {
+            return false;
+        }
+        if (left != null && right == null) {
+            return false;
+        }
+        if (left.val != right.val) {
+            return false;
+        }
+    boolean out=    compareTwo(left.left, right.right);
+      boolean in=  compareTwo(left.right, right.left);
+
+
+        return out&&in;
+
     }
 
     /**
