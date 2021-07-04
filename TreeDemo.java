@@ -9,6 +9,59 @@ public class TreeDemo {
     }
 
     /**
+     * 617. 合并二叉树
+     *
+     * @param root1
+     * @param root2
+     * @return
+     */
+    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+        if (root1 == null) {
+            return root2;
+        }
+        if (root2 == null) {
+            return root1;
+        }
+        TreeNode ans = new TreeNode();
+        merge(ans,root1,root2);
+        return ans;
+    }
+
+    private void merge(TreeNode ans, TreeNode root1, TreeNode root2) {
+        if (root1 == null && root2 == null) {
+            return;
+        }
+        if (root1 == null) {
+            ans.val = root2.val;
+            ans.left=root2.left;
+            ans.right=root2.right;
+            return;
+        } else if (root2 == null) {
+            ans.val = root1.val;
+            ans.left=root1.left;
+            ans.right=root1.right;
+            return;
+        } else {
+            ans.val = root1.val + root2.val;
+        }
+        if (root1.left == null && root2.left == null) {
+            ans.left = null;
+        }else {
+            TreeNode left=new TreeNode();
+            ans.left=left;
+            merge(ans.left,root1.left,root2.left);
+        }
+
+        if (root1.right == null && root2.right == null) {
+            ans.right = null;
+        }else {
+            TreeNode right=new TreeNode();
+            ans.right=right;
+            merge(ans.right,root1.right,root2.right);
+        }
+    }
+
+    /**
      * 104. 二叉树的最大深度
      *
      * @param root
