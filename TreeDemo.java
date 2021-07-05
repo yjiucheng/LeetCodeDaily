@@ -9,6 +9,58 @@ public class TreeDemo {
     }
 
     /**
+     * 111. 二叉树的最小深度
+     * 给定一个二叉树，找出其最小深度。
+     * <p>
+     * 最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+     * <p>
+     * 说明：叶子节点是指没有子节点的节点。
+     */
+    public int minDepth(TreeNode root) {
+
+
+        if (root == null) {
+            return 0;
+        }
+        //广度优先
+        int minDepth = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (queue.size() > 0) {
+            int count = queue.size();
+            minDepth++;
+            for (int i = 0; i < count; i++) {
+                TreeNode node = queue.poll();
+                if (node.left == null && node.right == null) {
+                    return minDepth;
+                }
+                if (node.left!=null){
+                    queue.add(node.left);
+                }
+                if (node.right!=null){
+                    queue.add(node.right);
+                }
+
+            }
+        }
+        return minDepth;
+
+
+        //深度优先
+//        int leftDepth = minDepth(root.left);
+//        int rightDepth = minDepth(root.right);
+//        if (root.left == null) {
+//            return rightDepth + 1;
+//        }
+//        if (root.right == null) {
+//            return leftDepth + 1;
+//        }
+//
+//        return Math.min(leftDepth, rightDepth);
+    }
+
+
+    /**
      * 617. 合并二叉树
      *
      * @param root1
