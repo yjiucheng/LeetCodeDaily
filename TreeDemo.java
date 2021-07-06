@@ -9,6 +9,19 @@ public class TreeDemo {
     }
 
     /**
+     * 222. 完全二叉树的节点个数
+     * 给你一棵 完全二叉树 的根节点 root ，求出该树的节点个数。
+     * 进阶：遍历树来统计节点是一种时间复杂度为 O(n) 的简单解决方案。你可以设计一个更快的算法吗？
+     */
+    public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        //常规遍历
+        return countNodes(root.left) + countNodes(root.right) + 1;
+    }
+
+    /**
      * 111. 二叉树的最小深度
      * 给定一个二叉树，找出其最小深度。
      * <p>
@@ -34,10 +47,10 @@ public class TreeDemo {
                 if (node.left == null && node.right == null) {
                     return minDepth;
                 }
-                if (node.left!=null){
+                if (node.left != null) {
                     queue.add(node.left);
                 }
-                if (node.right!=null){
+                if (node.right != null) {
                     queue.add(node.right);
                 }
 
