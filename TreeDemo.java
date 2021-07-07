@@ -9,6 +9,39 @@ public class TreeDemo {
     }
 
     /**
+     * 110. 平衡二叉树
+     * 给定一个二叉树，判断它是否是高度平衡的二叉树。
+     * <p>
+     * 本题中，一棵高度平衡二叉树定义为：
+     * <p>
+     * 一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1 。
+     */
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return Math.abs(getOneDepth(root.left) - getOneDepth(root.right)) <= 1 && isBalanced(root.left) && isBalanced(root.right);
+    }
+
+    public int height(TreeNode root) {
+        if (root == null) {
+            return 0;
+        } else {
+            return Math.max(height(root.left), height(root.right)) + 1;
+        }
+    }
+
+
+    private int getOneDepth(TreeNode node) {
+        if (node == null) {
+            return 0;
+        } else {
+            return Math.max(getOneDepth(node.left), getOneDepth(node.right)) + 1;
+        }
+    }
+
+
+    /**
      * 222. 完全二叉树的节点个数
      * 给你一棵 完全二叉树 的根节点 root ，求出该树的节点个数。
      * 进阶：遍历树来统计节点是一种时间复杂度为 O(n) 的简单解决方案。你可以设计一个更快的算法吗？
