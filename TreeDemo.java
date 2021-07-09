@@ -9,6 +9,47 @@ public class TreeDemo {
     }
 
     /**
+     * 257. 二叉树的所有路径
+     * 给定一个二叉树，返回所有从根节点到叶子节点的路径。
+     * <p>
+     * 说明: 叶子节点是指没有子节点的节点。
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> ans = new ArrayList<>();
+        if (root == null) {
+            return ans;
+        }
+        getAllPath(ans, root, new ArrayList<>());
+        return ans;
+    }
+
+
+    private void getAllPath(List<String> ans, TreeNode node, List<Integer> path) {
+        path.add(node.val);
+        if (node.left == null && node.right == null) {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < path.size(); i++) {
+                builder.append(path.get(i));
+                if (i != path.size() - 1) {
+                    builder.append("->");
+                }
+
+            }
+            ans.add(builder.toString());
+            return;
+        }
+        if (node.left != null) {
+            getAllPath(ans, node.left, path);
+            path.remove(path.size() - 1);
+        }
+        if (node.right != null) {
+            getAllPath(ans, node.right, path);
+            path.remove(path.size() - 1);
+        }
+    }
+
+
+    /**
      * 110. 平衡二叉树
      * 给定一个二叉树，判断它是否是高度平衡的二叉树。
      * <p>
