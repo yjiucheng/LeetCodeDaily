@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 数组相关
@@ -19,20 +22,22 @@ public class ArrayDemo {
      * <p>
      * 你可以假设数组是非空的，并且给定的数组总是存在多数元素。
      * <p>
+     * 尝试设计时间复杂度为 O(n)、空间复杂度为 O(1) 的算法解决此问题。
      */
     public int majorityElement(int[] nums) {
-        Map<Integer, Integer> ans = new HashMap<>();
+        int candNum = nums[0], count = 1;
         for (int num : nums) {
-            ans.put(num, ans.getOrDefault(num, 0) + 1);
-        }
-        int maxNums = 0;
-        for (int num : ans.keySet()) {
-            if (ans.get(num) > (nums.length / 2)) {
-                maxNums = num;
-                return maxNums;
+            if (candNum == num) {
+                count++;
+            } else {
+                count--;
+                if (count == 0) {
+                    count = 1;
+                    candNum = num;
+                }
             }
         }
-        return maxNums;
+        return candNum;
     }
 
 
