@@ -10,7 +10,7 @@ public class ArrayDemo {
     public static void main(String[] args) {
 //        int[] nums = new int[]{18,29,38,59,98,100,99,98,90};
         int[] nums = new int[]{1, 2, 3};
-//        System.err.println(Arrays.toString(smallerNumbersThanCurrent(nums)));
+        System.err.println(Arrays.toString(smallerNumbersThanCurrent(nums)));
         String a = "leetcode";
         System.err.println(subarraySum(nums, 3));
     }
