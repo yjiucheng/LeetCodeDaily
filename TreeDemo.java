@@ -9,6 +9,49 @@ public class TreeDemo {
     }
 
     /**
+     * 559. N 叉树的最大深度
+     */
+    public int maxDepth(Node2 root) {
+        int depth = 0;
+        if (root == null) {
+            return depth;
+        }
+        Queue<Node2> queue = new LinkedList<>();
+        queue.add(root);
+        while (queue.size() > 0) {
+            int count = queue.size();
+            for (int i = 0; i < count; i++) {
+                Node2 node2 = queue.poll();
+                if (node2.children != null && node2.children.size() > 0) {
+                    queue.addAll(node2.children);
+                }
+
+            }
+            depth++;
+        }
+        return depth;
+    }
+
+    class Node2 {
+        public int val;
+        public List<Node2> children;
+
+        public Node2() {
+        }
+
+        public Node2(int _val) {
+            val = _val;
+        }
+
+        public Node2(int _val, List<Node2> _children) {
+            val = _val;
+            children = _children;
+        }
+    }
+
+    ;
+
+    /**
      * 257. 二叉树的所有路径
      * 给定一个二叉树，返回所有从根节点到叶子节点的路径。
      * <p>
