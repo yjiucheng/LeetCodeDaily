@@ -16,20 +16,31 @@ public class TreeDemo {
         if (root == null) {
             return depth;
         }
-        Queue<Node2> queue = new LinkedList<>();
-        queue.add(root);
-        while (queue.size() > 0) {
-            int count = queue.size();
-            for (int i = 0; i < count; i++) {
-                Node2 node2 = queue.poll();
-                if (node2.children != null && node2.children.size() > 0) {
-                    queue.addAll(node2.children);
-                }
 
-            }
-            depth++;
-        }
+//        Queue<Node2> queue = new LinkedList<>();
+//        queue.add(root);
+//        while (queue.size() > 0) {
+//            int count = queue.size();
+//            for (int i = 0; i < count; i++) {
+//                Node2 node2 = queue.poll();
+//                if (node2.children != null && node2.children.size() > 0) {
+//                    queue.addAll(node2.children);
+//                }
+//            }
+//            depth++;
+//        }
         return depth;
+    }
+
+    private int getDepth(Node2 node2) {
+        if (node2 == null) {
+            return 0;
+        }
+        int max = 0;
+        for (int i = 0; i < node2.children.size(); i++) {
+            max = Math.max(max, getDepth(node2.children.get(i)));
+        }
+        return max + 1;
     }
 
     class Node2 {

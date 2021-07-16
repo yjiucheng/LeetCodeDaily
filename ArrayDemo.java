@@ -15,6 +15,49 @@ public class ArrayDemo {
         System.err.println(subarraySum(nums, 3));
     }
 
+    /**
+     * 剑指 Offer 53 - I. 在排序数组中查找数字 I
+     * 统计一个数字在排序数组中出现的次数。
+     * 输入: nums = [5,7,7,8,8,10], target = 8
+     * 输出: 2
+     * 输入: nums = [5,7,7,8,8,10], target = 6
+     * 输出: 0
+     */
+    public int search(int[] nums, int target) {
+        int count = 0;
+        if (nums == null || nums.length == 0) {
+            return count;
+        }
+        int leftIndex = 0;
+        int rightIndex = nums.length - 1;
+        int mid = 0;
+        while (rightIndex > leftIndex) {
+            mid = (leftIndex + rightIndex) / 2;
+            if (nums[mid] > target) {
+                rightIndex = mid - 1;
+            } else if (nums[mid] < target) {
+                leftIndex = mid + 1;
+            } else {
+                break;
+            }
+        }
+        for (int i = mid; i < nums.length; i++) {
+            if (nums[i] == target) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        for (int i = mid - 1; i >= 0; i--) {
+            if (nums[i] == target) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        return count;
+    }
+
 
     /**
      * 169. 多数元素
