@@ -15,6 +15,27 @@ public class ArrayDemo {
         System.err.println(subarraySum(nums, 3));
     }
 
+
+    /**
+     * 136. 只出现一次的数字
+     * 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
+     */
+    public int singleNumber(int[] nums) {
+        Arrays.sort(nums);
+        if(nums.length==1){
+            return nums[0];
+        }
+        if(nums[1]!=nums[0]){
+            return nums[0];
+        }
+        for (int i = 1; i < nums.length - 1; i++) {
+            if (nums[i] != nums[i - 1] && nums[i] != nums[i + 1]) {
+                return nums[i];
+            }
+        }
+        return nums[nums.length-1];
+    }
+
     /**
      * 剑指 Offer 53 - I. 在排序数组中查找数字 I
      * 统计一个数字在排序数组中出现的次数。
