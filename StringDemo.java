@@ -3,9 +3,35 @@ import java.util.*;
 public class StringDemo {
     public static void main(String[] args) {
 //        System.err.println(strStr("mississippi", "issip"));
-        String[] nums = new String[]{"flower", "flow", "flight"};
-        System.err.println(longestCommonPrefix(nums));
+        String[] nums = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
+        System.err.println(groupAnagrams(nums));
         String s = "123";
+    }
+
+    /**
+     * 面试题 10.02. 变位词组
+     * 编写一种方法，对字符串数组进行排序，将所有变位词组合在一起。变位词是指字母相同，但排列不同的字符串。
+     */
+    public static List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> ans = new ArrayList<>();
+        if (strs == null || strs.length == 0) {
+            return ans;
+        }
+        Map<String, Integer> map = new HashMap<>();
+        for (String string : strs) {
+            char[] strChars = string.toCharArray();
+            Arrays.sort(strChars);
+            String key=new String(strChars);
+            if (map.containsKey(key)) {
+                ans.get(map.get(key)).add(string);
+            } else {
+                List<String> list = new ArrayList<>();
+                list.add(string);
+                map.put(key, ans.size());
+                ans.add(list);
+            }
+        }
+        return ans;
     }
 
     /**
