@@ -3,8 +3,8 @@ import java.util.*;
 public class StringDemo {
     public static void main(String[] args) {
 //        System.err.println(strStr("mississippi", "issip"));
-        String[] nums = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
-        System.err.println(groupAnagrams(nums));
+//        String[] nums = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
+//        System.err.println(groupAnagrams(nums));
         String s = "123";
     }
 
@@ -21,7 +21,7 @@ public class StringDemo {
         for (String string : strs) {
             char[] strChars = string.toCharArray();
             Arrays.sort(strChars);
-            String key=new String(strChars);
+            String key = new String(strChars);
             if (map.containsKey(key)) {
                 ans.get(map.get(key)).add(string);
             } else {
@@ -31,6 +31,7 @@ public class StringDemo {
                 ans.add(list);
             }
         }
+
         return ans;
     }
 
