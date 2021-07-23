@@ -9,6 +9,34 @@ public class TreeDemo {
     }
 
     /**
+     * 513. 找树左下角的值
+     * 给定一个二叉树的 根节点 root，请找出该二叉树的 最底层 最左边 节点的值。
+     * <p>
+     * 假设二叉树中至少有一个节点。
+     */
+    public int findBottomLeftValue(TreeNode root) {
+        int ans = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (queue.size() > 0) {
+            int count = queue.size();
+            for (int i = 0; i < count; i++) {
+                TreeNode node = queue.poll();
+                if (i == 0) {
+                    ans = node.val;
+                }
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+        }
+        return ans;
+    }
+
+    /**
      * 404. 左叶子之和
      *
      * @param root
