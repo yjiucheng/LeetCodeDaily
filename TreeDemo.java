@@ -9,6 +9,26 @@ public class TreeDemo {
     }
 
     /**
+     * 404. 左叶子之和
+     *
+     * @param root
+     * @return
+     */
+    public int sumOfLeftLeaves(TreeNode root) {
+        int ans = 0;
+        if (root == null) {
+            return 0;
+        }
+        if (root.left != null && root.left.left == null && root.left.right == null) {
+            ans += root.left.val;
+        }
+        ans += sumOfLeftLeaves(root.left);
+        ans += sumOfLeftLeaves(root.right);
+        return ans;
+    }
+
+
+    /**
      * 559. N 叉树的最大深度
      */
     public int maxDepth(Node2 root) {

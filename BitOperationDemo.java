@@ -1,9 +1,10 @@
-public class BitOperationDemo{
+public class BitOperationDemo {
 
-      public static void main(String[] args) {
-       
-      }
-      /**
+    public static void main(String[] args) {
+
+    }
+
+    /**
      * 461. 汉明距离
      * 两个整数之间的 汉明距离 指的是这两个数字对应二进制位不同的位置的数目。
      * <p>
