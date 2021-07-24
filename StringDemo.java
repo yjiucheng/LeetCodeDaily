@@ -9,6 +9,54 @@ public class StringDemo {
     }
 
     /**
+     * 1736. 替换隐藏数字得到的最晚时间
+     * 给你一个字符串 time ，格式为 hh:mm（小时：分钟），其中某几位数字被隐藏（用 ? 表示）。
+     * <p>
+     * 有效的时间为 00:00 到 23:59 之间的所有时间，包括 00:00 和 23:59 。
+     * <p>
+     * 替换 time 中隐藏的数字，返回你可以得到的最晚有效时间。
+     * 输入：time = "2?:?0"
+     * 输出："23:50"
+     * 解释：以数字 '2' 开头的最晚一小时是 23 ，以 '0' 结尾的最晚一分钟是 50 。
+     */
+    public String maximumTime(String time) {
+        char[] timeChar = time.toCharArray();
+        for (int i = 0; i < timeChar.length; i++) {
+            char cur = timeChar[i];
+            if (cur=='?') {
+                switch (i) {
+                    case 0:
+                        if ('?'==timeChar[1]) {
+                            timeChar[0] = '2';
+                        } else {
+                            int index1=Integer.valueOf(String.valueOf(timeChar[1]));
+                            if(index1<=3){
+                                timeChar[0] = '2';
+                            }else {
+                                timeChar[0] = '1';
+                            }
+                        }
+                        break;
+                    case 1:
+                        if (timeChar[0] == '2') {
+                            timeChar[1] = '3';
+                        } else {
+                            timeChar[1] = '9';
+                        }
+                        break;
+                    case 3:
+                        timeChar[3] = '5';
+                        break;
+                    case 4:
+                        timeChar[4] = '9';
+                        break;
+                }
+            }
+        }
+        return new String(timeChar);
+    }
+
+    /**
      * 面试题 10.02. 变位词组
      * 编写一种方法，对字符串数组进行排序，将所有变位词组合在一起。变位词是指字母相同，但排列不同的字符串。
      */
