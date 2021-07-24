@@ -17,6 +17,31 @@ public class ArrayDemo {
 
 
     /**
+     * 1893. 检查是否区域内所有整数都被覆盖
+     */
+
+    public boolean isCovered(int[][] ranges, int left, int right) {
+        if (ranges == null || ranges.length == 0) {
+            return false;
+        }
+
+        for (int i = left; i <= right; i++) {
+            boolean contain = false;
+            for (int[] nums : ranges) {
+                if (i >= nums[0] && i <= nums[1]) {
+                    contain = true;
+                    break;
+                }
+            }
+            if (!contain) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    /**
      * 78. 子集
      * 给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。
      * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
