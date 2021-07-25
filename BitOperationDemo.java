@@ -5,6 +5,22 @@ public class BitOperationDemo {
     }
 
     /**
+     * 338. 比特位计数
+     *
+     * @param n
+     * @return
+     */
+    public int[] countBits(int n) {
+        int[] ans = new int[n + 1];
+        for (int i = 0; i <= n; i++) {
+
+            ans[i] = Integer.bitCount(i);
+        }
+        return ans;
+    }
+
+
+    /**
      * 461. 汉明距离
      * 两个整数之间的 汉明距离 指的是这两个数字对应二进制位不同的位置的数目。
      * <p>
