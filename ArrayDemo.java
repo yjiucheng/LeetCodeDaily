@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * 数组相关
@@ -14,6 +11,16 @@ public class ArrayDemo {
         String a = "leetcode";
         System.err.println(subarraySum(nums, 3));
     }
+
+
+    /**
+     * 1743. 从相邻元素对还原数组
+     *
+     * @param adjacentPairs
+     * @return
+     */
+//    public int[] restoreArray(int[][] adjacentPairs) {
+//    }
 
 
     /**
