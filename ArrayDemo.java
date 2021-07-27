@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 数组相关
@@ -12,6 +15,20 @@ public class ArrayDemo {
         System.err.println(subarraySum(nums, 3));
     }
 
+
+    /**
+     * 1920. 基于排列构建数组
+     *
+     * @param nums
+     * @return
+     */
+    public int[] buildArray(int[] nums) {
+        int[] ans = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            ans[i]=nums[nums[i]];
+        }
+        return ans;
+    }
 
     /**
      * 1743. 从相邻元素对还原数组
