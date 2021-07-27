@@ -9,6 +9,38 @@ public class TreeDemo {
     }
 
     /**
+     * 671. 二叉树中第二小的节点
+     *
+     * @param root
+     * @return
+     */
+    int ans;
+    int rootvalue;
+
+    public int findSecondMinimumValue(TreeNode root) {
+        ans = -1;
+        rootvalue = root.val;
+        findLessMin(root);
+        return ans;
+    }
+
+    private void findLessMin(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        if (ans != -1 && root.val >= ans) {
+            return;
+        }
+        if (root.val > rootvalue) {
+            ans = root.val;
+        }
+
+        findLessMin(root.left);
+        findLessMin(root.right);
+    }
+
+
+    /**
      * 513. 找树左下角的值
      * 给定一个二叉树的 根节点 root，请找出该二叉树的 最底层 最左边 节点的值。
      * <p>
