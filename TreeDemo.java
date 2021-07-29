@@ -2,11 +2,78 @@ import java.util.*;
 
 public class TreeDemo {
     public static void main(String[] args) {
-        int sum = 5;
-        System.err.println(sum / (double) 2);
+//        int sum = 5;
+//        System.err.println(sum / (double) 2);
+        int[] preorder = {3, 9, 20, 15, 7}, inorder = {9, 3, 15, 20, 7};
+        System.err.println(buildTree(preorder, inorder));
+    }
 
+    /**
+     * 106. 从中序与后序遍历序列构造二叉树
+     * <p>
+     * 根据一棵树的中序遍历与后序遍历构造二叉树。
+     * <p>
+     * 注意:
+     * 你可以假设树中没有重复的元素。
+     * <p>
+     * 中序遍历 inorder = [9,3,15,20,7]
+     * 后序遍历 postorder = [9,15,7,20,3]
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     */
+    public TreeNode buildTree2(int[] inorder, int[] postorder) {
+        TreeNode ans = new TreeNode();
+
+
+        return ans;
 
     }
+
+    /**
+     * 105. 从前序与中序遍历序列构造二叉树
+     *
+     * @param preorder
+     * @param inorder
+     * @return
+     */
+    static Map<Integer, Integer> map = new HashMap<>();
+
+    public static TreeNode buildTree(int[] preorder, int[] inorder) {
+        int n = preorder.length;
+        //前序排列：[根节点,(左边节点),(右边节点)]
+        //中序排列：[(左边节点),根节点,(右边节点)]
+        //前序排列的第一个元素就是根节点，通过根节点在中序排列中的下标，可确定左边节点和右边节点的长度
+        //记录中序排列中所有(元素，下标),方便后续直接取下标
+        for (int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+        return buildChildTree(preorder, inorder, 0, n - 1, 0, n - 1);
+    }
+
+    private static TreeNode buildChildTree(int[] preorder, int[] inorder, int preorder_left, int preorder_right, int inorder_left, int inorder_right) {
+        if (preorder_left > preorder_right) {
+            return null;
+        }
+
+
+        // 前序遍历中的第一个节点就是根节点
+        int preorder_root = preorder_left;
+        // 在中序遍历中定位根节点
+        int inorder_root = map.get(preorder[preorder_root]);
+        TreeNode node = new TreeNode();
+        node.val = preorder[preorder_root];
+
+        int size = inorder_root - inorder_left;
+//        int leftTreeStartIndex = preorder_left  + 1;
+//        int leftTreeEndIndex = leftTreeStartIndex + size;
+        node.left = buildChildTree(preorder, inorder, preorder_left + 1, preorder_left + size, inorder_left, inorder_root - 1);
+        node.right = buildChildTree(preorder, inorder, preorder_left + size + 1, preorder_right, inorder_root + 1, inorder_right);
+        return node;
+    }
+
 
     /**
      * 671. 二叉树中第二小的节点
