@@ -16,32 +16,17 @@ public class TreeDemo {
      * 返回以该节点为根的子树。 如果节点不存在，则返回 NULL。
      */
     public TreeNode searchBST(TreeNode root, int val) {
-        TreeNode ans = null;
-        if (root == null) {
-            return ans;
+        if (root == null || root.val == val) {
+            return root;
         }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        while (queue.size() > 0) {
-            int count = queue.size();
-            for (int i = 0; i < count; i++) {
-                TreeNode node = queue.poll();
-                if (node.val == val) {
-                    ans = node;
-                    break;
-                } else {
-                    if (node.left != null) {
-                        queue.add(node.left);
-                    }
-                    if (node.right != null) {
-                        queue.add(node.right);
-                    }
-                }
-            }
+        if (val < root.val) {
+            return searchBST(root.left, val);
+        }else {
+            return searchBST(root.right, val);
         }
-        return ans;
-
     }
+
+    private
 
     /**
      * 106. 从中序与后序遍历序列构造二叉树
