@@ -8,6 +8,41 @@ public class TreeDemo {
         System.err.println(buildTree(preorder, inorder));
     }
 
+
+    /**
+     * 700. 二叉搜索树中的搜索
+     * 给定二叉搜索树（BST）的根节点和一个值。
+     * 你需要在BST中找到节点值等于给定值的节点。
+     * 返回以该节点为根的子树。 如果节点不存在，则返回 NULL。
+     */
+    public TreeNode searchBST(TreeNode root, int val) {
+        TreeNode ans = null;
+        if (root == null) {
+            return ans;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (queue.size() > 0) {
+            int count = queue.size();
+            for (int i = 0; i < count; i++) {
+                TreeNode node = queue.poll();
+                if (node.val == val) {
+                    ans = node;
+                    break;
+                } else {
+                    if (node.left != null) {
+                        queue.add(node.left);
+                    }
+                    if (node.right != null) {
+                        queue.add(node.right);
+                    }
+                }
+            }
+        }
+        return ans;
+
+    }
+
     /**
      * 106. 从中序与后序遍历序列构造二叉树
      * <p>
@@ -24,13 +59,21 @@ public class TreeDemo {
      * /  \
      * 15   7
      */
+
+    static Map<Integer, Integer> map = new HashMap<>();
+
+    //todo 过几天在回顾
     public TreeNode buildTree2(int[] inorder, int[] postorder) {
-        TreeNode ans = new TreeNode();
-
-
-        return ans;
-
+        //前序排列：[根节点,(左边节点),(右边节点)]
+        //中序排列：[(左边节点),根节点,(右边节点)]
+        //后序排列：[(左边节点),(右边节点),根节点]
+        int n = inorder.length;
+        for (int i = 0; i < n; i++) {
+            map.put(postorder[i], i);
+        }
+        return null;
     }
+
 
     /**
      * 105. 从前序与中序遍历序列构造二叉树
@@ -39,7 +82,6 @@ public class TreeDemo {
      * @param inorder
      * @return
      */
-    static Map<Integer, Integer> map = new HashMap<>();
 
     public static TreeNode buildTree(int[] preorder, int[] inorder) {
         int n = preorder.length;
@@ -57,8 +99,6 @@ public class TreeDemo {
         if (preorder_left > preorder_right) {
             return null;
         }
-
-
         // 前序遍历中的第一个节点就是根节点
         int preorder_root = preorder_left;
         // 在中序遍历中定位根节点
