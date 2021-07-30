@@ -8,6 +8,24 @@ public class StringDemo {
         String s = "123";
     }
 
+
+    /**
+     * 171. Excel 表列序号
+     * 给你一个字符串 columnTitle ，表示 Excel 表格中的列名称。返回该列名称对应的列序号。
+     */
+    public int titleToNumber(String columnTitle) {
+        int length = columnTitle.length();
+        int multi = 1;
+        int ans = 0;
+        for (int i = length - 1; i >= 0; i--) {
+            int num = columnTitle.charAt(i) - 'A' + 1;
+            ans += num * multi;
+            multi *= 26;
+        }
+        return ans;
+    }
+
+
     /**
      * 1736. 替换隐藏数字得到的最晚时间
      * 给你一个字符串 time ，格式为 hh:mm（小时：分钟），其中某几位数字被隐藏（用 ? 表示）。
@@ -23,16 +41,16 @@ public class StringDemo {
         char[] timeChar = time.toCharArray();
         for (int i = 0; i < timeChar.length; i++) {
             char cur = timeChar[i];
-            if (cur=='?') {
+            if (cur == '?') {
                 switch (i) {
                     case 0:
-                        if ('?'==timeChar[1]) {
+                        if ('?' == timeChar[1]) {
                             timeChar[0] = '2';
                         } else {
-                            int index1=Integer.valueOf(String.valueOf(timeChar[1]));
-                            if(index1<=3){
+                            int index1 = Integer.valueOf(String.valueOf(timeChar[1]));
+                            if (index1 <= 3) {
                                 timeChar[0] = '2';
-                            }else {
+                            } else {
                                 timeChar[0] = '1';
                             }
                         }
