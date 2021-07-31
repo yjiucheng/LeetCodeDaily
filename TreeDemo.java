@@ -10,6 +10,49 @@ public class TreeDemo {
 
 
     /**
+     * 98. 验证二叉搜索树
+     * 给定一个二叉树，判断其是否是一个有效的二叉搜索树。
+     * <p>
+     * 假设一个二叉搜索树具有如下特征：
+     * <p>
+     * 节点的左子树只包含小于当前节点的数。
+     * 节点的右子树只包含大于当前节点的数。
+     * 所有左子树和右子树自身必须也是二叉搜索树。
+     */
+    public boolean isValidBST(TreeNode root) {
+        if (root.left == null && root.right == null) {
+            return true;
+        }
+        if (root.left == null) {
+            return root.val < root.right.val && checkIsValidBST(root.right, root.val, false);
+        } else if (root.right == null) {
+            return root.val > root.left.val && checkIsValidBST(root.left, root.val, true);
+        } else {
+            return root.val > root.left.val && root.val < root.right.val
+                    && checkIsValidBST(root.left, root.val, true)
+                    && checkIsValidBST(root.right, root.val, false);
+        }
+    }
+
+    private boolean checkIsValidBST(TreeNode node, int num, boolean left) {
+        if (node.left == null && node.right == null) {
+            return true;
+        }
+        if (node.left == null) {
+            if (left) {
+                return node.val < node.right.val && node.right.val < num && checkIsValidBST(node.right, node.val, true);
+            } else {
+                return node.val < node.right.val && node.right.val > num && checkIsValidBST(node.right, node.val, false);
+            }
+        } else if (node.right == null) {
+
+        } else {
+
+        }
+    }
+
+
+    /**
      * 700. 二叉搜索树中的搜索
      * 给定二叉搜索树（BST）的根节点和一个值。
      * 你需要在BST中找到节点值等于给定值的节点。
@@ -21,7 +64,7 @@ public class TreeDemo {
         }
         if (val < root.val) {
             return searchBST(root.left, val);
-        }else {
+        } else {
             return searchBST(root.right, val);
         }
     }
