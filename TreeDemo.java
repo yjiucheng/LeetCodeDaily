@@ -19,36 +19,25 @@ public class TreeDemo {
      * 节点的右子树只包含大于当前节点的数。
      * 所有左子树和右子树自身必须也是二叉搜索树。
      */
+    TreeNode max;
     public boolean isValidBST(TreeNode root) {
-        if (root.left == null && root.right == null) {
+        if (root == null) {
             return true;
         }
-        if (root.left == null) {
-            return root.val < root.right.val && checkIsValidBST(root.right, root.val, false);
-        } else if (root.right == null) {
-            return root.val > root.left.val && checkIsValidBST(root.left, root.val, true);
-        } else {
-            return root.val > root.left.val && root.val < root.right.val
-                    && checkIsValidBST(root.left, root.val, true)
-                    && checkIsValidBST(root.right, root.val, false);
+        boolean left = isValidBST(root.left);
+        if (!left) {
+            return false;
         }
-    }
-
-    private boolean checkIsValidBST(TreeNode node, int num, boolean left) {
-        if (node.left == null && node.right == null) {
-            return true;
+        // 中
+        if (max != null && root.val <= max.val) {
+            return false;
         }
-        if (node.left == null) {
-            if (left) {
-                return node.val < node.right.val && node.right.val < num && checkIsValidBST(node.right, node.val, true);
-            } else {
-                return node.val < node.right.val && node.right.val > num && checkIsValidBST(node.right, node.val, false);
-            }
-        } else if (node.right == null) {
+        max = root;
+        // 右
+        boolean right = isValidBST(root.right);
+        return right;
 
-        } else {
 
-        }
     }
 
 
