@@ -17,6 +17,17 @@ public class ArrayDemo {
 
 
     /**
+     * 1337. 矩阵中战斗力最弱的 K 行
+     * @param mat
+     * @param k
+     * @return
+     */
+    public int[] kWeakestRows(int[][] mat, int k) {
+
+    }
+
+
+    /**
      * 1929. 数组串联
      *
      * @param nums

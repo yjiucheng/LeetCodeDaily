@@ -36,8 +36,6 @@ public class TreeDemo {
         // 右
         boolean right = isValidBST(root.right);
         return right;
-
-
     }
 
 
