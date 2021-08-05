@@ -12,26 +12,26 @@ public class TreeDemo {
      * 530. 二叉搜索树的最小绝对差
      * 给你一棵所有节点为非负值的二叉搜索树，请你计算树中任意两节点的差的绝对值的最小值。
      */
+    int ans = Integer.MAX_VALUE;
+    int pre = -1;
+
     public int getMinimumDifference(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        dfsMid(root, list);
-        int ans = Integer.MAX_VALUE;
-        for (int i = 1; i < list.size(); i++) {
-            ans = Math.min(ans, list.get(i) - list.get(i - 1));
-            if (ans == 1) {
-                break;
-            }
-        }
+        dfsMid(root);
         return ans;
     }
 
-    private void dfsMid(TreeNode node, List<Integer> list) {
+    private void dfsMid(TreeNode node) {
         if (node == null) {
             return;
         }
-        dfsMid(node.left, list);
-        list.add(node.val);
-        dfsMid(node.right, list);
+        dfsMid(node.left);
+        if (pre == -1) {
+            pre = node.val;
+        } else {
+            ans = Math.min(ans, node.val - pre);
+            pre = node.val;
+        }
+        dfsMid(node.right);
     }
 
     /**
