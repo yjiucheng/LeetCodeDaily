@@ -24,7 +24,7 @@ public class ArrayDemo {
      * @return
      */
     public int[] kWeakestRows(int[][] mat, int k) {
-
+        return null;
     }
 
 
