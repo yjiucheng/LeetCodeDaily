@@ -9,15 +9,58 @@ public class TreeDemo {
     }
 
     /**
+     * 501. 二叉搜索树中的众数
+     *
+     * @param root
+     * @return
+     */
+    TreeNode preNode = null;
+    int maxCount = 0;
+    int count = 0;
+    List<Integer> list = new ArrayList<>();
+
+    public int[] findMode(TreeNode root) {
+        dfsfindMode(root);
+        int[] res = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+        return res;
+    }
+
+    private void dfsfindMode(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        dfsfindMode(root.left);
+        if (preNode == null || preNode.val != root.val) {
+            count = 1;
+        } else {
+            count++;
+        }
+
+        if (count > maxCount) {
+            list.clear();
+            list.add(root.val);
+            maxCount = count;
+        } else if (count == maxCount) {
+            list.add(root.val);
+        }
+        preNode = root;
+        dfsfindMode(root.right);
+    }
+
+
+    /**
      * 530. 二叉搜索树的最小绝对差
      * 给你一棵所有节点为非负值的二叉搜索树，请你计算树中任意两节点的差的绝对值的最小值。
      */
-    int ans = Integer.MAX_VALUE;
+    int ans2 = Integer.MAX_VALUE;
     int pre = -1;
 
     public int getMinimumDifference(TreeNode root) {
         dfsMid(root);
-        return ans;
+        return ans2;
     }
 
     private void dfsMid(TreeNode node) {
@@ -28,7 +71,7 @@ public class TreeDemo {
         if (pre == -1) {
             pre = node.val;
         } else {
-            ans = Math.min(ans, node.val - pre);
+            ans2 = Math.min(ans2, node.val - pre);
             pre = node.val;
         }
         dfsMid(node.right);
