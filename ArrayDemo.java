@@ -15,6 +15,14 @@ public class ArrayDemo {
         System.err.println(subarraySum(nums, 3));
     }
 
+    public int tribonacci(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        if(n===1){
+
+
+        }    }
 
     /**
      * 1337. 矩阵中战斗力最弱的 K 行
