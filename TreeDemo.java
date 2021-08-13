@@ -5,7 +5,70 @@ public class TreeDemo {
 //        int sum = 5;
 //        System.err.println(sum / (double) 2);
         int[] preorder = {3, 9, 20, 15, 7}, inorder = {9, 3, 15, 20, 7};
-        System.err.println(buildTree(preorder, inorder));
+//        System.err.println(buildTree(preorder, inorder));
+        TreeNode treeNode = new TreeNode(4, new TreeNode(9, new TreeNode(5), new TreeNode(1)), new TreeNode(0));
+        sumNumbers(treeNode);
+        System.err.println(sum);
+    }
+
+
+    /**
+     * 129. 求根节点到叶节点数字之和
+     * 给你一个二叉树的根节点 root ，树中每个节点都存放有一个 0 到 9 之间的数字。
+     * 每条从根节点到叶节点的路径都代表一个数字：
+     * <p>
+     * 例如，从根节点到叶节点的路径 1 -> 2 -> 3 表示数字 123 。
+     * 计算从根节点到叶节点生成的 所有数字之和 。
+     * <p>
+     * 叶节点 是指没有子节点的节点。
+     */
+    static int sum = 0;
+
+    public static int sumNumbers(TreeNode root) {
+        if (root.left == null && root.right == null) {
+            return root.val;
+        } else {
+            getVal(root, new StringBuilder());
+        }
+        return sum;
+    }
+
+    private int getVal(TreeNode root, int pre) {
+        if (root == null) {
+            return 0;
+        }
+        int sum = pre * 10 + root.val;
+        if(root.left==null&&root.right==null){
+            return sum;
+        }else {
+            return getVal(root.left,sum)+ getVal(root.right,sum);
+        }
+    }
+
+
+    private static String getVal(TreeNode root, StringBuilder sb) {
+        if (root.left == null && root.right == null) {
+            return root.val + "";
+        }
+        sb.append(root.val + "");
+        if (root.left != null) {
+            String left = getVal(root.left, sb);
+            if (left != null) {
+                sb.append(left);
+                sum += Integer.valueOf(sb.toString());
+                sb.deleteCharAt(sb.length() - 1);
+            }
+        }
+        if (root.right != null) {
+            String right = getVal(root.right, sb);
+            if (right != null) {
+                sb.append(right);
+                sum += Integer.valueOf(sb.toString());
+                sb.deleteCharAt(sb.length() - 1);
+            }
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return null;
     }
 
 
