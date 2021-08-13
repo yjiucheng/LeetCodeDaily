@@ -25,10 +25,10 @@ public class TreeDemo {
         if (root == null || root == p || root == q) {
             return root;
         }
-        TreeNode left = lowestCommonAncestor(root.left, p, q);
-        TreeNode right = lowestCommonAncestor(root.right, p, q);
-        if (left != null && right != null) {
-            return right;
+        TreeNode left = lowestCommonAncestor1(root.left, p, q);
+        TreeNode right = lowestCommonAncestor1(root.right, p, q);
+        if (left != null && right != null) {// 左右子树分别找到了，说明此时的root就是要求的结果
+            return root;
         }
         if (left == null) {
             return right;
