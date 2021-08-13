@@ -17,25 +17,23 @@ public class TreeDemo {
      * @param q
      * @return
      */
-    List<TreeNode> first = new ArrayList<>();
-    List<TreeNode> second = new ArrayList<>();
-    boolean fisrtComplete = false;
-    boolean secondComplete = false;
-
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-
-        return null;
+        return lowestCommonAncestor1(root, p, q);
     }
 
-    private boolean dfs(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) {
-            return false;
+    private TreeNode lowestCommonAncestor1(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) {
+            return root;
         }
-        if (fisrtComplete && secondComplete) {
-            return true;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null) {
+            return right;
         }
-
-
+        if (left == null) {
+            return right;
+        }
+        return left;
     }
 
     /**
