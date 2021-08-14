@@ -13,6 +13,28 @@ public class TreeDemo {
 
 
     /**
+     * 100. 相同的树
+     * 给你两棵二叉树的根节点 p 和 q ，编写一个函数来检验这两棵树是否相同。
+     * <p>
+     * 如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
+     */
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            return true;
+        }
+        if (p == null || q == null) {
+            return false;
+        }
+        if (p.val != q.val) {
+            return false;
+        }
+        boolean left = isSameTree(p.left, q.left);
+        boolean right = isSameTree(p.right, q.right);
+        return left && right;
+    }
+
+
+    /**
      * 129. 求根节点到叶节点数字之和
      * 给你一个二叉树的根节点 root ，树中每个节点都存放有一个 0 到 9 之间的数字。
      * 每条从根节点到叶节点的路径都代表一个数字：
@@ -38,10 +60,10 @@ public class TreeDemo {
             return 0;
         }
         int sum = pre * 10 + root.val;
-        if(root.left==null&&root.right==null){
+        if (root.left == null && root.right == null) {
             return sum;
-        }else {
-            return getVal(root.left,sum)+ getVal(root.right,sum);
+        } else {
+            return getVal(root.left, sum) + getVal(root.right, sum);
         }
     }
 
@@ -1118,18 +1140,6 @@ public class TreeDemo {
 
     private void getLevelQueue(TreeNode treeNode, Queue<TreeNode> queue) {
 
-    }
-
-    /**
-     * 100. 相同的树
-     * 给你两棵二叉树的根节点 p 和 q ，编写一个函数来检验这两棵树是否相同。
-     * <p>
-     * 如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
-     */
-    public boolean isSameTree(TreeNode p, TreeNode q) {
-        boolean ans = true;
-
-        return ans;
     }
 
 
