@@ -13,6 +13,33 @@ public class TreeDemo {
 
 
     /**
+     * 112. 路径总和
+     * 给你二叉树的根节点 root 和一个表示目标和的整数 targetSum ，
+     * 判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和 targetSum 。
+     * <p>
+     * 叶子节点 是指没有子节点的节点。
+     */
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return false;
+        }
+        if (root.left == null && root.right == null && root.val == targetSum) {
+            return true;
+        }
+        return hasPath(root.left, targetSum, root.val) || hasPath(root.right, targetSum, root.val);
+    }
+
+    private boolean hasPath(TreeNode root, int target, int sum) {
+        if (root == null) {
+            return false;
+        }
+        if (sum + root.val == target && (root.left == null && root.right == null)) {
+            return true;
+        }
+        return hasPath(root.left, target, root.val+sum) || hasPath(root.right, target, root.val+sum);
+    }
+
+    /**
      * 100. 相同的树
      * 给你两棵二叉树的根节点 p 和 q ，编写一个函数来检验这两棵树是否相同。
      * <p>
