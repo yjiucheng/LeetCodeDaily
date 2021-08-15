@@ -4,13 +4,37 @@ public class TreeDemo {
     public static void main(String[] args) {
 //        int sum = 5;
 //        System.err.println(sum / (double) 2);
+        System.err.println(4 / 2);
+        System.err.println(4 % 2);
+        System.err.println(5 / 2);
+        System.err.println(5 % 2);
         int[] preorder = {3, 9, 20, 15, 7}, inorder = {9, 3, 15, 20, 7};
 //        System.err.println(buildTree(preorder, inorder));
-        TreeNode treeNode = new TreeNode(4, new TreeNode(9, new TreeNode(5), new TreeNode(1)), new TreeNode(0));
-        sumNumbers(treeNode);
-        System.err.println(sum);
+//        TreeNode treeNode = new TreeNode(4, new TreeNode(9, new TreeNode(5), new TreeNode(1)), new TreeNode(0));
+//        sumNumbers(treeNode);
+//        System.err.println(sum);
     }
 
+    /**
+     * 面试题 04.02. 最小高度树
+     * 给定一个有序整数数组，元素各不相同且按升序排列，编写一个算法，创建一棵高度最小的二叉搜索树。
+     */
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if (nums.length==0) {
+            return null;
+        }
+        return sortedArrayToBST(nums, 0, nums.length - 1);
+    }
+
+    private TreeNode sortedArrayToBST(int[] num, int start, int end) {
+        if (start > end)
+            return null;
+        int mid = (start + end) >> 1;
+        TreeNode root = new TreeNode(num[mid]);
+        root.left = sortedArrayToBST(num, start, mid - 1);
+        root.right = sortedArrayToBST(num, mid + 1, end);
+        return root;
+    }
 
     /**
      * 112. 路径总和
@@ -36,7 +60,7 @@ public class TreeDemo {
         if (sum + root.val == target && (root.left == null && root.right == null)) {
             return true;
         }
-        return hasPath(root.left, target, root.val+sum) || hasPath(root.right, target, root.val+sum);
+        return hasPath(root.left, target, root.val + sum) || hasPath(root.right, target, root.val + sum);
     }
 
     /**
