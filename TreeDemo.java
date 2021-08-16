@@ -2,8 +2,6 @@ import java.util.*;
 
 public class TreeDemo {
     public static void main(String[] args) {
-//        int sum = 5;
-//        System.err.println(sum / (double) 2);
         System.err.println(4 / 2);
         System.err.println(4 % 2);
         System.err.println(5 / 2);
@@ -15,12 +13,35 @@ public class TreeDemo {
 //        System.err.println(sum);
     }
 
+
+    /**
+     * 235. 二叉搜索树的最近公共祖先
+     *
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode p, TreeNode q, char) {
+        if (root == null) {
+            return root;
+        }
+        if (p.val > root.val && q.val > root.val) {
+            return lowestCommonAncestor3(root.right, p, q);
+        } else if (p.val < root.val && q.val < root.val) {
+            return lowestCommonAncestor3(root.left, p, q);
+        }else {
+            return root;
+        }
+    }
+
+
     /**
      * 面试题 04.02. 最小高度树
      * 给定一个有序整数数组，元素各不相同且按升序排列，编写一个算法，创建一棵高度最小的二叉搜索树。
      */
     public TreeNode sortedArrayToBST(int[] nums) {
-        if (nums.length==0) {
+        if (nums.length == 0) {
             return null;
         }
         return sortedArrayToBST(nums, 0, nums.length - 1);
