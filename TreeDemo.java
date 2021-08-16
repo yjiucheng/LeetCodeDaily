@@ -22,7 +22,7 @@ public class TreeDemo {
      * @param q
      * @return
      */
-    public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode p, TreeNode q, char) {
+    public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) {
             return root;
         }
