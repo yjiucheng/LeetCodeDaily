@@ -20,24 +20,22 @@ public class StringDemo {
             char cur = sChars[i];
             if (cur == 'A') {
                 countA++;
+                if (countA >= 2) {
+                    return false;
+                }
             }
             if (countL < 3) {
                 if (cur == 'L') {
-                    if (countL == 0) {
-                        countL++;
-                    } else {
-                        if (sChars[i - 1] == 'L') {
-                            countL++;
-                        } else {
-                            countL = 0;
-                        }
+                    countL++;
+                    if (countL >= 3) {
+                        return false;
                     }
                 } else {
                     countL = 0;
                 }
             }
         }
-        return countA < 2 && countL < 3;
+        return true;
     }
 
     /**
