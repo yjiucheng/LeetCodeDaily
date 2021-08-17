@@ -5,9 +5,40 @@ public class StringDemo {
 //        System.err.println(strStr("mississippi", "issip"));
 //        String[] nums = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
 //        System.err.println(groupAnagrams(nums));
-        String s = "123";
+        String s = "PLPPPLLLPLPPPPLPPPPPLPLPLLLPLP";
+        System.err.println(checkRecord(s));
     }
 
+    /**
+     * 551. 学生出勤记录 I
+     */
+    public static boolean checkRecord(String s) {
+        char[] sChars = s.toCharArray();
+        int countA = 0;
+        int countL = 0;
+        for (int i = 0; i < sChars.length; i++) {
+            char cur = sChars[i];
+            if (cur == 'A') {
+                countA++;
+            }
+            if (countL < 3) {
+                if (cur == 'L') {
+                    if (countL == 0) {
+                        countL++;
+                    } else {
+                        if (sChars[i - 1] == 'L') {
+                            countL++;
+                        } else {
+                            countL = 0;
+                        }
+                    }
+                } else {
+                    countL = 0;
+                }
+            }
+        }
+        return countA < 2 && countL < 3;
+    }
 
     /**
      * 171. Excel 表列序号
