@@ -8,11 +8,54 @@ public class TreeDemo {
         System.err.println(5 % 2);
         int[] preorder = {3, 9, 20, 15, 7}, inorder = {9, 3, 15, 20, 7};
 //        System.err.println(buildTree(preorder, inorder));
-//        TreeNode treeNode = new TreeNode(4, new TreeNode(9, new TreeNode(5), new TreeNode(1)), new TreeNode(0));
-//        sumNumbers(treeNode);
-//        System.err.println(sum);
+        TreeNode treeNode1 = new TreeNode(5);
+        TreeNode treeNode2 = new TreeNode(3);
+        TreeNode treeNode3 = new TreeNode(6);
+        TreeNode treeNode4 = new TreeNode(2);
+        TreeNode treeNode5 = new TreeNode(4);
+        TreeNode treeNode6 = new TreeNode(7);
+        treeNode1.left = treeNode2;
+        treeNode1.right = treeNode3;
+        treeNode2.left = treeNode4;
+        treeNode2.right = treeNode5;
+        treeNode3.right = treeNode6;
+        System.err.println(deleteNode(treeNode1, 3));
     }
 
+
+    /**
+     * 450. 删除二叉搜索树中的节点
+     */
+    public static TreeNode deleteNode(TreeNode root, int key) {
+        root = deleteNode2(root, key);
+        return root;
+    }
+
+    public static TreeNode deleteNode2(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val == key) {
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            } else {
+                //找到左子树的值最大节点
+                TreeNode cur = root.left;
+                while (cur.right != null) {
+                    cur = cur.right;
+                }
+                root.val = cur.val;
+                root.left = deleteNode2(root.left, cur.val);
+            }
+        } else if (root.val < key) {
+            root.right = deleteNode2(root.right, key);
+        } else {
+            root.left = deleteNode2(root.left, key );
+        }
+        return root;
+    }
 
     /**
      * 701. 二叉搜索树中的插入操作
