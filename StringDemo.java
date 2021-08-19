@@ -5,9 +5,52 @@ public class StringDemo {
 //        System.err.println(strStr("mississippi", "issip"));
 //        String[] nums = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
 //        System.err.println(groupAnagrams(nums));
-        String s = "PLPPPLLLPLPPPPLPPPPPLPLPLLLPLP";
-        System.err.println(checkRecord(s));
+        String s = "leetcode";
+        System.err.println(reverseVowels(s));
     }
+
+
+    /**
+     * 345. 反转字符串中的元音字母
+     * 编写一个函数，以字符串作为输入，反转该字符串中的元音字母。
+     * 输入："hello"
+     * 输出："holle"
+     * 输入："leetcode"
+     * 输出："leotcede"
+     */
+    public static String reverseVowels(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        Set<Character> set = new HashSet<>();
+        set.add('a');
+        set.add('A');
+        set.add('e');
+        set.add('E');
+        set.add('i');
+        set.add('I');
+        set.add('o');
+        set.add('O');
+        set.add('u');
+        set.add('U');
+        char[] sChars = s.toCharArray();
+        List<Integer> indexList = new ArrayList<>();
+        List<Character> cahrList = new ArrayList<>();
+        for (int i = 0; i < sChars.length; i++) {
+            char cur = sChars[i];
+            if (set.contains(cur)) {
+                indexList.add(i);
+                cahrList.add(cur);
+            }
+        }
+        for (int i = 0; i < cahrList.size(); i++) {
+            char curChar = cahrList.get(i);
+            int newIndex = indexList.get(cahrList.size() - 1 - i);
+            sChars[newIndex] = curChar;
+        }
+        return new String(sChars);
+    }
+
 
     /**
      * 551. 学生出勤记录 I
