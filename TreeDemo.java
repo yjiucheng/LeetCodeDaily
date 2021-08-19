@@ -24,6 +24,26 @@ public class TreeDemo {
 
 
     /**
+     * 108. 将有序数组转换为二叉搜索树
+     */
+    public TreeNode sortedArrayToBST2(int[] nums) {
+        return sortedArrayToBST2(nums, 0, nums.length - 1);
+    }
+
+    public TreeNode sortedArrayToBST2(int[] nums, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+        int mid = (end - start) / 2 + start;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = sortedArrayToBST2(nums, start, mid - 1);
+        root.right = sortedArrayToBST2(nums, mid + 1, end);
+
+        return root;
+    }
+
+
+    /**
      * 669. 修剪二叉搜索树
      */
     public TreeNode trimBST(TreeNode root, int low, int high) {
