@@ -22,6 +22,28 @@ public class TreeDemo {
         System.err.println(deleteNode(treeNode1, 3));
     }
 
+    /**
+     * 538. 把二叉搜索树转换为累加树
+     *
+     */
+//    int sum;
+    public TreeNode convertBST(TreeNode root) {
+        sum = 0;
+        convertBST1(root);
+        return root;
+    }
+
+    // 按右中左顺序遍历，累加即可
+    public void convertBST1(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        convertBST1(root.right);
+        sum += root.val;
+        root.val = sum;
+        convertBST1(root.left);
+    }
+
 
     /**
      * 108. 将有序数组转换为二叉搜索树
