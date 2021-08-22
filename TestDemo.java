@@ -53,6 +53,17 @@ public class TestDemo {
 
 
     /**
+     * 278. 第一个错误的版本
+     * @param n
+     * @return
+     */
+//    public int firstBadVersion(int n) {
+//
+//    }
+
+
+
+    /**
      * 猜数字游戏的规则如下：
      * <p>
      * 每轮游戏，我都会从 1 到 n 随机选择一个数字。 请你猜选出的是哪个数字。
