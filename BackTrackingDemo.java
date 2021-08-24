@@ -1,7 +1,9 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 回溯算法
+ */
 public class BackTrackingDemo {
 
     public static void main(String[] args) {
@@ -15,20 +17,9 @@ public class BackTrackingDemo {
      * <p>
      * 你可以按 任何顺序 返回答案。
      */
-    public static List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> ans = new ArrayList<>();
-//        if (k > n) {
-//            return ans;
-//        }
-//        int startIndex = 1;
-//        while (startIndex + k <= n) {
-//            List<Integer> list = new ArrayList<>();
-//            for (int i = 0; i < k; i++) {
-//                list.add(startIndex + i);
-//            }
-//            ans.add(list);
-//            startIndex++;
-//        }
+    List<List<Integer>> ans = new ArrayList<>();
+    public  List<List<Integer>> combine(int n, int k) {
+
         return ans;
     }
 }
