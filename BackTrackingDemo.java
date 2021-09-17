@@ -15,8 +15,8 @@ public class BackTrackingDemo {
      * <p>
      * 你可以按 任何顺序 返回答案。
      */
-    List<List<Integer>> ans = new ArrayList<>();
-    public  List<List<Integer>> combine(int n, int k) {
+    static List<List<Integer>> ans = new ArrayList<>();
+    public static   List<List<Integer>> combine(int n, int k) {
 
         return ans;
     }
