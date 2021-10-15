@@ -7,6 +7,7 @@ import java.util.List;
 
 public class TestDemo {
     public static void main(String[] args) {
+        System.err.println(5*5-7/5);
 //        //l1 = [2,4,3], l2 = [5,6,4]
 //        //[9]
 //        //[1,9,9,9,9,9,9,9,9,9]
@@ -28,7 +29,7 @@ public class TestDemo {
 //        System.err.println(mergeTwoLists(null, listNode2));
 //        int[] num3 = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
         int[] num3 = new int[]{23, 2, 6, 4, 7};
-        System.err.println(checkSubarraySum(num3, 13));
+//        System.err.println(checkSubarraySum(num3, 13));
 //        moveZeroes(num3);
 //        System.err.println(minSubArrayLen(4, num3));
 
