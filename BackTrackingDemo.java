@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -8,7 +9,91 @@ public class BackTrackingDemo {
 
     public static void main(String[] args) {
 //        System.err.println(combine(1, 1));
-        System.err.println(combinationSum3(3, 9));
+//        System.err.println(combinationSum3(3, 9));
+        System.err.println(letterCombinations(""));
+    }
+
+
+    /**
+     * 17. 电话号码的字母组合
+     * 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
+     * <p>
+     * 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number
+     *
+     * 输入：digits = "23"
+     输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
+     */
+  static   HashMap<Character, List<String>> map17 = new HashMap<>();
+    static   List<String> resultList17 = new ArrayList<>();
+    static  StringBuilder stringBuilder = new StringBuilder();
+
+    public static List<String> letterCombinations(String digits) {
+        if (digits == null || digits.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<String> list2 = new ArrayList<>();
+        list2.add("a");
+        list2.add("b");
+        list2.add("c");
+        map17.put('2', list2);
+        List<String> list3 = new ArrayList<>();
+        list3.add("d");
+        list3.add("e");
+        list3.add("f");
+        map17.put('3', list3);
+        List<String> list4 = new ArrayList<>();
+        list4.add("g");
+        list4.add("h");
+        list4.add("i");
+        map17.put('4', list4);
+        List<String> list5 = new ArrayList<>();
+        list5.add("j");
+        list5.add("k");
+        list5.add("l");
+        map17.put('5', list5);
+        List<String> list6 = new ArrayList<>();
+        list6.add("m");
+        list6.add("n");
+        list6.add("o");
+        map17.put('6', list6);
+        List<String> list7 = new ArrayList<>();
+        list7.add("p");
+        list7.add("q");
+        list7.add("r");
+        list7.add("s");
+        map17.put('7', list7);
+        List<String> list8 = new ArrayList<>();
+        list8.add("t");
+        list8.add("u");
+        list8.add("v");
+        map17.put('8', list8);
+        List<String> list9 = new ArrayList<>();
+        list9.add("w");
+        list9.add("x");
+        list9.add("y");
+        list9.add("z");
+        map17.put('9', list9);
+
+        getWords(digits, 0);
+        return resultList17;
+    }
+
+
+    private static void getWords(String digits, int curIndex) {
+        if (curIndex == digits.length()) {
+            resultList17.add(stringBuilder.toString());
+            return;
+        }
+        List<String> list = map17.get(digits.charAt(curIndex));
+        for (int i = 0; i < list.size(); i++) {
+            String curStr = list.get(i);
+            stringBuilder.append(curStr);
+            getWords(digits, curIndex + 1);
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        }
     }
 
 
