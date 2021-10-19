@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -9,6 +11,35 @@ public class RetryDemo {
         ListNode demo = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
 //        System.err.println(reverseKGroup(demo, 2));
         System.err.println(reverseList(demo));
+    }
+
+
+    /**
+     * 454. 四数相加 II
+     * 给你四个整数数组 nums1、nums2、nums3 和 nums4 ，数组长度都是 n ，请你计算有多少个元组 (i, j, k, l) 能满足：
+     * <p>
+     * 0 <= i, j, k, l < n
+     * nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
+     * <p>
+     */
+    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+        int ansCount = 0;
+        Map<Integer, Integer> numsMap = new HashMap<>();
+        for (int curNums1 : nums1) {
+            for (int curNums2 : nums2) {
+                int sum = curNums1 + curNums2;
+                numsMap.put(sum, numsMap.getOrDefault(sum, 0) + 1);
+            }
+        }
+        for (int curNums3 : nums3) {
+            for (int curNums4 : nums4) {
+                int sum = curNums3 + curNums4;
+                if (numsMap.containsKey(-sum)) {
+                    ansCount += numsMap.get(-sum);
+                }
+            }
+        }
+        return ansCount;
     }
 
 
