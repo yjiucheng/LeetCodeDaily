@@ -26,7 +26,7 @@ public class BackTrackingDemo {
      * 输入：digits = "23"
      输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
      */
-  static   HashMap<Character, List<String>> map17 = new HashMap<>();
+  static   String[] map17 = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
     static   List<String> resultList17 = new ArrayList<>();
     static  StringBuilder stringBuilder = new StringBuilder();
 
@@ -34,48 +34,6 @@ public class BackTrackingDemo {
         if (digits == null || digits.isEmpty()) {
             return new ArrayList<>();
         }
-        List<String> list2 = new ArrayList<>();
-        list2.add("a");
-        list2.add("b");
-        list2.add("c");
-        map17.put('2', list2);
-        List<String> list3 = new ArrayList<>();
-        list3.add("d");
-        list3.add("e");
-        list3.add("f");
-        map17.put('3', list3);
-        List<String> list4 = new ArrayList<>();
-        list4.add("g");
-        list4.add("h");
-        list4.add("i");
-        map17.put('4', list4);
-        List<String> list5 = new ArrayList<>();
-        list5.add("j");
-        list5.add("k");
-        list5.add("l");
-        map17.put('5', list5);
-        List<String> list6 = new ArrayList<>();
-        list6.add("m");
-        list6.add("n");
-        list6.add("o");
-        map17.put('6', list6);
-        List<String> list7 = new ArrayList<>();
-        list7.add("p");
-        list7.add("q");
-        list7.add("r");
-        list7.add("s");
-        map17.put('7', list7);
-        List<String> list8 = new ArrayList<>();
-        list8.add("t");
-        list8.add("u");
-        list8.add("v");
-        map17.put('8', list8);
-        List<String> list9 = new ArrayList<>();
-        list9.add("w");
-        list9.add("x");
-        list9.add("y");
-        list9.add("z");
-        map17.put('9', list9);
 
         getWords(digits, 0);
         return resultList17;
@@ -87,10 +45,9 @@ public class BackTrackingDemo {
             resultList17.add(stringBuilder.toString());
             return;
         }
-        List<String> list = map17.get(digits.charAt(curIndex));
-        for (int i = 0; i < list.size(); i++) {
-            String curStr = list.get(i);
-            stringBuilder.append(curStr);
+        String str = map17[digits.charAt(curIndex) - '2'];
+        for (int i = 0; i < str.length(); i++) {
+            stringBuilder.append( str.charAt(i));
             getWords(digits, curIndex + 1);
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
