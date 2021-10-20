@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,7 +10,47 @@ public class BackTrackingDemo {
     public static void main(String[] args) {
 //        System.err.println(combine(1, 1));
 //        System.err.println(combinationSum3(3, 9));
-        System.err.println(letterCombinations(""));
+//        System.err.println(letterCombinations(""));
+        int[] nums = new int[]{2, 3, 6, 7};
+        System.err.println(combinationSum(nums, 7));
+    }
+
+
+    /**
+     * 39. 组合总和
+     * 给定一个无重复元素的正整数数组 candidates 和一个正整数 target ，找出 candidates 中所有可以使数字和为目标数 target 的唯一组合。
+     * <p>
+     * candidates 中的数字可以无限制重复被选取。如果至少一个所选数字数量不同，则两种组合是唯一的。 
+     * <p>
+     * 对于给定的输入，保证和为 target 的唯一组合数少于 150 个。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/combination-sum
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     */
+    static List<List<Integer>> ans39 = new ArrayList<>();
+
+    public static List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        combinationSum39(candidates, target, new ArrayList<>(), 0, 0);
+        return ans39;
+    }
+
+    public static void combinationSum39(int[] candidates, int target, List<Integer> temp, int startIndex, int sum) {
+        if (sum == target) {
+            ans39.add(new ArrayList<>(temp));
+            return;
+        }
+
+        for (int i = startIndex; i < candidates.length; i++) {
+            int curNum = candidates[i];
+            if (sum + curNum > target) {
+                break;
+            }
+            temp.add(curNum);
+            combinationSum39(candidates, target, temp, i, sum + curNum);
+            temp.remove(temp.size() - 1);
+        }
     }
 
 
@@ -22,13 +62,13 @@ public class BackTrackingDemo {
      * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number
-     *
+     * <p>
      * 输入：digits = "23"
-     输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
+     * 输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
      */
-  static   String[] map17 = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-    static   List<String> resultList17 = new ArrayList<>();
-    static  StringBuilder stringBuilder = new StringBuilder();
+    static String[] map17 = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    static List<String> resultList17 = new ArrayList<>();
+    static StringBuilder stringBuilder = new StringBuilder();
 
     public static List<String> letterCombinations(String digits) {
         if (digits == null || digits.isEmpty()) {
@@ -47,7 +87,7 @@ public class BackTrackingDemo {
         }
         String str = map17[digits.charAt(curIndex) - '2'];
         for (int i = 0; i < str.length(); i++) {
-            stringBuilder.append( str.charAt(i));
+            stringBuilder.append(str.charAt(i));
             getWords(digits, curIndex + 1);
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
