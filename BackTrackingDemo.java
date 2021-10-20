@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -49,40 +48,32 @@ public class BackTrackingDemo {
      * ]
      */
     static List<List<Integer>> ans40 = new ArrayList<>();
-    static HashMap<String, Integer> map = new HashMap<>();
 
     public static List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        ans40.clear();
         Arrays.sort(candidates);
-        combinationSum40(candidates, target, 0, 0, new ArrayList<>(), new StringBuilder());
+        combinationSum40(candidates, target, 0, new ArrayList<>());
         return ans40;
     }
 
-    public static void combinationSum40(int[] candidates, int target, int startIndex, int sum, List<Integer> temp, StringBuilder builder) {
-        if (sum == target) {
-            String key = builder.toString();
-            if (map.get(key) == null) {
-                map.put(key, 0);
-                ans40.add(new ArrayList<>(temp));
-            }
+    public static void combinationSum40(int[] candidates, int target, int startIndex, List<Integer> temp) {
+        if (0 == target) {
+            ans40.add(new ArrayList<>(temp));
             return;
         }
-        if (sum > target) {
+        if (0 > target) {
             return;
         }
         for (int index = startIndex; index < candidates.length; index++) {
             if (index > startIndex && candidates[index] == candidates[index - 1]) {
                 continue;
             }
+            if(candidates[index]>target){
+                break;
+            }
             int curNum = candidates[index];
             temp.add(curNum);
-            builder.append(curNum);
-            combinationSum40(candidates, target, index + 1, sum + curNum, temp, builder);
+            combinationSum40(candidates, target - curNum,index + 1,  temp);
             temp.remove(temp.size() - 1);
-            String str = curNum + "";
-            for (int i = 0; i < str.length(); i++) {
-                builder.deleteCharAt(builder.length() -1);
-            }
         }
     }
 
