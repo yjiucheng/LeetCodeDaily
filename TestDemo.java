@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TestDemo {
     public static void main(String[] args) {
-        System.err.println(5*5-7/5);
+        System.err.println(5 * 5 - 7 / 5);
 //        //l1 = [2,4,3], l2 = [5,6,4]
 //        //[9]
 //        //[1,9,9,9,9,9,9,9,9,9]
@@ -54,6 +54,25 @@ public class TestDemo {
 
 
     /**
+     * 453. 最小操作次数使数组元素相等
+     *
+     * @param nums
+     * @return
+     */
+    public int minMoves(int[] nums) {
+        int mix = Integer.MAX_VALUE;
+        int count = 0;
+        for (int num : nums) {
+            mix = Math.min(num, mix);
+        }
+        for (int num : nums) {
+            count += num - mix;
+        }
+        return count;
+    }
+
+
+    /**
      * 278. 第一个错误的版本
      * @param n
      * @return
@@ -61,7 +80,6 @@ public class TestDemo {
 //    public int firstBadVersion(int n) {
 //
 //    }
-
 
 
     /**
