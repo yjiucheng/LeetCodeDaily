@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -11,8 +12,78 @@ public class BackTrackingDemo {
 //        System.err.println(combine(1, 1));
 //        System.err.println(combinationSum3(3, 9));
 //        System.err.println(letterCombinations(""));
-        int[] nums = new int[]{2, 3, 6, 7};
-        System.err.println(combinationSum(nums, 7));
+        int[] nums = new int[]{10, 1, 2, 7, 6, 1, 5};
+        int[] nums2 = new int[]{2, 5, 2, 1, 2};
+//        System.err.println(combinationSum(nums, 7));
+        System.err.println(combinationSum2(nums, 8));
+//        System.err.println(combinationSum2(nums2, 5));
+    }
+
+
+    /**
+     * 40. 组合总和 II
+     * 给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+     * <p>
+     * candidates 中的每个数字在每个组合中只能使用一次。
+     * <p>
+     * 注意：解集不能包含重复的组合。 
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/combination-sum-ii
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * <p>
+     * 输入: candidates = [10,1,2,7,6,1,5], target = 8,
+     * 输出:
+     * [
+     * [1,1,6],
+     * [1,2,5],
+     * [1,7],
+     * [2,6]
+     * ]
+     * <p>
+     * 输入: candidates = [2,5,2,1,2], target = 5,
+     * 输出:
+     * [
+     * [1,2,2],
+     * [5]
+     * ]
+     */
+    static List<List<Integer>> ans40 = new ArrayList<>();
+    static HashMap<String, Integer> map = new HashMap<>();
+
+    public static List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        ans40.clear();
+        Arrays.sort(candidates);
+        combinationSum40(candidates, target, 0, 0, new ArrayList<>(), new StringBuilder());
+        return ans40;
+    }
+
+    public static void combinationSum40(int[] candidates, int target, int startIndex, int sum, List<Integer> temp, StringBuilder builder) {
+        if (sum == target) {
+            String key = builder.toString();
+            if (map.get(key) == null) {
+                map.put(key, 0);
+                ans40.add(new ArrayList<>(temp));
+            }
+            return;
+        }
+        if (sum > target) {
+            return;
+        }
+        for (int index = startIndex; index < candidates.length; index++) {
+            if (index > startIndex && candidates[index] == candidates[index - 1]) {
+                continue;
+            }
+            int curNum = candidates[index];
+            temp.add(curNum);
+            builder.append(curNum);
+            combinationSum40(candidates, target, index + 1, sum + curNum, temp, builder);
+            temp.remove(temp.size() - 1);
+            String str = curNum + "";
+            for (int i = 0; i < str.length(); i++) {
+                builder.deleteCharAt(builder.length() -1);
+            }
+        }
     }
 
 
