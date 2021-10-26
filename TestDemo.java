@@ -54,6 +54,44 @@ public class TestDemo {
 
 
     /**
+     * 240. 搜索二维矩阵 II
+     * 编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target 。该矩阵具有以下特性：
+     * <p>
+     * 每行的元素从左到右升序排列。
+     * 每列的元素从上到下升序排列。
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        if (m == 0) {
+            return false;
+        }
+        int n = matrix[0].length;
+        if (target < matrix[0][0] || target > matrix[m][n]) {
+            return false;
+        }
+        int startM = 0, startN = 0;
+        int endM = m - 1, endN = n - 1;
+        int midM, midN;
+        while (startM <= endM || startN <= endN) {
+            midM = (endM - startM) / 2 + startM;
+            midN = (endN - startN) / 2 + startN;
+            int num = matrix[midM][midN];
+            if (num < target) {
+                startM = midM + 1;
+                startN = midN + 1;
+            } else if (num == target) {
+                return true;
+            } else {
+                endM = midM - 1;
+                endN = midN - 1;
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
      * 453. 最小操作次数使数组元素相等
      *
      * @param nums
