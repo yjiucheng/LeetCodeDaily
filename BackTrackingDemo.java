@@ -22,6 +22,37 @@ public class BackTrackingDemo {
         System.err.println(demo.restoreIpAddresses("19216811"));
     }
 
+
+    /**
+     * 78. 子集
+     * 给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。
+     * <p>
+     * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
+     * <p>
+     * 输入：nums = [1,2,3]
+     * 输出：[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+     * <p>
+     * 输入：nums = [0]
+     * 输出：[[],[0]]
+     */
+
+    List<List<Integer>> ans78 = new ArrayList<>();
+
+    public List<List<Integer>> subsets(int[] nums) {
+        subsetsMatc(nums, 0, new ArrayList<>());
+        return ans78;
+    }
+
+    private void subsetsMatc(int[] nums, int start, List<Integer> temp) {
+        ans78.add(new ArrayList<>(temp));
+        for (int i = start; i < nums.length; i++) {
+            temp.add(nums[i]);
+            subsetsMatc(nums, i + 1, temp);
+            temp.remove(temp.size() - 1);
+        }
+    }
+
+
     /**
      * 93. 复原 IP 地址
      * 给定一个只包含数字的字符串，用以表示一个 IP 地址，返回所有可能从 s 获得的 有效 IP 地址 。你可以按任何顺序返回答案。
