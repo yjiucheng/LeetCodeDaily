@@ -14,7 +14,8 @@ public class BackTrackingDemo {
         int[] nums = new int[]{10, 1, 2, 7, 6, 1, 5};
         int[] nums2 = new int[]{2, 5, 2, 1, 2};
 //        System.err.println(combinationSum(nums, 7));
-        System.err.println(combinationSum2(nums, 8));
+//        System.err.println(combinationSum2(nums, 8));
+        System.err.println(partition("a"));
 //        System.err.println(combinationSum2(nums2, 5));
     }
 
@@ -28,9 +29,48 @@ public class BackTrackingDemo {
      * 输入：s = "aab"
      * 输出：[["a","a","b"],["aa","b"]]`
      */
-    public List<List<String>> partition(String s) {
+    static List<List<String>> ans131 = new ArrayList<>();
 
-        return null;
+    public static List<List<String>> partition(String s) {
+        if (s == null || s.length() == 0) {
+            return ans131;
+        }
+        partitionMatch(s, 0, new ArrayList<>());
+        return ans131;
+    }
+
+    private static void partitionMatch(String s, int start, List<String> list) {
+        if (start >= s.length()) {
+            ans131.add(new ArrayList<>(list));
+            return;
+        }
+        for (int i = start; i < s.length(); i++) {
+            String sub = s.substring(start, i + 1);
+            if (isBackString(sub)) {
+                list.add(sub);
+            } else {
+                continue;
+            }
+            partitionMatch(s, i + 1, list);
+            list.remove(list.size() - 1);
+        }
+    }
+
+
+    private static boolean isBackString(String s) {
+        if (s.length() == 1) {
+            return true;
+        }
+        int start = 0, end = s.length() - 1;
+        while (end >= start) {
+            if (s.charAt(start) == s.charAt(end)) {
+                start++;
+                end--;
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
 

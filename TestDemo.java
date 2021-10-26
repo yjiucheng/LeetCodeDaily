@@ -7,7 +7,8 @@ import java.util.List;
 
 public class TestDemo {
     public static void main(String[] args) {
-        System.err.println(5 * 5 - 7 / 5);
+        String s="aabb";
+        System.err.println(s.substring(0,4));
 //        //l1 = [2,4,3], l2 = [5,6,4]
 //        //[9]
 //        //[1,9,9,9,9,9,9,9,9,9]
