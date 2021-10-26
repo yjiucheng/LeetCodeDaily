@@ -15,8 +15,70 @@ public class BackTrackingDemo {
         int[] nums2 = new int[]{2, 5, 2, 1, 2};
 //        System.err.println(combinationSum(nums, 7));
 //        System.err.println(combinationSum2(nums, 8));
-        System.err.println(partition("a"));
+//        System.err.println(partition("a"));
 //        System.err.println(combinationSum2(nums2, 5));
+
+        BackTrackingDemo demo = new BackTrackingDemo();
+        System.err.println(demo.restoreIpAddresses("19216811"));
+    }
+
+    /**
+     * 93. 复原 IP 地址
+     * 给定一个只包含数字的字符串，用以表示一个 IP 地址，返回所有可能从 s 获得的 有效 IP 地址 。你可以按任何顺序返回答案。
+     * <p>
+     * 有效 IP 地址 正好由四个整数（每个整数位于 0 到 255 之间组成，且不能含有前导 0），整数之间用 '.' 分隔。
+     * <p>
+     * 例如："0.1.2.201" 和 "192.168.1.1" 是 有效 IP 地址，但是 "0.011.255.245"、"192.168.1.312" 和 "192.168@1.1" 是 无效 IP 地址。
+     * <p>
+     * 输入：s = "25525511135"
+     * 输出：["255.255.11.135","255.255.111.35"]
+     * <p>
+     * 输入：s = "0000"
+     * 输出：["0.0.0.0"]
+     * <p>
+     * 输入：s = "1111"
+     * 输出：["1.1.1.1"]
+     */
+    List<String> ans93 = new ArrayList<>();
+    int[] temp = new int[4];
+
+    public List<String> restoreIpAddresses(String s) {
+        restoreIpAddressesMatch(s, 0, 0);
+        return ans93;
+    }
+
+    private void restoreIpAddressesMatch(String s, int start, int count) {
+        if (count > 4) {
+            return;
+        }
+        if (count == 4) {
+            if (start >= s.length()) {
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < 4; i++) {
+                    builder.append(temp[i]);
+                    if (i != 3) {
+                        builder.append(".");
+                    }
+                }
+                ans93.add(builder.toString());
+            }
+            return;
+        }
+        for (int i = start; i < s.length() && i - start < 4; i++) {
+            String sub = s.substring(start, i + 1);
+            if (sub.startsWith("0")) {
+                if (sub.length() > 1) {
+                    break;
+                }
+            }
+            int num = Integer.parseInt(sub);
+            if (num > 255) {
+                break;
+            }
+            temp[count] = num;
+            restoreIpAddressesMatch(s, i + 1, count + 1);
+            temp[count] = -1;
+        }
     }
 
 
