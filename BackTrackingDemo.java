@@ -12,16 +12,50 @@ public class BackTrackingDemo {
 //        System.err.println(combinationSum3(3, 9));
 //        System.err.println(letterCombinations(""));
         int[] nums = new int[]{10, 1, 2, 7, 6, 1, 5};
-        int[] nums2 = new int[]{2, 5, 2, 1, 2};
+        int[] nums2 = new int[]{1, 2, 2, 2};
 //        System.err.println(combinationSum(nums, 7));
 //        System.err.println(combinationSum2(nums, 8));
 //        System.err.println(partition("a"));
 //        System.err.println(combinationSum2(nums2, 5));
 
         BackTrackingDemo demo = new BackTrackingDemo();
-        System.err.println(demo.restoreIpAddresses("19216811"));
+        System.err.println(demo.subsetsWithDup(nums2));
     }
 
+
+    /**
+     * 90. 子集 II
+     * 给你一个整数数组 nums ，其中可能包含重复元素，请你返回该数组所有可能的子集（幂集）。
+     * <p>
+     * 解集 不能 包含重复的子集。返回的解集中，子集可以按 任意顺序 排列。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/subsets-ii
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     */
+    List<List<Integer>> ans90 = new ArrayList<>();
+    boolean[] used;
+
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        used = new boolean[nums.length];
+        Arrays.sort(nums);
+        subsetsWithDupMatch(nums, 0, new ArrayList<>());
+        return ans90;
+    }
+
+    private void subsetsWithDupMatch(int[] nums, int start, List<Integer> temp) {
+        ans90.add(new ArrayList<>(temp));
+        for (int i = start; i < nums.length; i++) {
+            if (i - start > 0 && nums[i] == nums[i - 1]&&!used[i]) {
+                continue;
+            }
+            temp.add(nums[i]);
+            used[i]=true;
+            subsetsWithDupMatch(nums, i + 1, temp);
+            temp.remove(temp.size() - 1);
+            used[i]=false;
+        }
+    }
 
     /**
      * 78. 子集
