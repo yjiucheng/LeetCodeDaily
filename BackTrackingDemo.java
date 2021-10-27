@@ -12,15 +12,76 @@ public class BackTrackingDemo {
 //        System.err.println(combinationSum3(3, 9));
 //        System.err.println(letterCombinations(""));
         int[] nums = new int[]{10, 1, 2, 7, 6, 1, 5};
-        int[] nums2 = new int[]{4, 6, 7, 7};
+        int[] nums2 = new int[]{1,2,3};
 //        System.err.println(combinationSum(nums, 7));
 //        System.err.println(combinationSum2(nums, 8));
 //        System.err.println(partition("a"));
 //        System.err.println(combinationSum2(nums2, 5));
 
         BackTrackingDemo demo = new BackTrackingDemo();
-        System.err.println(demo.findSubsequences(nums2));
+        System.err.println(demo.permute(nums2));
     }
+
+    /**
+     * 46. 全排列
+     * 给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
+     * 输入：nums = [1,2,3]
+     * 输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+     */
+    List<List<Integer>> ans46 = new ArrayList<>();
+    boolean[] used46;
+
+    public List<List<Integer>> permute(int[] nums) {
+        if(nums.length==0){
+            return ans46;
+        }
+        used46 = new boolean[nums.length];
+        permute(nums,new ArrayList<>());
+        return ans46;
+    }
+
+
+    public void permute(int[] nums, List<Integer> temp) {
+        if (temp.size() == nums.length) {
+            ans46.add(new ArrayList<>(temp));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (used46[i]) {
+                continue;
+            }
+            temp.add(nums[i]);
+            used46[i] = true;
+            permute(nums, temp);
+            temp.remove(temp.size() - 1);
+            used46[i] = false;
+        }
+
+    }
+
+
+    /**
+     * 301. 删除无效的括号
+     * 给你一个由若干括号和字母组成的字符串 s ，删除最小数量的无效括号，使得输入的字符串有效。
+     * <p>
+     * 返回所有可能的结果。答案可以按 任意顺序 返回。
+     * <p>
+     * 输入：s = "()())()"
+     * 输出：["(())()","()()()"]
+     * <p>
+     * 输入：s = "(a)())()"
+     * 输出：["(a())()","(a)()()"]
+     * <p>
+     * 输入：s = ")("
+     * 输出：[""]
+     */
+    List<String> ans301 = new ArrayList<>();
+
+    //todo 这题有点难
+    public List<String> removeInvalidParentheses(String s) {
+        return ans301;
+    }
+
 
     /**
      * 491. 递增子序列
@@ -47,7 +108,7 @@ public class BackTrackingDemo {
         }
         int[] used = new int[201];
         for (int i = startIndex; i < nums.length; i++) {
-            if(temp.size()>0&&temp.get(temp.size()-1)>nums[i] || (used[nums[i] + 100] == 1)){
+            if (temp.size() > 0 && temp.get(temp.size() - 1) > nums[i] || (used[nums[i] + 100] == 1)) {
                 continue;
             }
             used[nums[i] + 100] = 1;
