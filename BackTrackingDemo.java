@@ -12,14 +12,49 @@ public class BackTrackingDemo {
 //        System.err.println(combinationSum3(3, 9));
 //        System.err.println(letterCombinations(""));
         int[] nums = new int[]{10, 1, 2, 7, 6, 1, 5};
-        int[] nums2 = new int[]{1, 2, 2, 2};
+        int[] nums2 = new int[]{4, 6, 7, 7};
 //        System.err.println(combinationSum(nums, 7));
 //        System.err.println(combinationSum2(nums, 8));
 //        System.err.println(partition("a"));
 //        System.err.println(combinationSum2(nums2, 5));
 
         BackTrackingDemo demo = new BackTrackingDemo();
-        System.err.println(demo.subsetsWithDup(nums2));
+        System.err.println(demo.findSubsequences(nums2));
+    }
+
+    /**
+     * 491. 递增子序列
+     * 给你一个整数数组 nums ，找出并返回所有该数组中不同的递增子序列，递增子序列中 至少有两个元素 。你可以按 任意顺序 返回答案。
+     * <p>
+     * 数组中可能含有重复元素，如出现两个整数相等，也可以视作递增序列的一种特殊情况。
+     * <p>
+     * 输入：nums = [4,6,7,7]
+     * 输出：[[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]
+     * <p>
+     * 输入：nums = [4,4,3,2,1]
+     * 输出：[[4,4]]
+     */
+    List<List<Integer>> ans491 = new ArrayList<>();
+
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        findSubsequencesBack(nums, new ArrayList<>(), 0);
+        return ans491;
+    }
+
+    public void findSubsequencesBack(int[] nums, List<Integer> temp, int startIndex) {
+        if (temp.size() >= 2) {
+            ans491.add(new ArrayList<>(temp));
+        }
+        int[] used = new int[201];
+        for (int i = startIndex; i < nums.length; i++) {
+            if(temp.size()>0&&temp.get(temp.size()-1)>nums[i] || (used[nums[i] + 100] == 1)){
+                continue;
+            }
+            used[nums[i] + 100] = 1;
+            temp.add(nums[i]);
+            findSubsequencesBack(nums, temp, i + 1);
+            temp.remove(temp.size() - 1);
+        }
     }
 
 
@@ -46,14 +81,14 @@ public class BackTrackingDemo {
     private void subsetsWithDupMatch(int[] nums, int start, List<Integer> temp) {
         ans90.add(new ArrayList<>(temp));
         for (int i = start; i < nums.length; i++) {
-            if (i - start > 0 && nums[i] == nums[i - 1]&&!used[i]) {
+            if (i - start > 0 && nums[i] == nums[i - 1] && !used[i]) {
                 continue;
             }
             temp.add(nums[i]);
-            used[i]=true;
+            used[i] = true;
             subsetsWithDupMatch(nums, i + 1, temp);
             temp.remove(temp.size() - 1);
-            used[i]=false;
+            used[i] = false;
         }
     }
 
