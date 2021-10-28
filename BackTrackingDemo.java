@@ -12,15 +12,55 @@ public class BackTrackingDemo {
 //        System.err.println(combinationSum3(3, 9));
 //        System.err.println(letterCombinations(""));
         int[] nums = new int[]{10, 1, 2, 7, 6, 1, 5};
-        int[] nums2 = new int[]{1,2,3};
+        int[] nums2 = new int[]{1, 1, 3};
 //        System.err.println(combinationSum(nums, 7));
 //        System.err.println(combinationSum2(nums, 8));
 //        System.err.println(partition("a"));
 //        System.err.println(combinationSum2(nums2, 5));
 
         BackTrackingDemo demo = new BackTrackingDemo();
-        System.err.println(demo.permute(nums2));
+        System.err.println(demo.permuteUnique(nums2));
     }
+
+
+    /**
+     * 47. 全排列 II
+     * 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
+     * 输入：nums = [1,1,2]
+     * 输出：
+     * [[1,1,2],
+     * [1,2,1],
+     * [2,1,1]]
+     */
+    List<List<Integer>> ans47 = new ArrayList<>();
+    boolean[] used47;
+
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        used47 = new boolean[nums.length];
+        Arrays.sort(nums);
+        permuteUnique(nums, new ArrayList<>());
+        return ans47;
+    }
+
+    public void permuteUnique(int[] nums, List<Integer> temp) {
+        if (temp.size() == nums.length) {
+            ans47.add(new ArrayList<>(temp));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i - 1] && used47[i - 1]) {
+                continue;
+            }
+            if(!used47[i]){
+                temp.add(nums[i]);
+                used47[i] = true;
+                permuteUnique(nums, temp);
+                used47[i] = false;
+                temp.remove(temp.size() - 1);
+            }
+        }
+    }
+
 
     /**
      * 46. 全排列
@@ -32,11 +72,11 @@ public class BackTrackingDemo {
     boolean[] used46;
 
     public List<List<Integer>> permute(int[] nums) {
-        if(nums.length==0){
+        if (nums.length == 0) {
             return ans46;
         }
         used46 = new boolean[nums.length];
-        permute(nums,new ArrayList<>());
+        permute(nums, new ArrayList<>());
         return ans46;
     }
 
