@@ -17,7 +17,6 @@ public class ArrayDemo {
 //        System.err.println(subarraySum(nums, 3));
     }
 
-
     /**
      * 217. 存在重复元素
      *
@@ -32,8 +31,8 @@ public class ArrayDemo {
 //        }
 //        return false;
         Arrays.sort(nums);
-        for (int i=1;i<nums.length;i++){
-            if (nums[i-1]==nums[i]){
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i - 1] == nums[i]) {
                 return true;
             }
         }
@@ -64,26 +63,43 @@ public class ArrayDemo {
         if (nums.length == 0 || nums.length == 1) {
             return;
         }
-        if (nums.length == 2) {
-            int tem = nums[0];
-            nums[0] = nums[1];
-            nums[1] = tem;
+        int firstIndex = -1;
+        for (int i = nums.length - 2; i >= 0; i--) {
+            if (nums[i] < nums[i + 1]) {
+                firstIndex = i;
+                break;
+            }
+        }
+        if (firstIndex == -1) {
+            reverse(nums, 0);
             return;
         }
-
-        int startIndex = 0;
-        int endIndex = nums.length - 1;
-        while (startIndex < nums.length - 1 && startIndex <= endIndex) {
-            if (nums[startIndex] <= nums[startIndex + 1]) {
-                startIndex++;
-                continue;
+        int secondIndex = -1;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (nums[i] > nums[firstIndex]) {
+                secondIndex = i;
+                break;
             }
-
         }
 
-
+        swap(nums, firstIndex, secondIndex);
+        reverse(nums, firstIndex + 1);
     }
 
+    private void swap(int[] nums, int i, int i1) {
+        int tmp = nums[i];
+        nums[i] = nums[i1];
+        nums[i1] = tmp;
+    }
+
+    public void reverse(int[] nums, int start) {
+        int left = start, right = nums.length - 1;
+        while (left < right) {
+            swap(nums, left, right);
+            left++;
+            right--;
+        }
+    }
 
     int[] cache = new int[40];
 
