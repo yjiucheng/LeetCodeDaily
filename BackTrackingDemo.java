@@ -18,8 +18,104 @@ public class BackTrackingDemo {
 //        System.err.println(partition("a"));
 //        System.err.println(combinationSum2(nums2, 5));
 
+
+        List<String> list1 = new ArrayList<>();
+        list1.add("JFK");
+        list1.add("KUL");
+
+        List<String> list2 = new ArrayList<>();
+        list2.add("JFK");
+        list2.add("NRT");
+
+        List<String> list3 = new ArrayList<>();
+        list3.add("NRT");
+        list3.add("JFK");
+
+
+        List<List<String>> tickets = new ArrayList<>();
+        tickets.add(list1);
+        tickets.add(list2);
+        tickets.add(list3);
+
         BackTrackingDemo demo = new BackTrackingDemo();
-        System.err.println(demo.permuteUnique(nums2));
+        System.err.println(demo.findItinerary(tickets));
+    }
+
+
+    /**
+     * 332. 重新安排行程
+     *
+     * @param tickets
+     * @return
+     */
+
+    boolean[] used332;
+    String lastFrom = "JFK";
+    String lastTo = "";
+    int lastIndex = -1;
+
+    public List<String> findItinerary(List<List<String>> tickets) {
+        used332 = new boolean[tickets.size()];
+        List<String> ans332 = new ArrayList<>();
+        ans332.add("JFK");
+        findItineraryMatch(tickets, ans332);
+        return ans332;
+    }
+
+    public void findItineraryMatch(List<List<String>> tickets, List<String> ans) {
+        for (int i = 0; i < tickets.size(); i++) {
+            if (used332[i]) {
+                continue;
+            }
+            List<String> list = tickets.get(i);
+            //当前from与lastFrom相等
+            if (list.get(0).equals(lastFrom)) {
+                String curTo = list.get(1);
+                if (originalIsFront(lastTo, curTo)) {
+                    continue;
+                } else {
+                    used332[i] = true;
+                    if (lastIndex != -1) {
+                        used332[lastIndex] = false;
+                        ans.remove(ans.size() - 1);
+                    }
+                    ans.add(curTo);
+                    lastTo = curTo;
+                    lastIndex = i;
+                }
+            }
+        }
+        for (boolean cur : used332) {
+            if (!cur) {
+                lastFrom = ans.get(ans.size() - 1);
+                lastTo = "";
+                lastIndex = -1;
+                findItineraryMatch(tickets, ans);
+                break;
+            }
+        }
+    }
+
+
+    /**
+     * 比较两个字符串的字典大小 originalStr<= targetStr  返回 true ，originalStr>targetStr，返回 false
+     */
+    private boolean originalIsFront(String originalStr, String targetStr) {
+        if (originalStr.length() == 0) {
+            return false;
+        }
+        for (int index = 0; index < originalStr.length(); index++) {
+            char origChar = originalStr.charAt(index);
+            char tarChar = targetStr.charAt(index);
+            if (origChar < tarChar) {
+                return true;
+            } else if (origChar == tarChar) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -51,7 +147,7 @@ public class BackTrackingDemo {
             if (i > 0 && nums[i] == nums[i - 1] && used47[i - 1]) {
                 continue;
             }
-            if(!used47[i]){
+            if (!used47[i]) {
                 temp.add(nums[i]);
                 used47[i] = true;
                 permuteUnique(nums, temp);

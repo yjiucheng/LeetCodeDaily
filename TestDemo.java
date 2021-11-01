@@ -1,14 +1,11 @@
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 public class TestDemo {
     public static void main(String[] args) {
-        String s="aabb";
-        System.err.println(s.substring(0,4));
+        String s = "aabb";
+        System.err.println(s.substring(0, 4));
 //        //l1 = [2,4,3], l2 = [5,6,4]
 //        //[9]
 //        //[1,9,9,9,9,9,9,9,9,9]
@@ -53,6 +50,22 @@ public class TestDemo {
 //        System.err.println(spiralOrder(newData));
     }
 
+
+    /**
+     * 575. 分糖果
+     * 输入: candies = [1,1,2,2,3,3]
+     * 输出: 3
+     * 解析: 一共有三种种类的糖果，每一种都有两个。
+     * 最优分配方案：妹妹获得[1,2,3],弟弟也获得[1,2,3]。这样使妹妹获得糖果的种类数最多。
+     * <p>
+     */
+    public int distributeCandies(int[] candyType) {
+        Set<Integer> set = new HashSet<>();
+        for (int type : candyType) {
+            set.add(type);
+        }
+        return Math.min(set.size(), candyType.length / 2);
+    }
 
     /**
      * 240. 搜索二维矩阵 II
