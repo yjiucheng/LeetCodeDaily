@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * 回溯算法
@@ -42,6 +40,8 @@ public class BackTrackingDemo {
     }
 
 
+
+
     /**
      * 332. 重新安排行程
      *
@@ -49,51 +49,30 @@ public class BackTrackingDemo {
      * @return
      */
 
-    boolean[] used332;
-    String lastFrom = "JFK";
-    String lastTo = "";
-    int lastIndex = -1;
+    private Queue<String> res332;
+    private Map<String, Map<String, Integer>> map332;
 
+    //todo 需要重新做
     public List<String> findItinerary(List<List<String>> tickets) {
-        used332 = new boolean[tickets.size()];
-        List<String> ans332 = new ArrayList<>();
-        ans332.add("JFK");
-        findItineraryMatch(tickets, ans332);
-        return ans332;
+        map332 = new HashMap<>();
+        res332 = new LinkedList<>();
+        for (List<String> t : tickets) {
+            Map<String, Integer> temp;
+            if (map332.containsKey(t.get(0))) {
+                temp = map332.get(t.get(0));
+                temp.put(t.get(1), temp.getOrDefault(t.get(1), 0) + 1);
+            } else {
+                temp = new TreeMap<>();
+                temp.put(t.get(1), 1);
+            }
+            map332.put(t.get(0), temp);
+        }
+        res332.add("JFK");
+//        findItineraryMatch(tickets, ans332);
+        return new ArrayList<>(res332);
     }
 
     public void findItineraryMatch(List<List<String>> tickets, List<String> ans) {
-        for (int i = 0; i < tickets.size(); i++) {
-            if (used332[i]) {
-                continue;
-            }
-            List<String> list = tickets.get(i);
-            //当前from与lastFrom相等
-            if (list.get(0).equals(lastFrom)) {
-                String curTo = list.get(1);
-                if (originalIsFront(lastTo, curTo)) {
-                    continue;
-                } else {
-                    used332[i] = true;
-                    if (lastIndex != -1) {
-                        used332[lastIndex] = false;
-                        ans.remove(ans.size() - 1);
-                    }
-                    ans.add(curTo);
-                    lastTo = curTo;
-                    lastIndex = i;
-                }
-            }
-        }
-        for (boolean cur : used332) {
-            if (!cur) {
-                lastFrom = ans.get(ans.size() - 1);
-                lastTo = "";
-                lastIndex = -1;
-                findItineraryMatch(tickets, ans);
-                break;
-            }
-        }
     }
 
 

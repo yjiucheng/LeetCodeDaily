@@ -23,8 +23,9 @@ public class ListNodeDemo {
 //        ListNode[] dat = new ListNode[]{demo1, demo2, demo3};
 //        System.err.println(mergeKLists(dat));
 
-//        ListNode demo = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(2, new ListNode(1))))));
-//        ListNode demoN = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(2, new ListNode(1)))));
+        ListNode demo = new ListNode(4, new ListNode(2, new ListNode(3, new ListNode(5, new ListNode(1, new ListNode(-1))))));
+        ListNode demoN = new ListNode(4, new ListNode(2, new ListNode(1, new ListNode(3))));
+//        ListNode demoN = new ListNode(5, new ListNode(4));
 //        System.err.println(isPalindrome(demoN));
 
 
@@ -44,7 +45,7 @@ public class ListNodeDemo {
         n4.random = n3;
         n5.random = n1;
 
-        System.err.println(copyRandomList(n1));
+        System.err.println(sortList(demo));
     }
 
 
@@ -52,9 +53,30 @@ public class ListNodeDemo {
      * 148. 排序链表
      * 给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。
      */
-//    public ListNode sortList(ListNode head) {
-//
-//    }
+    //todo
+    public static ListNode sortList(ListNode head) {
+        ListNode pre = new ListNode(Integer.MIN_VALUE, head);
+        ListNode cur = head;
+        ListNode last = pre;
+        while (cur != null) {
+            ListNode next = cur.next;
+            if (cur.val< last.val) {
+                last.next = next;
+                ListNode temp = pre.next;
+                ListNode tempLast = pre;
+                while (temp.val < cur.val) {
+                    tempLast = temp;
+                    temp = temp.next;
+                }
+                tempLast.next = cur;
+                cur.next = temp;
+            }else {
+                last = cur;
+            }
+            cur = next;
+        }
+        return pre.next;
+    }
 
 
     /**
