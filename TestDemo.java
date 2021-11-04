@@ -52,6 +52,33 @@ public class TestDemo {
 
 
     /**
+     * 367. 有效的完全平方数
+     *
+     * @param num
+     * @return
+     */
+    public boolean isPerfectSquare(int num) {
+        if (num == 0 || num == 1) {
+            return true;
+        }
+        int start = 1, end = num;
+        while (end >= start) {
+            int mid = (end - start) / 2 + start;
+            int ans = num / mid;
+            if (ans == mid) {
+                return true;
+            } else if (ans > mid) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
      * 575. 分糖果
      * 输入: candies = [1,1,2,2,3,3]
      * 输出: 3
