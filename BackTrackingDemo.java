@@ -36,10 +36,96 @@ public class BackTrackingDemo {
         tickets.add(list3);
 
         BackTrackingDemo demo = new BackTrackingDemo();
-        System.err.println(demo.findItinerary(tickets));
+        System.err.println(demo.solveNQueens(1));
     }
 
 
+    /**
+     * 37. 解数独
+     * 编写一个程序，通过填充空格来解决数独问题。
+     * <p>
+     * 数独的解法需 遵循如下规则：
+     * <p>
+     * 数字 1-9 在每一行只能出现一次。
+     * 数字 1-9 在每一列只能出现一次。
+     * 数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。（请参考示例图）
+     * 数独部分空格内已填入了数字，空白格用 '.' 表示。
+     */
+    public void solveSudoku(char[][] board) {
+
+    }
+
+
+    /**
+     * 51. N 皇后
+     * n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
+     *
+     * @param n
+     * @return
+     */
+    List<List<String>> ans51 = new ArrayList<>();
+    int[] usedPosition;
+
+    public List<List<String>> solveNQueens(int n) {
+        //用来记录已存放皇后的位置：
+        // usedPosition下标表示行数，usedPosition[index]值表示放置的列数
+        usedPosition = new int[n];
+        for (int i = 0; i < n; i++) {
+            usedPosition[i] = -1;
+        }
+        backTrackingSolveNQueens(n, 0, 0);
+        return ans51;
+    }
+
+    public void backTrackingSolveNQueens(int n, int queenCount, int rowNum) {
+        if (queenCount == n) {
+            //queenCount放置皇后的数量等于n，表示全部放完，
+            List<String> list = new ArrayList<>();
+            for (int index = 0; index < n; index++) {
+                int position = usedPosition[index];
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < n; i++) {
+                    if (position == i) {
+                        builder.append("Q");
+                    } else {
+                        builder.append(".");
+                    }
+                }
+                list.add(builder.toString());
+            }
+            ans51.add(list);
+            return;
+        }
+
+        //rowNum 当前排到的行数
+        for (int column = 0; column < n; column++) {
+            if (checkCurPositionCanUse(rowNum, column)) {
+                usedPosition[rowNum] = column;
+                backTrackingSolveNQueens(n, queenCount + 1, rowNum + 1);
+                usedPosition[rowNum] = -1;
+            }
+        }
+    }
+
+    //判断当前位置是否可以放置
+    private boolean checkCurPositionCanUse(int row, int column) {
+        for (int i = 0; i < row; i++) {
+//            if (usedPosition[i] == -1) {
+//                return true;
+//            }
+            int usedRow = i;
+            int usedColumn = usedPosition[i];
+            //同行和同列不能摆放
+            if (usedRow == row || usedColumn == column) {
+                return false;
+            }
+            //斜线上不能摆放
+            if (Math.abs((usedRow - row)) == Math.abs((usedColumn - column))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     /**
