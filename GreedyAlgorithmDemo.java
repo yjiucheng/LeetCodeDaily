@@ -6,10 +6,11 @@ import java.util.Arrays;
 public class GreedyAlgorithmDemo {
     public static void main(String[] args) {
 //        int[] nums = new int[]{-2,1,-3,4,-1,2,1,-5,4};
-        int[] nums = new int[]{-11,-14,-2};
+        int[] nums = new int[]{-11, -14, -2};
         GreedyAlgorithmDemo demo = new GreedyAlgorithmDemo();
         System.err.println(demo.maxSubArray(nums));
     }
+
 
     /**
      * 53. 最大子序和
@@ -18,14 +19,23 @@ public class GreedyAlgorithmDemo {
      * @return
      */
     public int maxSubArray(int[] nums) {
+        //当前的最大值
         int max = nums[0];
+        //贪心的思路为局部最优：当前“连续和”为负数的时候立刻放弃，从下一个元素重新计算“连续和”，
+        // 因为负数加上下一个元素 “连续和”只会越来越小。从而推出全局最优：选取最大“连续和”
+        //lastSum<0时，舍弃掉之前所有的连续和，重新从0开始
         int lastSum = nums[0] <= 0 ? 0 : nums[0];
         for (int i = 1; i < nums.length; i++) {
             int num = nums[i];
             if (lastSum + num < 0) {
-                lastSum = 0;
+                //lastSum + num<0细分的话有两种情况：
+                //lastSum=0，num<0  或者  lastSum>0，num<0
+                //由于lastSum + num < 0，所以最大值取Math.max(max, num)
                 max = Math.max(max, num);
+                //由于“连续和”lastSum + num<0，舍弃掉所有的连续和，重新从0开始
+                lastSum = 0;
             } else {
+                //lastSum + num>=0  连续和继续
                 max = Math.max(max, lastSum + num);
                 lastSum += num;
             }
