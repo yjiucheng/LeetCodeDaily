@@ -52,8 +52,81 @@ public class BackTrackingDemo {
      * 数独部分空格内已填入了数字，空白格用 '.' 表示。
      */
     public void solveSudoku(char[][] board) {
-
+        solveSudokuBackTracking(board);
     }
+
+    private boolean solveSudokuBackTracking(char[][] board) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] != '.') {
+                    continue;
+                }
+                for (char num = '1'; num <= '9'; num++) {
+                    if (canUseNum(board, num, i, j)) {
+                        board[i][j] = num;
+                        if (solveSudokuBackTracking(board)) {
+                            return true;
+                        }
+                        board[i][j] = '.';
+                    }
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean canUseNum(char[][] board, char num, int x, int y) {
+        //判断x方向上是否可以用
+        for (int i = 0; i < 9; i++) {
+            char cur = board[x][i];
+            if (cur == num) {
+                return false;
+            }
+        }
+        //判断y方向上是否可以用
+        for (int i = 0; i < 9; i++) {
+            char cur = board[i][y];
+            if (cur == num) {
+                return false;
+            }
+        }
+        //判断当前范围内是否可用
+        int startX, endX, startY, endY;
+        if (x <= 2) {
+            startX = 0;
+            endX = 2;
+        } else if (x >= 6) {
+            startX = 6;
+            endX = 8;
+        } else {
+            startX = 3;
+            endX = 5;
+        }
+        if (y <= 2) {
+            startY = 0;
+            endY = 2;
+        } else if (y >= 6) {
+            startY = 6;
+            endY = 8;
+        } else {
+            startY = 3;
+            endY = 5;
+        }
+        return checkRank(board, num, startX, endX, startY, endY);
+    }
+
+    private boolean checkRank(char[][] board, char num, int startX, int endX, int startY, int endY) {
+        for (int x = startX; x <= endX; x++) {
+            for (int y = startY; y <= endY; y++) {
+                if (board[x][y] == num) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     /**
      * 51. N 皇后

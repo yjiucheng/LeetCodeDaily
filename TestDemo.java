@@ -4,8 +4,12 @@ import java.util.*;
 
 public class TestDemo {
     public static void main(String[] args) {
-        String s = "aabb";
-        System.err.println(s.substring(0, 4));
+        char a='4';
+//        byte b=127;
+//        byte c=127;
+//        b=b+c;
+//        b+=c;
+        System.err.println(4-a);
 //        //l1 = [2,4,3], l2 = [5,6,4]
 //        //[9]
 //        //[1,9,9,9,9,9,9,9,9,9]
