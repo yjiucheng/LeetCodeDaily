@@ -6,9 +6,45 @@ import java.util.Arrays;
 public class GreedyAlgorithmDemo {
     public static void main(String[] args) {
 //        int[] nums = new int[]{-2,1,-3,4,-1,2,1,-5,4};
-        int[] nums = new int[]{7,6,4,3,1};
+        int[] nums = new int[]{3,2,1,0,4};
         GreedyAlgorithmDemo demo = new GreedyAlgorithmDemo();
-        System.err.println(demo.maxProfit(nums));
+        System.err.println(demo.canJump(nums));
+    }
+
+
+    /**
+     * 55. 跳跃游戏
+     * 给定一个非负整数数组 nums ，你最初位于数组的 第一个下标 。
+     * <p>
+     * 数组中的每个元素代表你在该位置可以跳跃的最大长度。
+     * <p>
+     * 判断你是否能够到达最后一个下标。
+     */
+    public boolean canJump(int[] nums) {
+        if (nums.length<2) {
+            return true;
+        }
+//        int lastMaxStep = nums[0];
+//        if (lastMaxStep == 0) {
+//            return false;
+//        }
+//        for (int i = 1; i < nums.length - 1; i++) {
+//            int curNum = nums[i];
+//            if (lastMaxStep - 1 == 0 && curNum == 0) {
+//                return false;
+//            }
+//            lastMaxStep = Math.max(lastMaxStep - 1, curNum);
+//        }
+//        return lastMaxStep > 0;
+        int coverRange = nums[0];
+        //在覆盖范围内更新最大的覆盖范围
+        for (int i = 0; i <= coverRange; i++) {
+            coverRange = Math.max(coverRange, i + nums[i]);
+            if (coverRange >= nums.length - 1) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
