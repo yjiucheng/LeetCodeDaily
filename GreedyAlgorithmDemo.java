@@ -6,9 +6,74 @@ import java.util.Arrays;
 public class GreedyAlgorithmDemo {
     public static void main(String[] args) {
 //        int[] nums = new int[]{-2,1,-3,4,-1,2,1,-5,4};
-        int[] nums = new int[]{3,2,1,0,4};
+        int[] nums = new int[]{1, 2, 22, -23, -9, -30, -6, -9, 1, 8, 24, 2, 21, 29, 10, -25, 18, 30, 1, 9, -8, -11, -22, -23, -17, -12, 19, 28, 19, 28};
         GreedyAlgorithmDemo demo = new GreedyAlgorithmDemo();
-        System.err.println(demo.canJump(nums));
+        System.err.println(demo.largestSumAfterKNegations(nums, 24));
+    }
+
+
+    /**
+     * 1005. K 次取反后最大化的数组和
+     * 给定一个整数数组 A，我们只能用以下方法修改该数组：
+     * 我们选择某个索引 i 并将 A[i] 替换为 -A[i]，然后总共重复这个过程 K 次。（我们可以多次选择同一个索引 i。）
+     * <p>[-2,5,0,2,-2]
+     * 3
+     * 以这种方式修改数组后，返回数组可能的最大和。
+     * <p>
+     * 输入：A = [4,2,3], K = 1
+     * 输出：5
+     * 解释：选择索引 (1,) ，然后 A 变为 [4,-2,3]。
+     */
+    public int largestSumAfterKNegations(int[] nums, int k) {
+        Arrays.sort(nums);
+        int sum = 0;
+        int minAbs = Integer.MAX_VALUE;
+        int minABxIndex = -1;
+        for (int i = 0; i < k; i++) {
+            if (i < nums.length) {
+                if (minAbs >= Math.abs(nums[i])) {
+                    if (minAbs == Math.abs(nums[i])) {
+                        if (nums[i] < 0) {
+                            minABxIndex = i;
+                        }
+                    } else {
+                        minABxIndex = i;
+                    }
+                    minAbs = Math.abs(nums[i]);
+                }
+            }
+            nums[minABxIndex] = -nums[minABxIndex];
+        }
+        for (int num : nums) {
+            sum += num;
+        }
+        return sum;
+    }
+
+    /**
+     * 45. 跳跃游戏 II
+     * 给你一个非负整数数组 nums ，你最初位于数组的第一个位置。
+     * <p>
+     * 数组中的每个元素代表你在该位置可以跳跃的最大长度。
+     * <p>
+     * 你的目标是使用最少的跳跃次数到达数组的最后一个位置。
+     * <p>
+     * 假设你总是可以到达数组的最后一个位置。
+     * <p>
+     */
+    public int jump(int[] nums) {
+        int length = nums.length;
+        int end = 0;
+        int maxPosition = 0;
+        int steps = 0;
+        for (int i = 0; i < length - 1; i++) {
+            maxPosition = Math.max(maxPosition, i + nums[i]);
+            if (i == end) {
+                end = maxPosition;
+                steps++;
+            }
+        }
+        return steps;
     }
 
 
@@ -21,7 +86,7 @@ public class GreedyAlgorithmDemo {
      * 判断你是否能够到达最后一个下标。
      */
     public boolean canJump(int[] nums) {
-        if (nums.length<2) {
+        if (nums.length < 2) {
             return true;
         }
 //        int lastMaxStep = nums[0];
