@@ -1,15 +1,64 @@
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * 贪心算法
  */
 public class GreedyAlgorithmDemo {
     public static void main(String[] args) {
-        int[] nums = new int[]{5,10,20};
+        int[] nums = new int[]{5, 10, 20};
 //        int[] nums = new int[]{1, 2, 22, -23, -9, -30, -6, -9, 1, 8, 24, 2, 21, 29, 10, -25, 18, 30, 1, 9, -8, -11, -22, -23, -17, -12, 19, 28, 19, 28};
         GreedyAlgorithmDemo demo = new GreedyAlgorithmDemo();
         System.err.println(demo.lemonadeChange(nums));
     }
+
+    /**
+     * 452. 用最少数量的箭引爆气球
+     */
+    public int findMinArrowShots(int[][] points) {
+        if (points.length == 0) return 0;
+        Arrays.sort(points, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[1] > o2[1]) {
+                    return 1;
+                }
+                else if (o1[1] == o2[1]) {
+                    return 0;
+                }
+                else {
+                    return -1;
+                }
+            }
+        });
+        int end = points[0][1];
+        int count = 1;
+        for (int i = 1; i < points.length; i++) {
+            if (points[i][0] > end) {
+                count++;
+                end = points[i][1];
+            } else {
+                end = Math.min(end, points[i][1]);
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 406. 根据身高重建队列
+     * 假设有打乱顺序的一群人站成一个队列，数组 people 表示队列中一些人的属性（不一定按顺序）。
+     * 每个 people[i] = [hi, ki] 表示第 i 个人的身高为 hi ，前面 正好 有 ki 个身高大于或等于 hi 的人。
+     * <p>
+     * 请你重新构造并返回输入数组 people 所表示的队列。
+     * 返回的队列应该格式化为数组 queue ，其中 queue[j] = [hj, kj] 是队列中第 j 个人的属性（queue[0] 是排在队列前面的人）。
+     * <p>
+     */
+    //todo 与135题类似
+    public int[][] reconstructQueue(int[][] people) {
+
+        return people;
+    }
+
 
     /**
      * 860. 柠檬水找零
