@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * 贪心算法
@@ -8,8 +10,63 @@ public class GreedyAlgorithmDemo {
     public static void main(String[] args) {
         int[] nums = new int[]{5, 10, 20};
 //        int[] nums = new int[]{1, 2, 22, -23, -9, -30, -6, -9, 1, 8, 24, 2, 21, 29, 10, -25, 18, 30, 1, 9, -8, -11, -22, -23, -17, -12, 19, 28, 19, 28};
+        String s = "ababcbacadefegdehijhklij";
         GreedyAlgorithmDemo demo = new GreedyAlgorithmDemo();
-        System.err.println(demo.lemonadeChange(nums));
+        System.err.println(demo.partitionLabels(s));
+    }
+
+
+    /**
+     * 763. 划分字母区间
+     * 字符串 S 由小写字母组成。
+     * 我们要把这个字符串划分为尽可能多的片段，同一字母最多出现在一个片段中。
+     * 返回一个表示每个字符串片段的长度的列表。
+     * <p>
+     * 输入：S = "ababcbacadefegdehijhklij"
+     * 输出：[9,7,8]
+     * 解释：
+     * 划分结果为 "ababcbaca", "defegde", "hijhklij"。
+     * 每个字母最多出现在一个片段中。
+     * 像 "ababcbacadefegde", "hijhklij" 的划分是错误的，因为划分的片段数较少。
+     * <p>
+     * <p>
+     * S的长度在[1, 500]之间。
+     * S只包含小写字母 'a' 到 'z' 。
+     */
+    public List<Integer> partitionLabels(String s) {
+        List<Integer> ans = new ArrayList<>();
+        char[] chars = s.toCharArray();
+        int start = 0;
+        char lastChar = chars[0];
+        int maxEnd = getLastIndex(chars, lastChar);
+        for (int i = 1; i < chars.length; i++) {
+            char cur = chars[i];
+            if (cur == lastChar) {
+                continue;
+            }
+            int tempEnd = getLastIndex(chars, cur);
+            if (i > maxEnd) {
+                ans.add(maxEnd - start + 1);
+                start = i;
+                maxEnd = tempEnd;
+            } else {
+                maxEnd = Math.max(tempEnd, maxEnd);
+            }
+            if (maxEnd == chars.length - 1) {
+                ans.add(maxEnd - start + 1);
+                break;
+            }
+        }
+        return ans;
+    }
+
+    private int getLastIndex(char[] chars, char target) {
+        for (int i = chars.length - 1; i >= 0; i--) {
+            if (chars[i] == target) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 
