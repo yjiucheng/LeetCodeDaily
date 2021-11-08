@@ -14,10 +14,51 @@ public class HashDemo {
 
         int s = 3;
 
-        System.err.println(fourSum(s1, -11));
+//        System.err.println(fourSum(s1, -11));
+        System.err.println(getHint("1123", "0111"));
 
-        System.err.println("本次耗时：" + (System.currentTimeMillis() - starttime));
+//        System.err.println("本次耗时：" + (System.currentTimeMillis() - starttime));
 
+    }
+
+
+    /**
+     * 299. 猜数字游戏
+     * <p>
+     * "1123"
+     * "0111"
+     */
+    public static String getHint(String secret, String guess) {
+        char[] secretChars = secret.toCharArray();
+        char[] guessChars = guess.toCharArray();
+        int countA = 0;
+        int countB = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < secretChars.length; i++) {
+            if (secretChars[i] == guessChars[i]) {
+                guessChars[i] = ' ';
+                countA++;
+            } else {
+                map.put(secretChars[i], map.getOrDefault(secretChars[i], 0) + 1);
+            }
+        }
+        for (int i = 0; i < guessChars.length; i++) {
+            if (map.get(guessChars[i]) != null) {
+                countB++;
+                int temp = map.get(guessChars[i]);
+                if (temp == 1) {
+                    map.remove(guessChars[i]);
+                } else {
+                    map.put(guessChars[i], temp - 1);
+                }
+            }
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append(countA);
+        builder.append("A");
+        builder.append(countB);
+        builder.append("B");
+        return builder.toString();
     }
 
 
