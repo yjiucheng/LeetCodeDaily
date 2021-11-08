@@ -34,30 +34,22 @@ public class GreedyAlgorithmDemo {
      * S只包含小写字母 'a' 到 'z' 。
      */
     public List<Integer> partitionLabels(String s) {
-        List<Integer> ans = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        int[] edge = new int[26];
         char[] chars = s.toCharArray();
-        int start = 0;
-        char lastChar = chars[0];
-        int maxEnd = getLastIndex(chars, lastChar);
-        for (int i = 1; i < chars.length; i++) {
-            char cur = chars[i];
-            if (cur == lastChar) {
-                continue;
-            }
-            int tempEnd = getLastIndex(chars, cur);
-            if (i > maxEnd) {
-                ans.add(maxEnd - start + 1);
-                start = i;
-                maxEnd = tempEnd;
-            } else {
-                maxEnd = Math.max(tempEnd, maxEnd);
-            }
-            if (maxEnd == chars.length - 1) {
-                ans.add(maxEnd - start + 1);
-                break;
+        for (int i = 0; i < chars.length; i++) {
+            edge[chars[i] - 'a'] = i;
+        }
+        int idx = 0;
+        int last = -1;
+        for (int i = 0; i < chars.length; i++) {
+            idx = Math.max(idx,edge[chars[i] - 'a']);
+            if (i == idx) {
+                list.add(i - last);
+                last = i;
             }
         }
-        return ans;
+        return list;
     }
 
     private int getLastIndex(char[] chars, char target) {
