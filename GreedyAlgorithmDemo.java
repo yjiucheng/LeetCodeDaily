@@ -12,25 +12,56 @@ public class GreedyAlgorithmDemo {
         System.err.println(demo.lemonadeChange(nums));
     }
 
+
+    /**
+     * 435. 无重叠区间
+     * 给定一个区间的集合，找到需要移除区间的最小数量，使剩余区间互不重叠。
+     * <p>
+     * 注意:
+     * <p>
+     * 可以认为区间的终点总是大于它的起点。
+     * 区间 [1,2] 和 [2,3] 的边界相互“接触”，但没有相互重叠。
+     * <p>
+     */
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals.length == 0) {
+            return 0;
+        }
+        sort(intervals);
+        int end = intervals[0][1];
+        int count = 0;
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] < end) {
+                count++;
+                end = Math.min(end, intervals[i][1]);
+            } else {
+                end = intervals[i][1];
+            }
+        }
+        return count;
+    }
+
+    private void sort(int[][] intervals) {
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[1] > o2[1]) {
+                    return 1;
+                } else if (o1[1] == o2[1]) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            }
+        });
+    }
+
     /**
      * 452. 用最少数量的箭引爆气球
      */
     public int findMinArrowShots(int[][] points) {
         if (points.length == 0) return 0;
-        Arrays.sort(points, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                if (o1[1] > o2[1]) {
-                    return 1;
-                }
-                else if (o1[1] == o2[1]) {
-                    return 0;
-                }
-                else {
-                    return -1;
-                }
-            }
-        });
+        sort(points);
         int end = points[0][1];
         int count = 1;
         for (int i = 1; i < points.length; i++) {
