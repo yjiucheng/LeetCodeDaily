@@ -5,10 +5,87 @@ import java.util.Arrays;
  */
 public class GreedyAlgorithmDemo {
     public static void main(String[] args) {
-//        int[] nums = new int[]{-2,1,-3,4,-1,2,1,-5,4};
-        int[] nums = new int[]{1, 2, 22, -23, -9, -30, -6, -9, 1, 8, 24, 2, 21, 29, 10, -25, 18, 30, 1, 9, -8, -11, -22, -23, -17, -12, 19, 28, 19, 28};
+        int[] nums = new int[]{5,10,20};
+//        int[] nums = new int[]{1, 2, 22, -23, -9, -30, -6, -9, 1, 8, 24, 2, 21, 29, 10, -25, 18, 30, 1, 9, -8, -11, -22, -23, -17, -12, 19, 28, 19, 28};
         GreedyAlgorithmDemo demo = new GreedyAlgorithmDemo();
-        System.err.println(demo.largestSumAfterKNegations(nums, 24));
+        System.err.println(demo.lemonadeChange(nums));
+    }
+
+    /**
+     * 860. 柠檬水找零
+     */
+    public boolean lemonadeChange(int[] bills) {
+        if (bills[0] != 5) {
+            return false;
+        }
+        int fiveCount = 1;
+        int tenCount = 0;
+        for (int i = 1; i < bills.length; i++) {
+            if (bills[i] == 5) {
+                fiveCount++;
+            }
+            if (bills[i] == 10) {
+                tenCount++;
+                fiveCount--;
+            }
+            if (bills[i] == 20) {
+                if (tenCount > 0) {
+                    tenCount--;
+                    fiveCount--;
+                } else {
+                    fiveCount = fiveCount - 3;
+                }
+            }
+            if (fiveCount < 0 || tenCount < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * 135. 分发糖果
+     * 老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
+     * <p>
+     * 你需要按照以下要求，帮助老师给这些孩子分发糖果：
+     * <p>
+     * 每个孩子至少分配到 1 个糖果。
+     * 评分更高的孩子必须比他两侧的邻位孩子获得更多的糖果。
+     * 那么这样下来，老师至少需要准备多少颗糖果呢？
+     * <p>
+     * 输入：[1,0,2]
+     * 输出：5
+     * 解释：你可以分别给这三个孩子分发 2、1、2 颗糖果。
+     * <p>
+     * 输入：[1,2,2]
+     * 输出：4
+     * 解释：你可以分别给这三个孩子分发 1、2、1 颗糖果。
+     * 第三个孩子只得到 1 颗糖果，这已满足上述两个条件。
+     */
+    //todo 这题没明白
+    public int candy(int[] ratings) {
+        int sum = 0;
+        int[] ans = new int[ratings.length];
+        ans[0] = 1;
+        for (int i = 1; i < ratings.length; i++) {
+            if (ratings[i] > ratings[i - 1]) {
+                ans[i] = ans[i - 1] + 1;
+            } else {
+                ans[i] = 1;
+            }
+        }
+
+        for (int i = ratings.length - 2; i >= 0; i--) {
+            if (ratings[i] > ratings[i + 1]) {
+                ans[i] = Math.max(ans[i], ans[i + 1] + 1);
+            }
+        }
+
+        for (int num : ans) {
+            sum += num;
+        }
+        return sum;
     }
 
 
@@ -29,7 +106,7 @@ public class GreedyAlgorithmDemo {
      * <p>
      */
     public int canCompleteCircuit(int[] gas, int[] cost) {
-        int ans = -1;
+        int ans = 0;
         int gasSum = 0;
         int costSum = 0;
         int lastGas = 0;
