@@ -13,6 +13,43 @@ public class GreedyAlgorithmDemo {
 
 
     /**
+     * 134. 加油站
+     * 在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
+     * <p>
+     * 你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。
+     * 你从其中的一个加油站出发，开始时油箱为空。
+     * <p>
+     * 如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。
+     * <p>
+     * 说明: 
+     * <p>
+     * 如果题目有解，该答案即为唯一答案。
+     * 输入数组均为非空数组，且长度相同。
+     * 输入数组中的元素均为非负数。
+     * <p>
+     */
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int ans = -1;
+        int gasSum = 0;
+        int costSum = 0;
+        int lastGas = 0;
+        for (int i = 0; i < gas.length; i++) {
+            gasSum += gas[i];
+            costSum += cost[i];
+            lastGas += gas[i] - cost[i];
+            if (lastGas < 0) {
+                ans = i + 1;
+                lastGas = 0;
+            }
+        }
+
+        if (gasSum - costSum < 0) {
+            return -1;
+        }
+        return ans;
+    }
+
+    /**
      * 1005. K 次取反后最大化的数组和
      * 给定一个整数数组 A，我们只能用以下方法修改该数组：
      * 我们选择某个索引 i 并将 A[i] 替换为 -A[i]，然后总共重复这个过程 K 次。（我们可以多次选择同一个索引 i。）
