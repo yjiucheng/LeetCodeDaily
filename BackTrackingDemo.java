@@ -11,10 +11,6 @@ public class BackTrackingDemo {
 //        System.err.println(letterCombinations(""));
         int[] nums = new int[]{10, 1, 2, 7, 6, 1, 5};
         int[] nums2 = new int[]{1, 1, 3};
-//        System.err.println(combinationSum(nums, 7));
-//        System.err.println(combinationSum2(nums, 8));
-//        System.err.println(partition("a"));
-//        System.err.println(combinationSum2(nums2, 5));
 
 
         List<String> list1 = new ArrayList<>();
@@ -35,8 +31,151 @@ public class BackTrackingDemo {
         tickets.add(list2);
         tickets.add(list3);
 
+
+//        board = "WWBRRBBW", hand = "RB"
+//        "WWGWGW"
+//        "GWBWR"
+        String board = "WWGWGW";
+        String hand = "GWBWR";
         BackTrackingDemo demo = new BackTrackingDemo();
-        System.err.println(demo.solveNQueens(1));
+        System.err.println(demo.findMinStep(board, hand));
+    }
+
+
+    /**
+     * 488. 祖玛游戏
+     * 输入：board = "WRRBBW", hand = "RB"
+     * 输出：-1
+     * 解释：无法移除桌面上的所有球。可以得到的最好局面是：
+     * - 插入一个 'R' ，使桌面变为 WRRRBBW 。WRRRBBW -> WBBW
+     * - 插入一个 'B' ，使桌面变为 WBBBW 。WBBBW -> WW
+     * 桌面上还剩着球，没有其他球可以插入。
+     * <p>
+     * <p>
+     * <p>
+     * 输入：board = "WWRRBBWW", hand = "WRBRW"
+     * 输出：2
+     * 解释：要想清空桌面上的球，可以按下述步骤：
+     * - 插入一个 'R' ，使桌面变为 WWRRRBBWW 。WWRRRBBWW -> WWBBWW
+     * - 插入一个 'B' ，使桌面变为 WWBBBWW 。WWBBBWW -> WWWW -> empty
+     * 只需从手中出 2 个球就可以清空桌面。
+     * <p>
+     */
+    int ansCount488 = -1;
+    boolean[] handUsed;
+    HashMap<Character, Integer> map488 = new HashMap<>();
+
+    //todo 解法有误
+    public int findMinStep(String board, String hand) {
+        if (board == null || board.length() == 0) {
+            return 0;
+        }
+        for (char cur : board.toCharArray()) {
+            map488.put(cur, map488.getOrDefault(cur, 0) + 1);
+        }
+        handUsed = new boolean[hand.length()];
+        findMinStepBackTracking(board, hand, 0, 0);
+        return ansCount488;
+    }
+
+    public void findMinStepBackTracking(String board, String hand, int handUsedCount, int tempCount) {
+        if (board.length() == 0) {
+            if (ansCount488 == -1) {
+                ansCount488 = tempCount;
+            } else {
+                ansCount488 = Math.min(ansCount488, tempCount);
+            }
+            return;
+        }
+        if (handUsedCount > hand.length()) {
+            return;
+        }
+        for (int i = 0; i < hand.length(); i++) {
+            if (handUsed[i]) {
+                continue;
+            }
+            char cur = hand.charAt(i);
+            if (board.contains(cur + "")) {
+                handUsed[i] = true;
+                String temp = dealBoard(board, cur);
+                findMinStepBackTracking(temp, hand, handUsedCount + 1, tempCount + 1);
+                handUsed[i] = false;
+            } else {
+                handUsedCount++;
+            }
+        }
+    }
+
+    //删除算法有问题 todo
+    public String dealBoard(String board, char intsetChar) {
+        char[] boardChars = board.toCharArray();
+        boolean hasDelete = false;
+        for (int i = 1; i < boardChars.length; i++) {
+            char cur = boardChars[i];
+            if (cur == boardChars[i - 1] && cur == intsetChar) {
+                boardChars[i] = ' ';
+                boardChars[i - 1] = ' ';
+                hasDelete = true;
+                break;
+            }
+        }
+        StringBuilder builder = new StringBuilder();
+        if (!hasDelete) {
+            boolean add = false;
+            for (char cur : boardChars) {
+                builder.append(cur);
+                if (cur == intsetChar && !add) {
+                    builder.append(intsetChar);
+                    add = true;
+                }
+            }
+        } else {
+            int count = 0;
+            char lastChar = ' ';
+            for (int i = 0; i < boardChars.length; i++) {
+                char cur = boardChars[i];
+                if (cur == ' ') {
+                    continue;
+                }
+                if (builder.length() == 0) {
+                    builder.append(cur);
+                    count++;
+                    lastChar = cur;
+                } else {
+                    if (cur == lastChar) {
+                        builder.append(cur);
+                        count++;
+                        if (count == 3) {
+                            //如果下一个字符还是相同，直接移除
+                            if (i + 1 < boardChars.length && boardChars[i + 1] == cur) {
+                                boardChars[i + 1] = ' ';
+                            }
+                            while (count > 0) {
+                                builder.deleteCharAt(builder.length() - 1);
+                                count--;
+                            }
+                            if (builder.length() > 0) {
+                                lastChar = builder.charAt(builder.length() - 1);
+                                if (builder.length() >= 2 && lastChar == builder.charAt(builder.length() - 2)) {
+                                    count = 2;
+                                } else {
+                                    count = 1;
+                                }
+
+                            } else {
+                                count = 0;
+                                lastChar = ' ';
+                            }
+                        }
+                    } else {
+                        builder.append(cur);
+                        count = 1;
+                        lastChar = cur;
+                    }
+                }
+            }
+        }
+        return builder.toString();
     }
 
 

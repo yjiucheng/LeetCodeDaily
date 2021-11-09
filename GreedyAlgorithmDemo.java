@@ -12,7 +12,112 @@ public class GreedyAlgorithmDemo {
 //        int[] nums = new int[]{1, 2, 22, -23, -9, -30, -6, -9, 1, 8, 24, 2, 21, 29, 10, -25, 18, 30, 1, 9, -8, -11, -22, -23, -17, -12, 19, 28, 19, 28};
         String s = "ababcbacadefegdehijhklij";
         GreedyAlgorithmDemo demo = new GreedyAlgorithmDemo();
-        System.err.println(demo.partitionLabels(s));
+        System.err.println(demo.monotoneIncreasingDigits(
+                10));
+    }
+
+
+    /**
+     * 968. 监控二叉树
+     * 给定一个二叉树，我们在树的节点上安装摄像头。
+     * <p>
+     * 节点上的每个摄影头都可以监视其父对象、自身及其直接子对象。
+     * <p>
+     * 计算监控树的所有节点所需的最小摄像头数量。
+     */
+    int sum968 = 0;
+
+
+    public int minCameraCover(TreeNode root) {
+        if (root == null) {
+            return sum968;
+        }
+        if (dealTree(root) == 2){
+            sum968++;
+        }
+        return sum968;
+    }
+
+    private int dealTree(TreeNode temp) {
+        if (temp == null) {
+            return 1;
+        }
+        int left = dealTree(temp.left);
+        int rigth = dealTree(temp.right);
+        if (left == 2 || rigth == 2) {
+            sum968++;
+            return 0;
+        } else if (left == 0 || rigth == 0) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+
+    /**
+     * 714. 买卖股票的最佳时机含手续费
+     * 给定一个整数数组 prices，其中第 i 个元素代表了第 i 天的股票价格 ；整数 fee 代表了交易股票的手续费用。
+     * <p>
+     * 你可以无限次地完成交易，但是你每笔交易都需要付手续费。如果你已经购买了一个股票，在卖出它之前你就不能再继续购买股票了。
+     * <p>
+     * 返回获得利润的最大值。
+     * <p>
+     * 注意：这里的一笔交易买入持并卖出股票的整个过程，每笔交易你只指需要有为支付一次手续费。
+     */
+    public int maxProfit(int[] prices, int fee) {
+        int sum = 0;
+        int buy = prices[0] + fee;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] + fee < buy) {
+                buy = prices[i] + fee;
+            } else if (prices[i] > buy) {
+                sum += prices[i] - buy;
+                buy = prices[i];
+            }
+        }
+        return sum;
+    }
+
+
+    /**
+     * 738. 单调递增的数字
+     * 给定一个非，负整数 N，找出小于或等于 N 的最大的整数同时这个整数需要满足其各个位数上的数字是单调递增。
+     * <p>
+     * （当且仅当每个相邻位数上的数字 x 和 y 满足 x <= y 时，我们称这个整数是单调递增的。）
+     * <p>
+     * 输入: N = 10
+     * 输出: 9
+     * 输入: N = 1234
+     * 输出: 1234
+     * <p>
+     * 输入: N = 332
+     * 输出: 299
+     */
+    public int monotoneIncreasingDigits(int n) {
+        String numStr = String.valueOf(n);
+        char[] chars = numStr.toCharArray();
+        int firstLow = -1;
+        for (int i = 1; i < chars.length; i++) {
+            if (chars[i - 1] > chars[i]) {
+                firstLow = i - 1;
+                break;
+            }
+        }
+        if (firstLow == -1) {
+            return n;
+        }
+        while (firstLow > 0 && chars[firstLow] == chars[firstLow - 1]) {
+            firstLow--;
+        }
+        int tem = Integer.valueOf(numStr.substring(0, firstLow + 1));
+        tem = tem - 1;
+        StringBuilder builder = new StringBuilder();
+        builder.append(tem);
+        for (int i = firstLow + 1; i < numStr.length(); i++) {
+            builder.append(9);
+        }
+        return Integer.parseInt(builder.toString());
     }
 
 
@@ -43,7 +148,7 @@ public class GreedyAlgorithmDemo {
         int idx = 0;
         int last = -1;
         for (int i = 0; i < chars.length; i++) {
-            idx = Math.max(idx,edge[chars[i] - 'a']);
+            idx = Math.max(idx, edge[chars[i] - 'a']);
             if (i == idx) {
                 list.add(i - last);
                 last = i;
@@ -365,8 +470,8 @@ public class GreedyAlgorithmDemo {
      * 注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
      */
     public int maxProfit(int[] prices) {
-        //如果没有股票：今天价格比明天低，就买进来
-//          如果有股票：明天价格比今天低，就卖出去
+        //如果没有，股票：今天价格比明天低，就买进来
+////          如果有股票：明天价格比今天低就卖出去
         boolean has = false;
         int sum = 0;
         int buyPrice = 0;
