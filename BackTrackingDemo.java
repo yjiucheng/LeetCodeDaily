@@ -41,6 +41,81 @@ public class BackTrackingDemo {
         System.err.println(demo.findMinStep(board, hand));
     }
 
+    /**
+     * 79. 单词搜索
+     * 给定一个 m x n 二维字符网格 board 和一个字符串单词 word 。如果 word 存在于网格中，返回 true ；否则，返回 false 。
+     * <p>
+     * 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
+     * <p>
+     */
+    boolean[][] used79;
+
+    public boolean exist(char[][] board, String word) {
+        used79 = new boolean[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                char cur = board[i][j];
+                if (cur != word.charAt(0)) {
+                    continue;
+                }
+                used79[i][j] = true;
+                if (existBackTracking(board, word, 1, i, j)) {
+                    return true;
+                }
+                used79[i][j] = false;
+            }
+        }
+        return false;
+    }
+
+    private boolean existBackTracking(char[][] board, String word, int count, int x, int y) {
+        if (count == word.length()) {
+            return true;
+        }
+        char curChar = word.charAt(count);
+        //上方
+        boolean top = false;
+        if (x >= 1) {
+            //没有被使用，且字符与当前curChar相等
+            if (!used79[x - 1][y] && curChar == board[x - 1][y]) {
+                used79[x - 1][y] = true;
+                top = existBackTracking(board, word, count + 1, x - 1, y);
+                used79[x - 1][y] = false;
+            }
+        }
+        //下
+        boolean bottom = false;
+        if (x < board.length - 1) {
+            //没有被使用，且字符与当前curChar相等
+            if (!used79[x + 1][y] && curChar == board[x + 1][y]) {
+                used79[x + 1][y] = true;
+                bottom = existBackTracking(board, word, count + 1, x + 1, y);
+                used79[x + 1][y] = false;
+            }
+        }
+        //左
+        boolean left = false;
+        if (y > 0) {
+            //没有被使用，且字符与当前curChar相等
+            if (!used79[x][y - 1] && curChar == board[x][y - 1]) {
+                used79[x][y - 1] = true;
+                left = existBackTracking(board, word, count + 1, x, y - 1);
+                used79[x][y - 1] = false;
+            }
+        }
+
+        //右
+        boolean right = false;
+        if (y < board[0].length - 1) {
+            //没有被使用，且字符与当前curChar相等
+            if (!used79[x][y + 1] && curChar == board[x][y + 1]) {
+                used79[x][y + 1] = true;
+                right = existBackTracking(board, word, count + 1, x, y + 1);
+                used79[x][y + 1] = false;
+            }
+        }
+        return top || bottom || left || right;
+    }
 
     /**
      * 488. 祖玛游戏
