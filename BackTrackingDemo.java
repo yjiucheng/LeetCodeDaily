@@ -114,7 +114,8 @@ public class BackTrackingDemo {
                 used79[x][y + 1] = false;
             }
         }
-        return top || bottom || left || right;
+
+        return top||bottom||left||right;
     }
 
     /**

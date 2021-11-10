@@ -10,10 +10,43 @@ public class GreedyAlgorithmDemo {
     public static void main(String[] args) {
         int[] nums = new int[]{5, 10, 20};
 //        int[] nums = new int[]{1, 2, 22, -23, -9, -30, -6, -9, 1, 8, 24, 2, 21, 29, 10, -25, 18, 30, 1, 9, -8, -11, -22, -23, -17, -12, 19, 28, 19, 28};
-        String s = "ababcbacadefegdehijhklij";
+        String s = "AAAAAABCDEFG";
         GreedyAlgorithmDemo demo = new GreedyAlgorithmDemo();
-        System.err.println(demo.monotoneIncreasingDigits(
-                10));
+        System.err.println(demo.leastInterval(s.toCharArray(),2));
+    }
+
+
+    /**
+     * 621. 任务调度器
+     * 给你一个用字符数组 tasks 表示的 CPU 需要执行的任务列表。
+     * 其中每个字母表示一种不同种类的任务。任务可以以任意顺序执行，并且每个任务都可以在 1 个单位时间内执行完。
+     * 在任何一个单位时间，CPU 可以完成一个任务，或者处于待命状态。
+     * <p>
+     * 然而，两个 相同种类 的任务之间必须有长度为整数 n 的冷却时间，因此至少有连续 n 个单位时间内 CPU 在执行不同的任务，或者在待命状态。
+     * <p>
+     * 你需要计算完成所有任务所需要的 最短时间 。
+     * <p>
+     * 链接：https://leetcode-cn.com/problems/task-scheduler
+     */
+    public int leastInterval(char[] tasks, int n) {
+        int minTime = tasks.length;
+        int[] nums = new int[40];
+        for (int i = 0; i < tasks.length; i++) {
+            nums[tasks[i] - 'A'] += 1;
+        }
+        Arrays.sort(nums);
+        int maxCount = nums[nums.length - 1];
+        int count = 0;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (maxCount == nums[i]) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        int sumTime = (maxCount - 1) * (n + 1) + count;
+
+        return sumTime >= minTime ? sumTime : minTime;
     }
 
 
@@ -32,7 +65,7 @@ public class GreedyAlgorithmDemo {
         if (root == null) {
             return sum968;
         }
-        if (dealTree(root) == 2){
+        if (dealTree(root) == 2) {
             sum968++;
         }
         return sum968;
