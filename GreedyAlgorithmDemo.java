@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class GreedyAlgorithmDemo {
     public static void main(String[] args) {
-        int[] nums = new int[]{1,3,2,2,2};
+        int[] nums = new int[]{1, 3, 2, 2, 2};
 //        int[] nums = new int[]{1, 2, 22, -23, -9, -30, -6, -9, 1, 8, 24, 2, 21, 29, 10, -25, 18, 30, 1, 9, -8, -11, -22, -23, -17, -12, 19, 28, 19, 28};
         String s = "AAAAAABCDEFG";
         GreedyAlgorithmDemo demo = new GreedyAlgorithmDemo();
