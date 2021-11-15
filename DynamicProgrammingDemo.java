@@ -4,7 +4,51 @@
 public class DynamicProgrammingDemo {
     public static void main(String[] args) {
         DynamicProgrammingDemo demo = new DynamicProgrammingDemo();
-        System.err.println(demo.uniquePaths(5, 8));
+        System.err.println(demo.integerBreak(13));
+    }
+
+
+    /**
+     * 343. 整数拆分
+     * 给定一个正整数 n，将其拆分为至少两个正整数的和，并使这些整数的乘积最大化。 返回你可以获得的最大乘积。
+     */
+    public int integerBreak(int n) {
+        if (n <= 1) {
+            return n;
+        }
+        int max = 1;
+        if (n < 7) {
+            return getSum(n);
+        }
+        int n4 = 4;
+        int n5 = 6;
+        int n6 = 9;
+        for (int i = 7; i <= n; i++) {
+            if (i % 3 == 2) {
+                n5 *= 3;
+                max = n5;
+            } else if (i % 3 == 1) {
+                n4 *= 3;
+                max = n4;
+            } else {
+                n6 *= 3;
+                max = n6;
+            }
+        }
+        return max;
+    }
+
+    private int getSum(int n) {
+        if (n <= 1) {
+            return 1;
+        }
+        int max = 1;
+        if (n % 2 == 0) {
+            max = (n / 2) * (n / 2);
+        } else {
+            max = (n / 2) * (n / 2 + 1);
+        }
+        return max;
     }
 
 
