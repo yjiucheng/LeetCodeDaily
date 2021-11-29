@@ -15,6 +15,48 @@ public class ArrayDemo {
     }
 
     /**
+     * 33. 搜索旋转排序数组
+     */
+    public int search33(int[] nums, int target) {
+        int index = -1;
+        if (nums.length == 0) {
+            return index;
+        }
+        if (nums.length == 1) {
+            return nums[0] == target ? 0 : index;
+        }
+
+        int statIndex = 0;
+        int endIndex = nums.length - 1;
+        int midIndex;
+        while (endIndex >= statIndex) {
+            midIndex = (endIndex - statIndex) / 2 + statIndex;
+            if (nums[midIndex] == target) {
+                index = midIndex;
+                break;
+            }
+
+            //左边是有序数组
+            if (nums[statIndex] <= nums[midIndex]) {
+                if (target >= nums[statIndex] && target < nums[midIndex]) {
+                    endIndex = midIndex - 1;
+                } else {
+                    statIndex = midIndex + 1;
+                }
+            } else {
+                if (target > nums[midIndex] && target <= nums[endIndex]) {
+                    statIndex = midIndex + 1;
+                } else {
+                    endIndex = midIndex - 1;
+                }
+            }
+        }
+
+        return index;
+    }
+
+
+    /**
      * 347. 前 K 个高频元素
      * 给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案。
      * 输入: nums = [1,1,1,2,2,3], k = 2
