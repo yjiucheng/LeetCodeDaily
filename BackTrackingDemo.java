@@ -9,7 +9,7 @@ public class BackTrackingDemo {
 //        System.err.println(combine(1, 1));
 //        System.err.println(combinationSum3(3, 9));
 //        System.err.println(letterCombinations(""));
-        int[] nums = new int[]{10, 1, 2, 7, 6, 1, 5};
+        int[] nums = new int[]{100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,99,97};
         int[] nums2 = new int[]{1, 1, 3};
 
 
@@ -38,8 +38,50 @@ public class BackTrackingDemo {
         String board = "WWGWGW";
         String hand = "GWBWR";
         BackTrackingDemo demo = new BackTrackingDemo();
-        System.err.println(demo.findMinStep(board, hand));
+        System.err.println(demo.canPartition(nums));
     }
+
+
+    /**
+     * 416. 分割等和子集
+     * 给你一个 只包含正整数 的 非空 数组 nums 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
+     *
+     * @param nums
+     * @return
+     */
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        for (int cur : nums) {
+            sum += cur;
+        }
+        if (sum % 2 != 0) {
+            return false;
+        }
+        int target = sum / 2;
+        return canPartitionBack(nums, target - nums[0], 1, 0);
+    }
+
+    private boolean canPartitionBack(int[] nums, int target, int index, int curSum) {
+        if (target == curSum) {
+            return true;
+        }
+        if (index > nums.length - 1) {
+            return false;
+        }
+        if (curSum > target) {
+            return false;
+        }
+        int curNum = nums[index];
+        //取当前curNum
+        if (canPartitionBack(nums, target, index + 1, curSum + curNum)) {
+            return true;
+        }
+        if (canPartitionBack(nums, target, index + 1, curSum)) {
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * 79. 单词搜索
@@ -115,7 +157,7 @@ public class BackTrackingDemo {
             }
         }
 
-        return top||bottom||left||right;
+        return top || bottom || left || right;
     }
 
     /**
