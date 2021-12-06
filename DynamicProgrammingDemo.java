@@ -16,6 +16,26 @@ public class DynamicProgrammingDemo {
         testWeightBagProblem2(weight, value, bagSize);
     }
 
+
+    /**
+     * 1049. 最后一块石头的重量 II
+     */
+    public int lastStoneWeightII(int[] stones) {
+        int sum = 0;
+        for (int cur : stones) {
+            sum += cur;
+        }
+        int target = sum / 2;
+        int[] dp = new int[target + 1];
+        for (int i = 0; i < stones.length; i++) {
+            for (int j = target; j >= stones[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - stones[i]] + stones[i]);
+            }
+        }
+        return sum-2*dp[target];
+    }
+
+
     //01背包：滚动数组
     public static void testWeightBagProblem2(int[] weight, int[] value, int bagSize) {
         /**
@@ -29,7 +49,7 @@ public class DynamicProgrammingDemo {
             for (int j = bagSize; j >= weight[i]; j--) {
                 dp[j] = Math.max(dp[j], value[i] + dp[j - weight[i]]);
             }
-            for (int cur:dp){
+            for (int cur : dp) {
                 System.out.print(cur + " ");
             }
             System.out.print("\n");
