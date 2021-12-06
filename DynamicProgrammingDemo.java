@@ -11,6 +11,30 @@ public class DynamicProgrammingDemo {
         int[] value = {15, 20, 30};
         int bagSize = 4;
         testWeightBagProblem(weight, value, bagSize);
+        System.out.print("\n");
+        System.out.print("\n");
+        testWeightBagProblem2(weight, value, bagSize);
+    }
+
+    //01背包：滚动数组
+    public static void testWeightBagProblem2(int[] weight, int[] value, int bagSize) {
+        /**
+         * 1.确定dp数组以及下标的含义 dp[j] j:背包容量
+         * dp[j] ：表示从物品0到i内，任取到到容量为j的背包中，能取到的最大物品价值总和
+         */
+        int[] dp = new int[bagSize + 1];
+        dp[0] = 0;
+
+        for (int i = 0; i < weight.length; i++) {
+            for (int j = bagSize; j >= weight[i]; j--) {
+                dp[j] = Math.max(dp[j], value[i] + dp[j - weight[i]]);
+            }
+            for (int cur:dp){
+                System.out.print(cur + " ");
+            }
+            System.out.print("\n");
+        }
+
     }
 
     //01背包：二维数组
