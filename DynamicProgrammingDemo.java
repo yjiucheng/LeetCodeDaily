@@ -4,10 +4,88 @@
 public class DynamicProgrammingDemo {
     public static void main(String[] args) {
         DynamicProgrammingDemo demo = new DynamicProgrammingDemo();
-        System.err.println(demo.integerBreak(13));
+//        System.err.println(demo.integerBreak(13));
 
+
+        int[] weight = {1, 3, 4};
+        int[] value = {15, 20, 30};
+        int bagSize = 4;
+        testWeightBagProblem(weight, value, bagSize);
     }
 
+    //01背包：二维数组
+    public static void testWeightBagProblem(int[] weight, int[] value, int bagSize) {
+        /**
+         * 1.确定dp数组以及下标的含义 dp[i][j] i:物品下标  j:背包容量
+         * dp[i][j] ：表示从物品0到i内，任取到到容量为j的背包中，能取到的最大物品价值总和
+         */
+        int[][] dp = new int[value.length][bagSize + 1];
+        /**
+         * 2.确定递推公式
+         *
+         *  dp[i][j]中对于当前物品i，有以下两种状态：
+         *  【不取物品i】：不物品i，那就和当前物品i没啥关系，前一个物取品i-1的最大即为当前最大，即dp[i-1][j]的值为当前最大
+         *  即：
+         *  dp[i][j]=dp[i-1][j]
+         *
+         *  【取物品i】：（注意：取物品i默认是背包容量j能装下物品i，即j>=weight[i]）
+         *    物品i的价值 value[i]
+         *    物品i的重量weight[i]
+         *    取物品i之后的背包总价值=value[i]+背包装了物品i之后的剩余空间能装的最大价值
+         *    即：
+         *    dp[i][j]=value[i]+dp[i-1][j-weight[i]]
+         *    对dp[i-1][j-weight[i]]说明：
+         *    ①.为啥是i-1：因为是装了物品之后的剩余空间的最大价值，物品i已经在背包里了，不能再次使用，所以只能从物品0到物品i-1中选
+         *    ②.j-weight[i]:表示装了物品i之后背包的剩余空间（不用担心j-weight[i]<0,在取物品i的时候就默认j>=weight[i]）
+         *
+         *
+         * 【综上】:取两种情况中的大值
+         * dp[i][j]=Math.max(dp[i-1][j],value[i]+dp[i-1][j-weight[i]]）
+         *
+         */
+
+        /**
+         * 3.dp数组如何初始化
+         * 分析：dp[i][j]=Math.max(dp[i-1][j],value[i]+dp[i-1][j-weight[i]]）
+         * 和i-1关联，所以i=0一定要初始化
+         * 另外：考虑j的实际含义：背包的容量，如果j=0，则最大价值一定未0
+         *
+         * 所以，需要初始化：dp[0][j]
+         * dp[i][0]=0
+         */
+        for (int j = 0; j <= bagSize; j++) {
+            if (weight[0] > j) {
+                dp[0][j] = 0;
+            } else {
+                dp[0][j] = value[0];
+            }
+        }
+
+        /**
+         * 4.确定遍历顺序
+         * 二维数组先遍历背包，还是先遍历物品都一样
+         */
+        for (int i = 1; i < weight.length; i++) {
+            for (int j = 0; j <= bagSize; j++) {
+                if (j < weight[i]) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], value[i] + dp[i - 1][j - weight[i]]);
+                }
+            }
+        }
+
+
+        //5.举例推导dp数组
+        //打印dp数组
+        for (int i = 0; i < weight.length; i++) {
+            for (int j = 0; j <= bagSize; j++) {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.print("\n");
+        }
+
+    }
 
     /**
      * 416. 分割等和子集
@@ -31,11 +109,11 @@ public class DynamicProgrammingDemo {
         dp[0] = 0;
         for (int i = 0; i < nums.length; i++) {
             for (int j = target; j >= nums[i]; j--) {
-                dp[j]=Math.max(dp[j],dp[j-nums[i]]+nums[i]);
+                dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
             }
         }
 
-        return target==dp[target];
+        return target == dp[target];
     }
 
     /**
