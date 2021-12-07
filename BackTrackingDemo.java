@@ -9,38 +9,81 @@ public class BackTrackingDemo {
 //        System.err.println(combine(1, 1));
 //        System.err.println(combinationSum3(3, 9));
 //        System.err.println(letterCombinations(""));
-        int[] nums = new int[]{100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,99,97};
-        int[] nums2 = new int[]{1, 1, 3};
+        int[] nums = new int[]{100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 99, 97};
+        int[] nums2 = new int[]{1,2,1,4,6,3,2};
+        int target=15;
 
-
-        List<String> list1 = new ArrayList<>();
-        list1.add("JFK");
-        list1.add("KUL");
-
-        List<String> list2 = new ArrayList<>();
-        list2.add("JFK");
-        list2.add("NRT");
-
-        List<String> list3 = new ArrayList<>();
-        list3.add("NRT");
-        list3.add("JFK");
-
-
-        List<List<String>> tickets = new ArrayList<>();
-        tickets.add(list1);
-        tickets.add(list2);
-        tickets.add(list3);
-
-
-//        board = "WWBRRBBW", hand = "RB"
-//        "WWGWGW"
-//        "GWBWR"
-        String board = "WWGWGW";
-        String hand = "GWBWR";
+//        List<String> list1 = new ArrayList<>();
+//        list1.add("JFK");
+//        list1.add("KUL");
+//
+//        List<String> list2 = new ArrayList<>();
+//        list2.add("JFK");
+//        list2.add("NRT");
+//
+//        List<String> list3 = new ArrayList<>();
+//        list3.add("NRT");
+//        list3.add("JFK");
+//
+//
+//        List<List<String>> tickets = new ArrayList<>();
+//        tickets.add(list1);
+//        tickets.add(list2);
+//        tickets.add(list3);
+//
+//
+////        board = "WWBRRBBW", hand = "RB"
+////        "WWGWGW"
+////        "GWBWR"
+//        String board = "WWGWGW";
+//        String hand = "GWBWR";
         BackTrackingDemo demo = new BackTrackingDemo();
-        System.err.println(demo.canPartition(nums));
+        System.err.println(demo.findTargetSumWays(nums2,target));
     }
 
+
+    /**
+     * 494. 目标和
+     * 给你一个整数数组 nums 和一个整数 target 。
+     * <p>
+     * 向数组中的每个整数前添加 '+' 或 '-' ，然后串联起所有整数，可以构造一个 表达式 ：
+     * <p>
+     * 例如，nums = [2, 1] ，可以在 2 之前添加 '+' ，在 1 之前添加 '-' ，然后串联起来得到表达式 "+2-1" 。
+     * 返回可以通过上述方法构造的、运算结果等于 target 的不同 表达式 的数目。
+     * <p>
+     * 输入：nums = [1,1,1,1,1], target = 3
+     * 输出：5
+     * 解释：一共有 5 种方法让最终目标和为 3 。
+     * -1 + 1 + 1 + 1 + 1 = 3
+     * +1 - 1 + 1 + 1 + 1 = 3
+     * +1 + 1 - 1 + 1 + 1 = 3
+     * +1 + 1 + 1 - 1 + 1 = 3
+     * +1 + 1 + 1 + 1 - 1 = 3
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/target-sum
+     * <p>
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     */
+    int ans494 = 0;
+
+    public int findTargetSumWays(int[] nums, int target) {
+        //回溯解法
+        findTargetSumWaysBackTacking(nums, 0, target, 0);
+        return ans494;
+    }
+
+    private void findTargetSumWaysBackTacking(int[] nums, int index, int target, int sum) {
+        if (index == nums.length) {
+            if (target == sum) {
+                ans494++;
+            }
+            return;
+        }
+        int cur = nums[index];
+        findTargetSumWaysBackTacking(nums, index + 1, target, sum + cur);
+        findTargetSumWaysBackTacking(nums, index + 1, target, sum - cur);
+    }
 
     /**
      * 416. 分割等和子集
