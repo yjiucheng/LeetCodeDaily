@@ -45,8 +45,24 @@ public class DynamicProgrammingDemo {
         for (int cur : nums) {
             sum += cur;
         }
-
-        return 0;
+        //nums[i]都是非负整数： 在不做任何操作的前提下，加法求和sum是确定的
+        // 添加负号部分的和记作 neg
+        // 所以：（sum-neg）-neg=target
+        //neg=（sum-target）/2
+        if ((sum - target) < 0 || (sum - target) % 2 != 0) {
+            return 0;
+        }
+        int bigSize = (sum - target) / 2;
+        //① 确定dp[j]的含义：装满容量为j的背包方法数
+        int[] dp = new int[bigSize + 1];
+        //② 确定递推公式：
+        dp[0] = 1;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = bigSize; j >= nums[i]; j--) {
+                dp[j] += dp[j - nums[i]];
+            }
+        }
+        return dp[bigSize];
     }
 
 
