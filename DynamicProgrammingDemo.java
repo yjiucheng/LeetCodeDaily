@@ -49,11 +49,15 @@ public class DynamicProgrammingDemo {
         // 添加负号部分的和记作 neg
         // 所以：（sum-neg）-neg=target
         //neg=（sum-target）/2
+        //问题转化成在数组 nums 中选取若干元素，使得这些元素之和等于neg，计算选取元素的方案数
         if ((sum - target) < 0 || (sum - target) % 2 != 0) {
             return 0;
         }
+
+        //① 确定dp[i][j]的含义：其中dp[i][j] 表示在数组nums 的前i个数中选取元素，使得这些元素之和等于j的方案数。
+        // 假设数组nums 的长度为 n，则最终答案为dp[n][neg]
+        //二维数组可用滚动数组优化：dp[j] 装满容量为j的背包方法数
         int bigSize = (sum - target) / 2;
-        //① 确定dp[j]的含义：装满容量为j的背包方法数
         int[] dp = new int[bigSize + 1];
         //② 确定递推公式：
         dp[0] = 1;
