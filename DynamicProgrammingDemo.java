@@ -4,16 +4,59 @@
 public class DynamicProgrammingDemo {
     public static void main(String[] args) {
         DynamicProgrammingDemo demo = new DynamicProgrammingDemo();
-//        System.err.println(demo.integerBreak(13));
 
 
-        int[] weight = {1, 3, 4};
-        int[] value = {15, 20, 30};
-        int bagSize = 4;
-        testWeightBagProblem(weight, value, bagSize);
-        System.out.print("\n");
-        System.out.print("\n");
-        testWeightBagProblem2(weight, value, bagSize);
+//        int[] weight = {1, 3, 4};
+//        int[] value = {15, 20, 30};
+//        int bagSize = 4;
+//        testWeightBagProblem(weight, value, bagSize);
+//        System.out.print("\n");
+//        System.out.print("\n");
+//        testWeightBagProblem2(weight, value, bagSize);
+
+        String[] strs = {"10", "0001", "111001", "1", "0"};
+        System.err.println(demo.findMaxForm(strs, 5, 3));
+    }
+
+    /**
+     * 474. 一和零
+     * 给你一个二进制字符串数组 strs 和两个整数 m 和 n 。
+     * <p>
+     * 请你找出并返回 strs 的最大子集的长度，该子集中 最多 有 m 个 0 和 n 个 1 。
+     * <p>
+     * 如果 x 的所有元素也是 y 的元素，集合 x 是集合 y 的 子集 。
+     * <p>
+     *  
+     */
+    public int findMaxForm(String[] strs, int m, int n) {
+        //dp[i][j]:i个0 j个1 的子集数
+        int[][] dp = new int[m + 1][n + 1];
+        for (String curStr : strs) {
+            int zeroCount = 0;
+            int oneCount = 0;
+            for (int index = 0; index < curStr.length(); index++) {
+                char cur = curStr.charAt(index);
+                if (cur == '0') {
+                    zeroCount++;
+                } else {
+                    oneCount++;
+                }
+            }
+            for (int i = m; i >=zeroCount; i--) {
+                for (int j = n; j >=oneCount; j--) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - zeroCount][j - oneCount] + 1);
+                }
+            }
+        }
+
+        for (int i=0;i<=m;i++){
+            for (int j=0;j<=n;j++){
+                System.err.print(dp[i][j]+"");
+            }
+            System.err.println();
+        }
+
+        return dp[m][n];
     }
 
 
