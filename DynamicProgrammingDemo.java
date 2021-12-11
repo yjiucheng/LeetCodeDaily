@@ -6,7 +6,7 @@ public class DynamicProgrammingDemo {
         DynamicProgrammingDemo demo = new DynamicProgrammingDemo();
 
 
-//        int[] weight = {1, 3, 4};
+        int[] weight = {1, 2, 5};
 //        int[] value = {15, 20, 30};
 //        int bagSize = 4;
 //        testWeightBagProblem(weight, value, bagSize);
@@ -15,8 +15,40 @@ public class DynamicProgrammingDemo {
 //        testWeightBagProblem2(weight, value, bagSize);
 
         String[] strs = {"10", "0001", "111001", "1", "0"};
-        System.err.println(demo.findMaxForm(strs, 5, 3));
+        System.err.println(demo.change(5, weight));
     }
+
+
+    /**
+     * 518. 零钱兑换 II
+     * 给你一个整数数组 coins 表示不同面额的硬币，另给一个整数 amount 表示总金额。
+     * <p>
+     * 请你计算并币返回可以凑成总金额的硬币组合数。如果任何硬组合都无法凑出总金额，返回 0 。
+     * <p>
+     * 假设每一种面额的硬币有无限个。 
+     * <p>
+     * 题目数据保证结果符合 32 位带符号整数。
+     * <p>
+     * 输入：amount = 5, coins = [1, 2, 5]
+     * 输出：4
+     * 解释：有四种方式可以凑成总金额：
+     * 5=5
+     * 5=2+2+1
+     * 5=2+1+1+1
+     * 5=1+1+1+1+1
+     * <p>
+     */
+    public int change(int amount, int[] coins) {
+       int[] dp=new int[amount+1];
+       dp[0]=1;
+       for (int i=0;i<coins.length;i++){
+           for (int j=coins[i];j<=amount;j++){
+               dp[j]+=dp[j-coins[i]];
+           }
+       }
+        return dp[amount];
+    }
+
 
     /**
      * 474. 一和零
@@ -42,16 +74,16 @@ public class DynamicProgrammingDemo {
                     oneCount++;
                 }
             }
-            for (int i = m; i >=zeroCount; i--) {
-                for (int j = n; j >=oneCount; j--) {
+            for (int i = m; i >= zeroCount; i--) {
+                for (int j = n; j >= oneCount; j--) {
                     dp[i][j] = Math.max(dp[i][j], dp[i - zeroCount][j - oneCount] + 1);
                 }
             }
         }
 
-        for (int i=0;i<=m;i++){
-            for (int j=0;j<=n;j++){
-                System.err.print(dp[i][j]+"");
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                System.err.print(dp[i][j] + "");
             }
             System.err.println();
         }

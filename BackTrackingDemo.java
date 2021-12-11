@@ -10,8 +10,8 @@ public class BackTrackingDemo {
 //        System.err.println(combinationSum3(3, 9));
 //        System.err.println(letterCombinations(""));
         int[] nums = new int[]{100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 99, 97};
-        int[] nums2 = new int[]{1,2,1,4,6,3,2};
-        int target=15;
+        int[] nums2 = new int[]{1, 2, 1, 4, 6, 3, 2};
+        int target = 15;
 
 //        List<String> list1 = new ArrayList<>();
 //        list1.add("JFK");
@@ -38,9 +38,8 @@ public class BackTrackingDemo {
 //        String board = "WWGWGW";
 //        String hand = "GWBWR";
         BackTrackingDemo demo = new BackTrackingDemo();
-        System.err.println(demo.findTargetSumWays(nums2,target));
+        System.err.println(demo.findTargetSumWays(nums2, target));
     }
-
 
     /**
      * 494. 目标和
